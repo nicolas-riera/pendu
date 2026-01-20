@@ -107,7 +107,7 @@ def words_menu(screen, clock, my_fonts):
             break
 
         if reset_popup:
-            reset_popup = reset_words_menu(screen, clock, my_fonts, mouseclicked)
+            reset_popup = popup(screen, clock, my_fonts, mouseclicked, "La liste a été restaurée.", (150, 315))
 
         else:
             if add_word_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()) or add_word_button.collidepoint(pygame.mouse.get_pos()) or remove_word_button.collidepoint(pygame.mouse.get_pos()) or reset_word_button.collidepoint(pygame.mouse.get_pos()):
@@ -137,6 +137,8 @@ def words_menu(screen, clock, my_fonts):
 def add_word_menu(screen, clock, my_fonts):
 
     usr_word = ""
+    error_found_popup = False
+    error_too_short_popup = False
 
     while True:
         
@@ -144,25 +146,87 @@ def add_word_menu(screen, clock, my_fonts):
 
         events, mouseclicked, escpressed = pygame_events()
 
-        # Rendering  
-
-        screen.fill("white") 
-
-        words_title_button_text = my_fonts[1].render("Ajouter un mot", True, (0, 0, 0))
-        screen.blit(words_title_button_text, (340, 120))
+        # Keyboard input logic
 
         usr_input = keyboard_input(events)
 
         if usr_input == "backspace":
             usr_word = usr_word[:-1]
         elif usr_input == "enter":
-            break
+            if usr_word in read_words():
+                error_found_popup = True
+            elif len(usr_word) < 3:
+                error_too_short_popup = True
+            elif usr_word != "":
+                break
+        else:
+            if len(usr_word) < 26:
+                usr_word += usr_input
+
+        # Rendering  
+
+        screen.fill("white") 
+
+        words_title_button_text = my_fonts[1].render("Ajouter un mot", True, (0, 0, 0))
+        screen.blit(words_title_button_text, (230, 120))
+
+        pygame.draw.rect(screen, (240, 240, 240), (70, 310, 660, 60))
+        usr_word_display = my_fonts[0].render(usr_word, True, (0, 0, 0))
+        screen.blit(usr_word_display, (75, 320))
+
+        if usr_word == "":
+            add_word_button_color = (224, 222, 218)
+        else:
+            add_word_button_color = (236, 179, 101)
+
+        pygame.draw.rect(screen, add_word_button_color, (295, 500, 203, 80))
+        add_word_button = pygame.Rect((295, 500, 203, 80))
+        add_word_button_text = my_fonts[0].render("Ajouter mot", True, (0, 0, 0))
+        screen.blit(add_word_button_text, (322, 520))
+
+        pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
+        return_button = pygame.Rect((295, 600, 203, 80))
+        return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
+        screen.blit(return_button_text, (356, 620))
+        
+        # Logic
+
+        if error_found_popup:
+            error_found_popup = popup(screen, clock, my_fonts, mouseclicked, "Le mot existe déjà.", (193, 315))
+        elif error_too_short_popup:
+            error_too_short_popup= popup(screen, clock, my_fonts, mouseclicked, "Le mot est trop court.", (168, 315))
+
+        elif add_word_button.collidepoint(pygame.mouse.get_pos()) and not(return_button.collidepoint(pygame.mouse.get_pos())):
+            if usr_word != "":
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+
+                if mouseclicked:
+                    if usr_word in read_words():
+                        error_found_popup = True
+                    elif len(usr_word) < 3:
+                        error_too_short_popup = True
+                    else:
+                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                        usr_word = ""
+                        break
+
+            else:  
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
         else:
-            usr_word += usr_input
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
-        usr_word_display = my_fonts[0].render(usr_word, True, (0, 0, 0))
-        screen.blit(usr_word_display, (322, 320))
+
+            if return_button.collidepoint(pygame.mouse.get_pos()) and not(add_word_button.collidepoint(pygame.mouse.get_pos())):
+                if mouseclicked:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                    usr_word = ""
+                    break
+                else:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+
+            else:
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) 
 
         pygame.display.flip()  
         clock.tick(60) 
@@ -170,9 +234,11 @@ def add_word_menu(screen, clock, my_fonts):
     if usr_word != "":
         add_word(usr_word)
 
+        
 
 
-def reset_words_menu(screen, clock, my_fonts, mouseclicked):
+
+def popup(screen, clock, my_fonts, mouseclicked, text, text_pos):
 
     # Rendering 
         
@@ -182,8 +248,8 @@ def reset_words_menu(screen, clock, my_fonts, mouseclicked):
     screen.blit(screen_fade, (0, 0))
         
     pygame.draw.rect(screen, (255, 255, 255), (100, 250, 600, 300))
-    reset_text_display = my_fonts[1].render("La liste a été restaurée.", True, (0, 0, 0))
-    screen.blit(reset_text_display, (150, 315))
+    text_display = my_fonts[1].render(text, True, (0, 0, 0))
+    screen.blit(text_display, text_pos)
 
     pygame.draw.rect(screen, (168, 168, 168), (295, 450, 203, 80))
     ok_button = pygame.Rect((295, 450, 203, 80))

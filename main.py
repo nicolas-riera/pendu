@@ -14,6 +14,8 @@ if __name__ == "__main__":
 
     pygame.display.set_caption("Pendu")
 
+    pygame.key.set_repeat(400, 50)
+
     screen = pygame.display.set_mode((800,800))
     my_fonts = pygame.font.SysFont('Arial', 30), pygame.font.SysFont('Arial', 50)
     clock = pygame.time.Clock()
