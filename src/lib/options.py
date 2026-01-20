@@ -3,8 +3,7 @@
 import os
 import pygame
 
-#from src.lib.words_mgt import *
-# read_words()->list add_word(word:str) reset_list() remove_word(word_index) 
+from src.lib.words_mgt import *
 from src.lib.pygame_events import *
 
 # Variables
@@ -27,13 +26,15 @@ def options(screen, clock, my_fonts):
         # Rendering  
 
         screen.fill("white") 
-        
+
+        settings_title_button_text = my_fonts[1].render("Options", True, (0, 0, 0))
+        screen.blit(settings_title_button_text, (310, 120))
 
         # Draw.rect(surface, color, (x position, y position, x width, y width))
-        pygame.draw.rect(screen, (236, 179, 101), (295, 450, 203, 80))
-        words_button = pygame.Rect((295, 450, 203, 80))
+        pygame.draw.rect(screen, (236, 179, 101), (295, 300, 203, 80))
+        words_button = pygame.Rect((295, 300, 203, 80))
         words_button_text = my_fonts[0].render("Mots", True, (0, 0, 0))
-        screen.blit(words_button_text, (365, 470))
+        screen.blit(words_button_text, (365, 320))
 
         pygame.draw.rect(screen, (168, 168, 168), (295, 560, 203, 80))
         return_button = pygame.Rect((295, 560, 203, 80))
@@ -52,13 +53,120 @@ def options(screen, clock, my_fonts):
             if mouseclicked:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 if words_button.collidepoint(pygame.mouse.get_pos()):
-                    print("words")
-                    #words_menu(screen,clock,my_fonts)
-                else:
-                    print("return")
+                    words_menu(screen,clock,my_fonts)
+                elif return_button.collidepoint(pygame.mouse.get_pos()):
                     break
             else:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
 
         else:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) 
+
+def words_menu(screen, clock, my_fonts):
+
+    reset_popup = False
+    
+    while True:
+        
+        # pygame events
+
+        mouseclicked, echappressed = pygame_events()
+
+        # Rendering  
+
+        screen.fill("white") 
+
+        words_title_button_text = my_fonts[1].render("Mots", True, (0, 0, 0))
+        screen.blit(words_title_button_text, (340, 120))
+
+        # Draw.rect(surface, color, (x position, y position, x width, y width))
+        pygame.draw.rect(screen, (236, 179, 101), (295, 300, 203, 80))
+        add_word_button = pygame.Rect((295, 300, 203, 80))
+        add_word_button_text = my_fonts[0].render("Ajouter mot", True, (0, 0, 0))
+        screen.blit(add_word_button_text, (322, 320))
+        
+        pygame.draw.rect(screen, (236, 179, 151), (295, 400, 203, 80))
+        remove_word_button = pygame.Rect((295, 400, 203, 80))
+        remove_word_button_text = my_fonts[0].render("Retirer mot", True, (0, 0, 0))
+        screen.blit(remove_word_button_text, (322, 420))
+
+        pygame.draw.rect(screen, (236, 179, 201), (295, 500, 203, 80))
+        reset_word_button = pygame.Rect((295, 500, 203, 80))
+        reset_word_button_text = my_fonts[0].render("Restaurer liste", True, (0, 0, 0))
+        screen.blit(reset_word_button_text, (300, 520))
+
+        pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
+        return_button = pygame.Rect((295, 600, 203, 80))
+        return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
+        screen.blit(return_button_text, (356, 620))    
+
+        # Logic
+
+        if echappressed:
+            break
+
+        if reset_popup:
+            reset_popup = reset_words_menu(screen, clock, my_fonts, mouseclicked)
+
+        else:
+            if add_word_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()) or add_word_button.collidepoint(pygame.mouse.get_pos()) or remove_word_button.collidepoint(pygame.mouse.get_pos()) or reset_word_button.collidepoint(pygame.mouse.get_pos()):
+                if mouseclicked:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                    if add_word_button.collidepoint(pygame.mouse.get_pos()):
+                        print("words")
+                        #add_words_menu(screen, clock, my_fonts)
+                    elif return_button.collidepoint(pygame.mouse.get_pos()):
+                        print("return")
+                        break
+                    elif remove_word_button.collidepoint(pygame.mouse.get_pos()):
+                        print("remove")
+                        #remove_words_menu(screen, clock, my_fonts)
+                    elif reset_word_button.collidepoint(pygame.mouse.get_pos()):
+                        reset_words()
+                        reset_popup = True
+
+                else:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+
+            else:
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)       
+
+        pygame.display.flip()  
+        clock.tick(60) 
+
+
+def reset_words_menu(screen, clock, my_fonts, mouseclicked):
+
+    # Rendering 
+        
+    screen_fade = pygame.Surface((800, 800))
+    screen_fade.fill((0, 0, 0))
+    screen_fade.set_alpha(160)
+    screen.blit(screen_fade, (0, 0))
+        
+    pygame.draw.rect(screen, (255, 255, 255), (100, 250, 600, 300))
+    reset_text_display = my_fonts[1].render("La liste a été restaurée.", True, (0, 0, 0))
+    screen.blit(reset_text_display, (150, 315))
+
+    pygame.draw.rect(screen, (168, 168, 168), (295, 450, 203, 80))
+    ok_button = pygame.Rect((295, 450, 203, 80))
+    ok_button_text = my_fonts[0].render("OK", True, (0, 0, 0))
+    screen.blit(ok_button_text, (370, 470))
+
+    pygame.display.flip()  
+    clock.tick(60)
+
+    # Logic
+
+    if ok_button.collidepoint(pygame.mouse.get_pos()):
+        if mouseclicked:
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+            return False
+
+        else:
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+
+    else:
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) 
+
+    return True

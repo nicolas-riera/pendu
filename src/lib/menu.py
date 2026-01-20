@@ -36,12 +36,12 @@ def menu(screen, clock, my_fonts):
         pygame.draw.rect(screen, (236, 179, 101), (295, 450, 203, 80))
         play_button = pygame.Rect((295, 450, 203, 80))
         play_button_text = my_fonts[0].render("Jouer", True, (0, 0, 0))
-        screen.blit(play_button_text, (365, 470))
+        screen.blit(play_button_text, (360, 470))
 
         pygame.draw.rect(screen, (168, 168, 168), (295, 560, 203, 80))
         option_button = pygame.Rect((295, 560, 203, 80))
         option_button_text = my_fonts[0].render("Options", True, (0, 0, 0))
-        screen.blit(option_button_text, (356, 580))
+        screen.blit(option_button_text, (350, 580))
 
         pygame.display.flip()  
         clock.tick(60)     

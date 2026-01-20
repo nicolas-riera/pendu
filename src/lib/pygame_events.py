@@ -20,6 +20,6 @@ def pygame_events():
 
         if event.type == pygame.KEYDOWN:
             if pygame.key.get_pressed()[pygame.K_ESCAPE]:
-                echappressed = True                     
+                echappressed = True 
 
     return mouseclicked, echappressed
