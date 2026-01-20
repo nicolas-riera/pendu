@@ -18,7 +18,9 @@ def read_words_file():
     
 def add_word(word:str):
         
-    file_list = read_words_file().append(word)
+    file_list = read_words_file()
+
+    file_list.append(word)
 
     text_list=""
     for e in file_list:

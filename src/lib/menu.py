@@ -12,7 +12,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Assets loading
 
-logo_title = pygame.image.load(os.path.join(BASE_DIR, "../" ,"img", "logo_title.png"))
+logo_title = pygame.image.load(os.path.join(BASE_DIR, "../" , "../", "assets", "img", "logo_title.png"))
 
 # Functions
 
@@ -22,7 +22,7 @@ def menu(screen, clock, my_fonts):
         
         # pygame events
 
-        mouseclicked, escpressed = pygame_events()
+        events, mouseclicked, escpressed = pygame_events()
 
         # Rendering  
 
