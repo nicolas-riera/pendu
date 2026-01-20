@@ -4,6 +4,7 @@ import os
 import pygame
 
 from src.lib.pygame_events import *
+from src.lib.options import *
 
 # Variables
 
@@ -58,8 +59,8 @@ def menu(screen, clock, my_fonts):
                     print("game")
                     # tbd game
                 else:
-                    print("option")
-                    # tbd option
+                    print("options")
+                    options(screen, clock, my_fonts)
             else:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
 
