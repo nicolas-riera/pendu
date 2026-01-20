@@ -21,7 +21,7 @@ def options(screen, clock, my_fonts):
         
         # pygame events
 
-        mouseclicked, echappressed = pygame_events()
+        mouseclicked, escpressed = pygame_events()
 
         # Rendering  
 
@@ -46,7 +46,7 @@ def options(screen, clock, my_fonts):
 
         # Logic
 
-        if echappressed:
+        if escpressed:
             break
         
         if words_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()):
@@ -70,7 +70,7 @@ def words_menu(screen, clock, my_fonts):
         
         # pygame events
 
-        mouseclicked, echappressed = pygame_events()
+        mouseclicked, escpressed = pygame_events()
 
         # Rendering  
 
@@ -102,7 +102,7 @@ def words_menu(screen, clock, my_fonts):
 
         # Logic
 
-        if echappressed:
+        if escpressed:
             break
 
         if reset_popup:
@@ -113,8 +113,7 @@ def words_menu(screen, clock, my_fonts):
                 if mouseclicked:
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                     if add_word_button.collidepoint(pygame.mouse.get_pos()):
-                        print("words")
-                        #add_words_menu(screen, clock, my_fonts)
+                        add_word_menu(screen, clock, my_fonts)
                     elif return_button.collidepoint(pygame.mouse.get_pos()):
                         print("return")
                         break
@@ -133,6 +132,27 @@ def words_menu(screen, clock, my_fonts):
 
         pygame.display.flip()  
         clock.tick(60) 
+
+def add_word_menu(screen, clock, my_fonts):
+
+    while True:
+        
+        # pygame events
+
+        mouseclicked, escpressed = pygame_events()
+
+        # Rendering  
+
+        screen.fill("white") 
+
+        words_title_button_text = my_fonts[1].render("Mots", True, (0, 0, 0))
+        screen.blit(words_title_button_text, (340, 120))
+
+        # Draw.rect(surface, color, (x position, y position, x width, y width))
+        pygame.draw.rect(screen, (236, 179, 101), (295, 300, 203, 80))
+        add_word_button = pygame.Rect((295, 300, 203, 80))
+        add_word_button_text = my_fonts[0].render("Ajouter mot", True, (0, 0, 0))
+        screen.blit(add_word_button_text, (322, 320))
 
 
 def reset_words_menu(screen, clock, my_fonts, mouseclicked):

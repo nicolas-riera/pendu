@@ -22,7 +22,7 @@ def menu(screen, clock, my_fonts):
         
         # pygame events
 
-        mouseclicked, echappressed = pygame_events()
+        mouseclicked, escpressed = pygame_events()
 
         # Rendering  
 
@@ -48,7 +48,7 @@ def menu(screen, clock, my_fonts):
 
         # Logic
 
-        if echappressed:
+        if escpressed:
             pygame.quit()
             raise SystemExit
         

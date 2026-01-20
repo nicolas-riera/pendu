@@ -7,7 +7,7 @@ import pygame
 def pygame_events():
 
     mouseclicked = False
-    echappressed = False
+    escpressed = False
 
     for event in pygame.event.get():
 
@@ -20,6 +20,6 @@ def pygame_events():
 
         if event.type == pygame.KEYDOWN:
             if pygame.key.get_pressed()[pygame.K_ESCAPE]:
-                echappressed = True 
+                escpressed = True 
 
-    return mouseclicked, echappressed
+    return mouseclicked, escpressed
