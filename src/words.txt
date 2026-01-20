@@ -16,23 +16,3 @@ tempete
 papillon
 
 --user-
-montagne
-horloge
-parapluie
-etoile
-labyrinthe
-chocolat
-ocean
-dragon
-telephone
-jardin
-mystere
-satellite
-boussole
-tempete
-papillon
-toto
-toto
-ok
-paoa
-t
