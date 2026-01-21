@@ -242,11 +242,14 @@ def remove_word_menu(screen, clock, my_fonts):
 
     words_list = read_words()
     words_list_current_page = 0
-    words_list_pages = math.ceil(len(words_list) / 20)
+
+    previous_page_rect = None
+    next_page_rect = None
         
     while True:
 
         clickable_words = []
+        words_list_pages = math.ceil(len(words_list) / 20)
 
         # pygame events
 
@@ -285,12 +288,20 @@ def remove_word_menu(screen, clock, my_fonts):
                 clickable_words.append((words_list[i], word_rect))
                 
         if words_list_pages > 1:
+
             if words_list_current_page != 0:
-                previous_page_arrow = my_fonts[0].render("<", True, (0, 0, 0))
+                previous_page_arrow = my_fonts[1].render("<", True, (0, 0, 0))
+                previous_page_rect = previous_page_arrow.get_rect(topleft=(70, 660))
                 screen.blit(previous_page_arrow, (70, 660))
+            else:
+                previous_page_rect = None
+
             if words_list_current_page != words_list_pages-1:
                 next_page_arrow = my_fonts[1].render(">", True, (0, 0, 0))
+                next_page_rect = next_page_arrow.get_rect(topleft=(700, 660))
                 screen.blit(next_page_arrow, (700, 660))
+            else:
+                next_page_rect = None
 
         pygame.draw.rect(screen, (168, 168, 168), (295, 650, 203, 80))
         return_button = pygame.Rect((295, 650, 203, 80))
@@ -304,14 +315,31 @@ def remove_word_menu(screen, clock, my_fonts):
 
         hover = False
 
+        if next_page_rect is not None:
+            if next_page_rect.collidepoint(pygame.mouse.get_pos()):
+                if mouseclicked:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_WAITARROW) 
+                    words_list_current_page += 1
+                else:
+                    hover = True   
+        
+        if previous_page_rect is not None:
+            if previous_page_rect.collidepoint(pygame.mouse.get_pos()):
+                if mouseclicked:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_WAITARROW) 
+                    words_list_current_page -= 1
+                else:
+                    hover = True
+
         if escpressed:
             break
+
         elif return_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 break
             else:
-                hover = True          
+                hover = True   
            
         for word, word_rect in clickable_words:
             if word_rect.collidepoint(pygame.mouse.get_pos()):
@@ -319,6 +347,8 @@ def remove_word_menu(screen, clock, my_fonts):
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                     remove_word(words_list.index(word))
                     words_list = read_words()
+                    if words_list_pages != math.ceil(len(words_list) / 20) and words_list_current_page == words_list_pages:
+                        words_list_current_page -= 1
                 else:
                     hover = True
 
