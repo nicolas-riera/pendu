@@ -18,6 +18,8 @@ logo_title = pygame.image.load(os.path.join(BASE_DIR, "../", "assets", "img", "l
 
 def menu(screen, clock, my_fonts):
 
+    error_popup_empty = False
+
     while True:
         
         # pygame events
@@ -41,10 +43,7 @@ def menu(screen, clock, my_fonts):
         pygame.draw.rect(screen, (168, 168, 168), (295, 560, 203, 80))
         option_button = pygame.Rect((295, 560, 203, 80))
         option_button_text = my_fonts[0].render("Options", True, (0, 0, 0))
-        screen.blit(option_button_text, (350, 580))
-
-        pygame.display.flip()  
-        clock.tick(60)     
+        screen.blit(option_button_text, (350, 580))  
 
         # Logic
 
@@ -52,12 +51,19 @@ def menu(screen, clock, my_fonts):
             pygame.quit()
             raise SystemExit
         
-        if play_button.collidepoint(pygame.mouse.get_pos()) or option_button.collidepoint(pygame.mouse.get_pos()):
+        elif error_popup_empty:
+            error_popup_empty = ok_popup(screen, clock, my_fonts, mouseclicked, "La liste est vide.", (213, 315))
+            if not error_popup_empty:
+                continue
+        
+        elif play_button.collidepoint(pygame.mouse.get_pos()) or option_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 if play_button.collidepoint(pygame.mouse.get_pos()):
-                    pass
-                    # tbd game
+                    if read_words() != []:
+                        game(screen, clock, my_fonts)
+                    else:
+                        error_popup_empty = True
                 else:
                     options(screen, clock, my_fonts)
             else:
@@ -65,4 +71,7 @@ def menu(screen, clock, my_fonts):
 
         else:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
+        pygame.display.flip()  
+        clock.tick(60)   
             
