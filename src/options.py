@@ -359,7 +359,7 @@ def remove_word_menu(screen, clock, my_fonts):
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                     remove_word(words_list.index(word))
                     words_list = read_words()
-                    if words_list_pages != math.ceil(len(words_list) / 20) and words_list_current_page == words_list_pages:
+                    if words_list_pages != math.ceil(len(words_list) / 20) and words_list_current_page + 1 == words_list_pages:
                         words_list_current_page -= 1
                 else:
                     hover = True
