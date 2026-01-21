@@ -123,6 +123,7 @@ def words_menu(screen, clock, my_fonts):
                     elif remove_word_button.collidepoint(pygame.mouse.get_pos()):
                         remove_word_menu(screen, clock, my_fonts)
                     elif reset_word_button.collidepoint(pygame.mouse.get_pos()):
+                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_WAITARROW) 
                         reset_words()
                         reset_popup = True
 
