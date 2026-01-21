@@ -42,7 +42,13 @@ def reset_words():
 
     write_lines(lines)
 
+def clear_words():
+    lines = read_words_file()
 
+    lines = lines[:103]
+
+    write_lines(lines)
+    
 def check_empty_last_line():
     lines = read_words_file()
     write_lines(lines)
