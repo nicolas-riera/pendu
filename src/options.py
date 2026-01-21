@@ -262,6 +262,9 @@ def remove_word_menu(screen, clock, my_fonts):
 
         screen.fill("white")
 
+        words_title_button_text = my_fonts[1].render("Retirer un mot", True, (0, 0, 0))
+        screen.blit(words_title_button_text, (233, 22))
+
         if words_list == []:
             error_popup_empty = True
 
