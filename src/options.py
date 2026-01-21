@@ -373,7 +373,7 @@ def remove_word_menu(screen, clock, my_fonts):
 
         elif delete_all_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
-                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_WAITARROW) 
                 notice_clear_all_popup = True
             else:
                 hover = True
