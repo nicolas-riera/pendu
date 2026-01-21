@@ -1,8 +1,8 @@
 # Libraries
+
 import random
 import pygame
 import unicodedata
-import time
 
 from src.words_mgt import *
 from src.pygame_events import *
