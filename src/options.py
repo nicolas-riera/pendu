@@ -156,7 +156,7 @@ def add_word_menu(screen, clock, my_fonts):
         if usr_input == "backspace":
             usr_word = usr_word[:-1]
         elif usr_input == "enter":
-            if usr_word in read_words():
+            if usr_word.lower() in read_words():
                 error_found_popup = True
             elif len(usr_word.replace("-", "")) < 3:
                 error_too_short_popup = True
