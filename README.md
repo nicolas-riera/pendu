@@ -1,64 +1,83 @@
-# Pendu (Hangman) — Python / Pygame
+# Pendu — Python / pygame
 
-Small Hangman project with a **Pygame UI** (menu + options) and a **word list manager**.
+Un simple Pendu développé en Python et utilise pygame pour l'interface graphique.
 
-## Requirements
+## Présentation
+
+### Le jeu du pendu
+
+Le pendu est un jeu de lettres classique qui consiste à deviner un mot secret en proposant des lettres, une à une, avant que le dessin d’un pendu ne soit complété. C’est à la fois un jeu de réflexion et de vocabulaire.
+
+### But du jeu
+
+Le but est de trouver le mot secret avant de faire trop d’erreurs. Chaque lettre incorrecte rapproche le joueur de la défaite.
+
+### Règles principales
+
+1. Un mot est choisi secrètement par l’ordinateur.
+
+2. Le mot est représenté par des tirets, une pour chaque lettre.
+
+3. Le joueur propose une lettre à la fois.
+
+4. Si la lettre est présente dans le mot, elle est révélée à sa/ses position(s).
+
+5. Si la lettre n’est pas dans le mot, une partie du pendu est dessinée (tête, corps, bras, jambes…).
+
+6. Le joueur gagne s’il trouve toutes les lettres avant que le pendu ne soit complet.
+
+7. Le joueur perd si le dessin du pendu est terminé avant que le mot soit trouvé   
+
+## Installation (Windows uniquement)
+
+tbd
+
+## Fonctionnalités (temporaire)
+
+- tbd/game
+- Gestion complète de la liste des mots :
+    - Ajout de mots par l'utilisateur.
+    - Suppression par cas ou complète des mots.
+    - Réinitialisation des mots à leur état d'origine.
+
+## Contrôles
+
+- **Souris** : Cliquer sur les boutons (Menu/ Options/Pop-ups)
+- **Échap** : Revenir en arrière/quitter le jeu (par rapport à l'écran affiché)
+
+Dans **Jouer** :
+- Clavier :
+    - Entrer les lettres avec le clavier
+        - Caractères acceptés : lettres
+
+Dans **Options → Mots → Ajouter mot** :
+
+- **Clavier** :
+    - Taper les lettres avec le clavier
+        - Caractères acceptés : lettres et tiret  
+    - **Retour arrière**: Supprimer le dernier caractère entrée
+    - **Enter**: Valider le mot entrée
+
+Dans **Options → Mots → Retirer mot** :
+
+- Cliquer sur un mot pour le supprimer
+- Utiliser les flèches `<` / `>` pour changer de pages (s'il y a plus de 20 mots)
+
+## Exécuter depuis le code source
+
+### Prérequis
 
 - Python 3.x
-- `pygame`
+- pygame -> ```python -m pip install pygame```
 
-Install Pygame:
+## Exécuter
 
-```bash
-python -m pip install pygame
-```
-
-## Run
-
-From the project root (the folder that contains `main.py`):
+À partir du dossier racine du projet (le dossier qui contient `main.py`), exécuter :
 
 ```bash
 python main.py
 ```
 
-## Controls
+## Auteurs
 
-- **Mouse**: click buttons (Menu / Options / Word management)
-- **Esc**: go back / quit (depending on the screen)
-
-In **Options → Mots → Ajouter mot**:
-
-- Type letters on your keyboard
-- **Backspace**: delete last character
-- **Enter**: validate
-
-In **Options → Mots → Retirer mot**:
-
-- Click a word to remove it
-- Use `<` / `>` arrows to change pages (if there are many words)
-
-## Word list
-
-The word list is stored in `assets/words.txt`.
-
-- Lines after `--default--` are default words
-- Lines after `--user` are user-added words
-
-The app also provides:
-- **Ajouter mot**: append a word
-- **Retirer mot**: remove by clicking
-- **Restaurer liste**: restore defaults
-
-## Project structure
-
-- `main.py`: app entrypoint (Pygame window)
-- `src/menu.py`: main menu (Play / Options)
-- `src/options.py`: options screens + word list management UI
-- `src/words_mgt.py`: read/add/remove/reset words in `assets/words.txt`
-- `assets/`: fonts, images, and `words.txt`
-
-## Status / notes
-
-- The **UI is working** (menu + options + word management).
-- The **Play** button is currently a placeholder (`tbd game` in `src/menu.py`).
-
+Ce projet a été réalisé par [Nicolas](https://github.com/nicolas-riera), [Arthur](https://github.com/arthur-georget) et [Achraf](https://github.com/achraf-nait-belkacem).
