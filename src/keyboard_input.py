@@ -16,7 +16,6 @@ def keyboard_input(events):
                 char = event.unicode.lower()
                 if char == "-":
                     return char
-                category = unicodedata.category(char)
-                if category.startswith("L"):  
+                if unicodedata.category(char).startswith("L"):  
                     return char
     return ""
