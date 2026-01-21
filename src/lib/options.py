@@ -116,10 +116,9 @@ def words_menu(screen, clock, my_fonts):
                     if add_word_button.collidepoint(pygame.mouse.get_pos()):
                         add_word_menu(screen, clock, my_fonts)
                     elif return_button.collidepoint(pygame.mouse.get_pos()):
-                        print("return")
                         break
                     elif remove_word_button.collidepoint(pygame.mouse.get_pos()):
-                        print("remove")
+                        pass
                         #remove_words_menu(screen, clock, my_fonts)
                     elif reset_word_button.collidepoint(pygame.mouse.get_pos()):
                         reset_words()
@@ -232,9 +231,6 @@ def add_word_menu(screen, clock, my_fonts):
 
     if usr_word != "":
         add_word(usr_word)
-
-        
-
 
 
 def popup(screen, clock, my_fonts, mouseclicked, text, text_pos):
