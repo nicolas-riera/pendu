@@ -207,7 +207,6 @@ def add_word_menu(screen, clock, my_fonts):
                         error_too_short_popup = True
                     else:
                         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
-                        usr_word = ""
                         break
 
             else:  
