@@ -1,3 +1,4 @@
+# Libraries
 import random
 import pygame
 
@@ -6,10 +7,12 @@ from src.pygame_events import *
 from src.keyboard_input import *
 from src.render_adaptive_text import *
 
+# Variables
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regular.ttf")
 
-
+# Functions
 
 ############################## Console only ##############################################
 def ask_letter(letters_tried=[]):
@@ -42,8 +45,12 @@ def ask_restart_game(gaming):
 ##########################################################################################
 
 def is_in_letters_tried(letter,letters_tried,letters_found):
-    '''Take letter and letters_tried as parameter 
-    and return a boolean if the letter is found in letters_tried or not'''
+
+    '''
+    Take letter and letters_tried as parameter 
+    and return a boolean if the letter is found in letters_tried or not
+    '''
+
     is_tried = False
     if letter in letters_tried:
         is_tried = True
@@ -54,7 +61,11 @@ def is_in_letters_tried(letter,letters_tried,letters_found):
     return is_tried
 
 def update_clue(clue,letter,word_to_guess):
-    '''Update clue if letter is found in word_to_guess'''
+
+    '''
+    Update clue if letter is found in word_to_guess
+    '''
+
     for i in range(len(word_to_guess)):
         if letter == word_to_guess[i]:
             clue[i] = letter
@@ -67,8 +78,12 @@ def return_clue_string(clue):
     return clue_string
 
 def check_letter(word_to_guess,letter,letters_found,letters_tried):
-    '''Check if letter is present in word_to_guess, 
-        return is_good_choice, letters_tried and a boolean letter_found'''
+
+    '''
+    Check if letter is present in word_to_guess, 
+        return is_good_choice, letters_tried and a boolean letter_found
+    '''
+    
     is_good_choice = False
     if word_to_guess.find(letter) != -1:
         occurrences = word_to_guess.count(letter) 
