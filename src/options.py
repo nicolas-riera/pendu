@@ -2,10 +2,12 @@
 
 import os
 import pygame
+import math
 
 from src.words_mgt import *
 from src.pygame_events import *
 from src.keyboard_input import *
+from src.render_adaptive_text import *
 
 # Variables
 
@@ -38,10 +40,10 @@ def options(screen, clock, my_fonts):
         words_button_text = my_fonts[0].render("Mots", True, (0, 0, 0))
         screen.blit(words_button_text, (365, 320))
 
-        pygame.draw.rect(screen, (168, 168, 168), (295, 560, 203, 80))
-        return_button = pygame.Rect((295, 560, 203, 80))
+        pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
+        return_button = pygame.Rect((295, 600, 203, 80))
         return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
-        screen.blit(return_button_text, (356, 580))
+        screen.blit(return_button_text, (356, 620))
 
         pygame.display.flip()  
         clock.tick(60)     
@@ -51,7 +53,7 @@ def options(screen, clock, my_fonts):
         if escpressed:
             break
         
-        if words_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()):
+        elif words_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 if words_button.collidepoint(pygame.mouse.get_pos()):
@@ -107,7 +109,7 @@ def words_menu(screen, clock, my_fonts):
         if escpressed:
             break
 
-        if reset_popup:
+        elif reset_popup:
             reset_popup = popup(screen, clock, my_fonts, mouseclicked, "La liste a été restaurée.", (150, 315))
 
         else:
@@ -119,8 +121,7 @@ def words_menu(screen, clock, my_fonts):
                     elif return_button.collidepoint(pygame.mouse.get_pos()):
                         break
                     elif remove_word_button.collidepoint(pygame.mouse.get_pos()):
-                        pass
-                        #remove_words_menu(screen, clock, my_fonts)
+                        remove_word_menu(screen, clock, my_fonts)
                     elif reset_word_button.collidepoint(pygame.mouse.get_pos()):
                         reset_words()
                         reset_popup = True
@@ -191,7 +192,10 @@ def add_word_menu(screen, clock, my_fonts):
         
         # Logic
 
-        if error_found_popup:
+        if escpressed:
+            break
+
+        elif error_found_popup:
             error_found_popup = popup(screen, clock, my_fonts, mouseclicked, "Le mot existe déjà.", (193, 315))
         elif error_too_short_popup:
             error_too_short_popup= popup(screen, clock, my_fonts, mouseclicked, "Le mot est trop court.", (168, 315))
@@ -232,6 +236,65 @@ def add_word_menu(screen, clock, my_fonts):
 
     if usr_word != "":
         add_word(usr_word)
+
+
+def remove_word_menu(screen, clock, my_fonts):
+
+    words_list = read_words()
+    words_list_current_page = 0
+    words_list_pages = math.ceil(len(words_list) / 20)
+        
+    while True:
+
+        # pygame events
+
+        events, mouseclicked, escpressed = pygame_events()
+
+        # Rendering  
+
+        screen.fill("white")
+
+        for i in range(words_list_current_page * 20, len(words_list)):
+            if (i-words_list_current_page * 20) < 10:
+                render_adaptive_text(
+            screen=screen,
+            text=words_list[i],
+            x=130,
+            y=100 + 50 * (i-words_list_current_page * 20),
+            max_width=250,
+            font_path=FONT_PATH
+            )
+            
+            elif (i-words_list_current_page * 20) < 20:
+                render_adaptive_text(
+            screen=screen,
+            text=words_list[i],
+            x=450,
+            y=100 + 50 * ((i-words_list_current_page * 20)-10),
+            max_width=250,
+            font_path=FONT_PATH
+            )
+                
+        if words_list_pages > 1:
+            if words_list_current_page != 0:
+                previous_page_arrow = my_fonts[0].render("<", True, (0, 0, 0))
+                screen.blit(previous_page_arrow, (70, 610))
+            if words_list_current_page != words_list_pages-1:
+                next_page_arrow = my_fonts[1].render(">", True, (0, 0, 0))
+                screen.blit(next_page_arrow, (700, 610))
+
+        pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
+        return_button = pygame.Rect((295, 600, 203, 80))
+        return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
+        screen.blit(return_button_text, (356, 620))
+
+        pygame.display.flip()  
+        clock.tick(60) 
+
+        # Logic
+
+        if escpressed:
+            break
 
 
 def popup(screen, clock, my_fonts, mouseclicked, text, text_pos):
