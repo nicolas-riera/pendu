@@ -54,4 +54,17 @@ def reset_words():
 
     with open(FILE_PATH, "w") as f:
         f.write(text_list)
+
+def check_empty_last_line():
+
+    file_list = read_words_file()
         
+    if file_list[len(file_list)-1] != f"{file_list[len(file_list)-1]}\n":
+        file_list[len(file_list)-1] = f"{file_list[len(file_list)-1]}\n"
+    
+    text_list=""
+    for e in file_list:
+        text_list += e
+
+    with open(FILE_PATH, "w") as f:
+        f.write(text_list)
