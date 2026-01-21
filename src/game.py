@@ -89,4 +89,5 @@ def game(word_list):
     except KeyboardInterrupt:
         print("\nstopped by user!")
 
-game(word_list)
+if __name__ == "__main__":
+    game(word_list)
