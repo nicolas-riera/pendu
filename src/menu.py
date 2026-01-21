@@ -5,6 +5,7 @@ import pygame
 
 from src.pygame_events import *
 from src.options import *
+from src.game import *
 
 # Variables
 
