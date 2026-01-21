@@ -4,7 +4,7 @@ import pygame
 
 # Functions
 
-def popup(screen, clock, my_fonts, mouseclicked, text, text_pos):
+def ok_popup(screen, clock, my_fonts, mouseclicked, text, text_pos):
 
     # Rendering 
         
