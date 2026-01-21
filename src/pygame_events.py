@@ -17,7 +17,7 @@ def pygame_events():
             pygame.quit()
             raise SystemExit
         
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             mouseclicked = True
 
         if event.type == pygame.KEYDOWN:
