@@ -40,6 +40,19 @@ def ask_restart_game(gaming):
     return gaming
 
 ##########################################################################################
+
+def is_in_letters_tried(letter,letters_tried,letters_found):
+    '''Take letter and letters_tried as parameter 
+    and return a boolean if the letter is found in letters_tried or not'''
+    is_tried = False
+    if letter in letters_tried:
+        is_tried = True
+    elif letter in letters_found:
+        is_tried = True
+    else:
+        is_tried = False
+    return is_tried
+
 def update_clue(clue,letter,word_to_guess):
     '''Update clue if letter is found in word_to_guess'''
     for i in range(len(word_to_guess)):
@@ -52,7 +65,6 @@ def return_clue_string(clue):
     for char in clue:
         clue_string = clue_string + ' ' + char
     return clue_string
-
 
 def check_letter(word_to_guess,letter,letters_found,letters_tried):
     '''Check if letter is present in word_to_guess, 
@@ -103,13 +115,14 @@ def game(screen,clock,my_fonts):
 
                 # Logic
 
-
                 # Keyboard input logic
 
-                usr_input = keyboard_input(events)
+                usr_input = keyboard_input(events).lower()
+
+                letter_tried_already = is_in_letters_tried(usr_input,letters_tried,letters_found)
                 
-                if usr_input != "backspace" and usr_input != "enter" and usr_input != "-" and usr_input != "":
-                    letter = usr_input.lower()
+                if usr_input != "backspace" and usr_input != "enter" and usr_input != "-" and usr_input != "" and not letter_tried_already:
+                    letter = usr_input
                     letter_checked = False
 
                 if escpressed:
@@ -132,7 +145,7 @@ def game(screen,clock,my_fonts):
                 print(f"Bravo vous avez trouvé le mot {word_to_guess}")
             else:
                 print(f"Vous avez perdu!")
-            gaming = ask_restart_game(gaming)
+            gaming = True
         print("Merci d'avoir joué au pendu.")
                 
     except KeyboardInterrupt:
