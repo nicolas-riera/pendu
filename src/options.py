@@ -157,7 +157,7 @@ def add_word_menu(screen, clock, my_fonts):
         elif usr_input == "enter":
             if usr_word in read_words():
                 error_found_popup = True
-            elif len(usr_word) < 3:
+            elif len(usr_word.replace("-", "")) < 3:
                 error_too_short_popup = True
             elif usr_word != "":
                 break
@@ -208,7 +208,7 @@ def add_word_menu(screen, clock, my_fonts):
                 if mouseclicked:
                     if usr_word in read_words():
                         error_found_popup = True
-                    elif len(usr_word) < 3:
+                    elif len(usr_word.replace("-", "")) < 3:
                         error_too_short_popup = True
                     else:
                         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
