@@ -59,12 +59,12 @@ def replay_menu_popup(screen, clock, my_fonts, mouseclicked, text, text_pos):
     pygame.draw.rect(screen, (236, 179, 101), (160, 450, 203, 80))
     replay_button = pygame.Rect((160, 450, 203, 80))
     replay_button_text = my_fonts[0].render("Rejouer", True, (0, 0, 0))
-    screen.blit(replay_button_text, 218, 470)
+    screen.blit(replay_button_text, (205, 470))
 
     pygame.draw.rect(screen, (236, 179, 201), (430, 450, 203, 80))
     gotomenu_button = pygame.Rect((430, 450, 203, 80))
     gotomenu_button_text = my_fonts[0].render("Menu", True, (0, 0, 0))
-    screen.blit(gotomenu_button_text, (500, 470))
+    screen.blit(gotomenu_button_text, (495, 470))
 
     pygame.display.flip()  
     clock.tick(60)
