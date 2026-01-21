@@ -7,9 +7,11 @@ import pygame
 def pygame_events():
 
     mouseclicked = False
-    echappressed = False
+    escpressed = False
 
-    for event in pygame.event.get():
+    events = pygame.event.get()
+
+    for event in events:
 
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -20,6 +22,6 @@ def pygame_events():
 
         if event.type == pygame.KEYDOWN:
             if pygame.key.get_pressed()[pygame.K_ESCAPE]:
-                echappressed = True                     
+                escpressed = True 
 
-    return mouseclicked, echappressed
+    return events, mouseclicked, escpressed

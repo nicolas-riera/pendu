@@ -4,6 +4,7 @@ import os
 import pygame
 
 from src.lib.pygame_events import *
+from src.lib.options import *
 
 # Variables
 
@@ -11,7 +12,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Assets loading
 
-logo_title = pygame.image.load(os.path.join(BASE_DIR, "../" ,"img", "logo_title.png"))
+logo_title = pygame.image.load(os.path.join(BASE_DIR, "../" , "../", "assets", "img", "logo_title.png"))
 
 # Functions
 
@@ -21,7 +22,7 @@ def menu(screen, clock, my_fonts):
         
         # pygame events
 
-        mouseclicked, echappressed = pygame_events()
+        events, mouseclicked, escpressed = pygame_events()
 
         # Rendering  
 
@@ -35,19 +36,19 @@ def menu(screen, clock, my_fonts):
         pygame.draw.rect(screen, (236, 179, 101), (295, 450, 203, 80))
         play_button = pygame.Rect((295, 450, 203, 80))
         play_button_text = my_fonts[0].render("Jouer", True, (0, 0, 0))
-        screen.blit(play_button_text, (365, 470))
+        screen.blit(play_button_text, (360, 470))
 
         pygame.draw.rect(screen, (168, 168, 168), (295, 560, 203, 80))
         option_button = pygame.Rect((295, 560, 203, 80))
         option_button_text = my_fonts[0].render("Options", True, (0, 0, 0))
-        screen.blit(option_button_text, (356, 580))
+        screen.blit(option_button_text, (350, 580))
 
         pygame.display.flip()  
         clock.tick(60)     
 
         # Logic
 
-        if echappressed:
+        if escpressed:
             pygame.quit()
             raise SystemExit
         
@@ -55,11 +56,10 @@ def menu(screen, clock, my_fonts):
             if mouseclicked:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 if play_button.collidepoint(pygame.mouse.get_pos()):
-                    print("game")
+                    pass
                     # tbd game
                 else:
-                    print("option")
-                    # tbd option
+                    options(screen, clock, my_fonts)
             else:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
 
