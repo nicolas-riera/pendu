@@ -16,7 +16,7 @@ FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regu
 
 # Functions
 
-def is_in_letters_tried(letter,letters_tried,letters_found):
+def is_in_letters_tried(letter, letters_tried, letters_found):
 
     '''
     Take letter and letters_tried as parameter 
@@ -24,15 +24,17 @@ def is_in_letters_tried(letter,letters_tried,letters_found):
     '''
 
     is_tried = False
+
     if letter in letters_tried:
         is_tried = True
     elif letter in letters_found:
         is_tried = True
     else:
         is_tried = False
+
     return is_tried
 
-def update_clue(clue,letter,word_to_guess):
+def update_clue(clue, letter, word_to_guess):
 
     '''
     Update clue if letter is found in word_to_guess
@@ -44,9 +46,11 @@ def update_clue(clue,letter,word_to_guess):
     return clue
 
 def return_clue_string(clue):
+
     clue_string = ''
     for char in clue:
         clue_string = clue_string + ' ' + char
+
     return clue_string
 
 def check_letter(word_to_guess,letter,letters_found,letters_tried):
@@ -57,15 +61,22 @@ def check_letter(word_to_guess,letter,letters_found,letters_tried):
     '''
     
     is_good_choice = False
+
     if word_to_guess.find(letter) != -1:
         occurrences = word_to_guess.count(letter) 
         letters_found += letter*occurrences
         is_good_choice = True
     else:
         letters_tried += letter
+
     return is_good_choice,letters_found,letters_tried
 
 def normalizing_letter(usr_input):
+
+    '''
+    Converts letters with accents to their corresponding non-accent letter
+    '''
+
     normalized = unicodedata.normalize('NFD', usr_input)
     return ''.join(c for c in normalized if not unicodedata.combining(c))
 
