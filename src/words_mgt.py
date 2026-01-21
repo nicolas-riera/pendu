@@ -9,62 +9,40 @@ FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../", "ass
 # Functions
 
 def read_words():
-    with open(FILE_PATH) as f:
-        return [word[:-1].lower() for word in f.readlines()[18:]]
-    
+    lines = read_words_file()
+
+    return lines[18:]
+   
 def read_words_file():
-    with open(FILE_PATH) as f:
-        return [word.lower() for word in f.readlines()]
-    
-def add_word(word:str):
-        
-    file_list = read_words_file()
+    with open(FILE_PATH, "r", encoding="utf-8") as f:
+        return [line.rstrip("\n") for line in f]
 
-    file_list.append(word)
+def write_lines(lines):
+    with open(FILE_PATH, "w", encoding="utf-8") as f:
+        f.writelines(f"{line}\n" for line in lines)
 
-    text_list=""
-    for e in file_list:
-        text_list += e +"\n"
+def add_word(word):
+    lines = read_words_file()
 
-    with open(FILE_PATH, "w") as f:
-        f.write(text_list)
+    lines.append(word)
+
+    write_lines(lines)
 
 def remove_word(index):
+    lines = read_words_file()
 
-    file_list = read_words_file()
-    
-    file_list.pop(18+index)
+    lines.pop(18 + index)
 
-    text_list=""
-    for e in file_list:
-        text_list += e
-
-    with open(FILE_PATH, "w") as f:
-        f.write(text_list)
+    write_lines(lines)
 
 def reset_words():
+    lines = read_words_file()
 
-    file_list = read_words_file()[:18]
+    lines = lines[:18] + lines[1:16] 
 
-    text_list=""
-    for e in file_list:
-        text_list += e
-    for e in file_list[1:16]:
-        text_list += e
+    write_lines(lines)
 
-    with open(FILE_PATH, "w") as f:
-        f.write(text_list)
 
 def check_empty_last_line():
-
-    file_list = read_words_file()
-        
-    if file_list[len(file_list)-1] != f"{file_list[len(file_list)-1]}\n":
-        file_list[len(file_list)-1] = f"{file_list[len(file_list)-1]}\n"
-    
-    text_list=""
-    for e in file_list:
-        text_list += e
-
-    with open(FILE_PATH, "w") as f:
-        f.write(text_list)
+    lines = read_words_file()
+    write_lines(lines)
