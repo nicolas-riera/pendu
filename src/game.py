@@ -1,6 +1,7 @@
 # Libraries
 import random
 import pygame
+import unicodedata
 
 from src.words_mgt import *
 from src.pygame_events import *
@@ -93,6 +94,10 @@ def check_letter(word_to_guess,letter,letters_found,letters_tried):
         letters_tried += letter
     return is_good_choice,letters_found,letters_tried
 
+def normalizing_letter(usr_input):
+    normalized = unicodedata.normalize('NFD', usr_input)
+    return ''.join(c for c in normalized if not unicodedata.combining(c))
+
 def game(screen,clock,my_fonts):
     gaming = True
     try:
@@ -133,6 +138,9 @@ def game(screen,clock,my_fonts):
                 # Keyboard input logic
 
                 usr_input = keyboard_input(events).lower()
+
+                if usr_input != "":
+                    usr_input = normalizing_letter(usr_input)
 
                 letter_tried_already = is_in_letters_tried(usr_input,letters_tried,letters_found)
                 
