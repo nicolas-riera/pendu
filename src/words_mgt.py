@@ -22,8 +22,6 @@ def add_word(word:str):
 
     file_list.append(word)
 
-    print(file_list)
-
     text_list=""
     for e in file_list:
         text_list += e +"\n"
