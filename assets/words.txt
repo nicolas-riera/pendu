@@ -15,7 +15,7 @@ boussole
 tempete
 papillon
 
---use
+--user
 montagne
 horloge
 parapluie
