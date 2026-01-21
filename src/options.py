@@ -195,6 +195,7 @@ def add_word_menu(screen, clock, my_fonts):
         # Logic
 
         if escpressed:
+            usr_word = ""
             break
 
         elif error_found_popup:
