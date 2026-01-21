@@ -359,7 +359,7 @@ def remove_word_menu(screen, clock, my_fonts):
                 break
         
         elif notice_clear_all_popup:
-            notice_clear_all_popup = ok_popup(screen, clock, my_fonts, mouseclicked, "Tout les mots ont été retirés.", (153, 315))
+            notice_clear_all_popup = ok_popup(screen, clock, my_fonts, mouseclicked, "Liste vidée.", (270, 315))
             if not notice_clear_all_popup:
                 clear_words()
                 break
