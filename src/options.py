@@ -268,34 +268,36 @@ def remove_word_menu(screen, clock, my_fonts):
 
         if words_list == []:
             error_popup_empty = True
+        
+        else:
 
-        for i in range(words_list_current_page * 20, len(words_list)):
-            if (i-words_list_current_page * 20) < 10:
-                word_rect = render_adaptive_text(
-                    screen=screen,
-                    text=words_list[i],
-                    x=130,
-                    y=100 + 50 * (i-words_list_current_page * 20),
-                    max_width=250,
-                    font_path=FONT_PATH,
-                    clickable=True
-                )
+            for i in range(words_list_current_page * 20, len(words_list)):
+                if (i-words_list_current_page * 20) < 10:
+                    word_rect = render_adaptive_text(
+                        screen=screen,
+                        text=words_list[i],
+                        x=130,
+                        y=100 + 50 * (i-words_list_current_page * 20),
+                        max_width=250,
+                        font_path=FONT_PATH,
+                        clickable=True
+                    )
 
-                clickable_words.append((words_list[i], word_rect))
+                    clickable_words.append((words_list[i], word_rect))
 
-            
-            elif (i-words_list_current_page * 20) < 20:
-                word_rect = render_adaptive_text(
-                    screen=screen,
-                    text=words_list[i],
-                    x=450,
-                    y=100 + 50 * ((i-words_list_current_page * 20)-10),
-                    max_width=250,
-                    font_path=FONT_PATH,
-                    clickable=True
-                )
+                
+                elif (i-words_list_current_page * 20) < 20:
+                    word_rect = render_adaptive_text(
+                        screen=screen,
+                        text=words_list[i],
+                        x=450,
+                        y=100 + 50 * ((i-words_list_current_page * 20)-10),
+                        max_width=250,
+                        font_path=FONT_PATH,
+                        clickable=True
+                    )
 
-                clickable_words.append((words_list[i], word_rect))
+                    clickable_words.append((words_list[i], word_rect))
                 
         if words_list_pages > 1:
 
