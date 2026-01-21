@@ -2,6 +2,7 @@
 import random
 import pygame
 import unicodedata
+import time
 
 from src.words_mgt import *
 from src.pygame_events import *
@@ -16,6 +17,24 @@ FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regu
 
 # Functions
 
+def make_clue(word_to_guess):
+    '''
+    Take word_to_guess
+    and return a string of the lengh of word_to_guess but filled with "_"
+    '''
+    
+    clue = ""
+
+    for i in range(len(word_to_guess)):
+        if i == 0 and len(word_to_guess) > 4:
+            clue += word_to_guess[0]
+        elif word_to_guess[i] == "-":
+            clue += "-"
+        else:
+            clue += "_"
+
+    return clue
+
 def is_in_letters_tried(letter, letters_tried, letters_found):
 
     '''
@@ -23,16 +42,11 @@ def is_in_letters_tried(letter, letters_tried, letters_found):
     and return a boolean if the letter is found in letters_tried or not
     '''
 
-    is_tried = False
 
-    if letter in letters_tried:
-        is_tried = True
-    elif letter in letters_found:
-        is_tried = True
+    if letter in letters_tried or letter in letters_found:
+        return True
     else:
-        is_tried = False
-
-    return is_tried
+        return False
 
 def update_clue(clue, letter, word_to_guess):
 
@@ -40,10 +54,13 @@ def update_clue(clue, letter, word_to_guess):
     Update clue if letter is found in word_to_guess
     '''
 
+    clue_list = list(clue)
+
     for i in range(len(word_to_guess)):
         if letter == word_to_guess[i]:
-            clue[i] = letter
-    return clue
+            clue_list[i] = letter
+    
+    return ''.join(clue_list)
 
 def return_clue_string(clue):
 
@@ -53,23 +70,21 @@ def return_clue_string(clue):
 
     return clue_string
 
-def check_letter(word_to_guess,letter,letters_found,letters_tried):
+def check_letter(word_to_guess, letter, letters_found, letters_tried):
 
     '''
     Check if letter is present in word_to_guess, 
-        return is_good_choice, letters_tried and a boolean letter_found
+    return is_good_choice, letters_tried and a boolean letter_found
     '''
-    
-    is_good_choice = False
 
     if word_to_guess.find(letter) != -1:
         occurrences = word_to_guess.count(letter) 
-        letters_found += letter*occurrences
-        is_good_choice = True
+        letters_found += letter * occurrences
+        return True, letters_found, letters_tried
     else:
         letters_tried += letter
 
-    return is_good_choice,letters_found,letters_tried
+    return False, letters_found, letters_tried
 
 def normalizing_letter(usr_input):
 
@@ -80,6 +95,18 @@ def normalizing_letter(usr_input):
     normalized = unicodedata.normalize('NFD', usr_input)
     return ''.join(c for c in normalized if not unicodedata.combining(c))
 
+def game_won_check(clue, word_to_guess):
+
+    '''
+    Check if the player has won, 
+    return a boolean corresponding if he won or not
+    '''
+
+    if clue == word_to_guess:
+        return True
+    else:
+        return False
+
 def game(screen,clock,my_fonts):
 
     gaming = True
@@ -89,8 +116,7 @@ def game(screen,clock,my_fonts):
     letters_found = ""
     letters_tried = ""
     word_to_guess = random.choice(word_list)
-    clue = list("_" * len(word_to_guess))
-    game_won = False
+    clue = make_clue(word_to_guess)
     letter_checked = True
     notice_win_popup = False
     notice_lose_popup = False
@@ -120,8 +146,7 @@ def game(screen,clock,my_fonts):
                 letters_found = ""
                 letters_tried = ""
                 word_to_guess = random.choice(word_list)
-                clue = list("_" * len(word_to_guess))
-                game_won = False
+                clue = make_clue(word_to_guess)
                 letter_checked = True
                 notice_win_popup = False
             elif usr_choice == 2:
@@ -129,14 +154,13 @@ def game(screen,clock,my_fonts):
 
 
         elif notice_lose_popup:
-            notice_win_popup, usr_choice = replay_menu_popup(screen, clock, my_fonts, mouseclicked, "Vous avez perdu...", (195, 315))
+            notice_lose_popup, usr_choice = replay_menu_popup(screen, clock, my_fonts, mouseclicked, "Vous avez perdu...", (195, 315))
             if usr_choice == 1:
                 life = 10
                 letters_found = ""
                 letters_tried = ""
                 word_to_guess = random.choice(word_list)
-                clue = list("_" * len(word_to_guess))
-                game_won = False
+                clue = make_clue(word_to_guess)
                 letter_checked = True
                 notice_lose_popup = False
             elif usr_choice == 2:
@@ -147,32 +171,33 @@ def game(screen,clock,my_fonts):
             # Keyboard input logic
 
             usr_input = keyboard_input(events).lower()
+ 
+            usr_input_normalized = normalizing_letter(usr_input)
 
-            if usr_input != "":
-                usr_input = normalizing_letter(usr_input)
+            if is_in_letters_tried(usr_input_normalized, letters_tried, letters_found):
+                # tbd : display text that the letter has already been tried
+                pass
 
-            letter_tried_already = is_in_letters_tried(usr_input,letters_tried,letters_found)
-            
-            if usr_input != "backspace" and usr_input != "enter" and usr_input != "-" and usr_input != "" and not letter_tried_already:
-                letter = usr_input
+            elif usr_input != "backspace" and usr_input != "enter" and usr_input != "-" and usr_input != "":
                 letter_checked = False
 
             if not letter_checked:
-                clue = update_clue(clue,letter,word_to_guess)
-                is_good_choice,letters_found,letters_tried = check_letter(word_to_guess,letter,letters_found,letters_tried)
+
+                is_good_choice, letters_found, letters_tried = check_letter(word_to_guess, usr_input_normalized, letters_found, letters_tried)
+                
                 if is_good_choice:
-                    print("Bonne pioche!")
-                    update_clue(clue,letter,word_to_guess)
-                    if "_" not in clue:
-                        game_won = True
+                    clue = update_clue(clue, usr_input, word_to_guess)
+                    # tbd : display that it is a good choice
                 else:
-                    print("Mauvaise pioche!")
+                    # tbd : display that it isn't a good choice
                     life -= 1
+
                 letter_checked = True
 
-        if game_won and not (notice_win_popup or notice_lose_popup):
+        if game_won_check(clue, word_to_guess) and not (notice_win_popup or notice_lose_popup):
             notice_win_popup = True
-        else:
+        
+        if life == 0:
             notice_lose_popup = True
 
         pygame.display.flip()  
