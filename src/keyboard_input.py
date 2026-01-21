@@ -13,7 +13,7 @@ def keyboard_input(events):
             elif event.key == pygame.K_RETURN:
                 return "enter"
             elif event.unicode:
-                char = event.unicode.lower()
+                char = event.unicode
                 if char == "-":
                     return char
                 if unicodedata.category(char).startswith("L"):  

@@ -237,7 +237,7 @@ def add_word_menu(screen, clock, my_fonts):
         clock.tick(60) 
 
     if usr_word != "":
-        add_word(usr_word)
+        add_word(usr_word.lower())
 
 
 def remove_word_menu(screen, clock, my_fonts):
