@@ -170,8 +170,8 @@ def add_word_menu(screen, clock, my_fonts):
 
         screen.fill("white") 
 
-        words_title_button_text = my_fonts[1].render("Ajouter un mot", True, (0, 0, 0))
-        screen.blit(words_title_button_text, (230, 120))
+        words_title_text = my_fonts[1].render("Ajouter un mot", True, (0, 0, 0))
+        screen.blit(words_title_text, (230, 120))
 
         pygame.draw.rect(screen, (240, 240, 240), (70, 310, 660, 60))
         usr_word_display = my_fonts[0].render(usr_word, True, (0, 0, 0))
@@ -263,8 +263,8 @@ def remove_word_menu(screen, clock, my_fonts):
 
         screen.fill("white")
 
-        words_title_button_text = my_fonts[1].render("Retirer un mot", True, (0, 0, 0))
-        screen.blit(words_title_button_text, (233, 22))
+        words_title_text = my_fonts[1].render("Retirer un mot", True, (0, 0, 0))
+        screen.blit(words_title_text, (233, 22))
 
         if words_list == []:
             error_popup_empty = True
@@ -317,6 +317,9 @@ def remove_word_menu(screen, clock, my_fonts):
         return_button = pygame.Rect((295, 650, 203, 80))
         return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
         screen.blit(return_button_text, (356, 670))
+
+        page_indicator_text = my_fonts[0].render(f"Page {words_list_current_page + 1}", True, (0, 0, 0))
+        screen.blit(page_indicator_text, (352, 743))
 
         # Logic
 
