@@ -11,7 +11,7 @@ FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../", "ass
 def read_words():
     lines = read_words_file()
 
-    return lines[18:]
+    return lines[103:]
    
 def read_words_file():
     with open(FILE_PATH, "r", encoding="utf-8") as f:
@@ -31,14 +31,14 @@ def add_word(word):
 def remove_word(index):
     lines = read_words_file()
 
-    lines.pop(18 + index)
+    lines.pop(103 + index)
 
     write_lines(lines)
 
 def reset_words():
     lines = read_words_file()
 
-    lines = lines[:18] + lines[1:16] 
+    lines = lines[:103] + lines[1:101] 
 
     write_lines(lines)
 
