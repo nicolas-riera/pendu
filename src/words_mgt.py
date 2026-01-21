@@ -14,7 +14,7 @@ def read_words():
     
 def read_words_file():
     with open(FILE_PATH) as f:
-        return [word[:-1].lower() for word in f.readlines()]
+        return [word.lower() for word in f.readlines()]
     
 def add_word(word:str):
         
@@ -37,7 +37,7 @@ def remove_word(index):
 
     text_list=""
     for e in file_list:
-        text_list += e +"\n"
+        text_list += e
 
     with open(FILE_PATH, "w") as f:
         f.write(text_list)
@@ -48,9 +48,9 @@ def reset_words():
 
     text_list=""
     for e in file_list:
-        text_list += e +"\n"
+        text_list += e
     for e in file_list[1:16]:
-        text_list += e +"\n"
+        text_list += e
 
     with open(FILE_PATH, "w") as f:
         f.write(text_list)

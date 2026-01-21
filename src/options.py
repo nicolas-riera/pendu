@@ -149,7 +149,8 @@ def add_word_menu(screen, clock, my_fonts):
 
         # Keyboard input logic
 
-        usr_input = keyboard_input(events)
+        if not(error_found_popup or error_too_short_popup):
+            usr_input = keyboard_input(events)
 
         if usr_input == "backspace":
             usr_word = usr_word[:-1]
