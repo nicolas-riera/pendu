@@ -322,7 +322,7 @@ def remove_word_menu(screen, clock, my_fonts):
         return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
         screen.blit(return_button_text, (226, 670))
 
-        pygame.draw.rect(screen, (236, 179, 151), (425, 650, 203, 80))
+        pygame.draw.rect(screen, (236, 179, 201), (425, 650, 203, 80))
         delete_all_button = pygame.Rect((425, 650, 203, 80))
         delete_all_button_text = my_fonts[0].render("Tout supprimer", True, (0, 0, 0))
         screen.blit(delete_all_button_text, (427, 670))
@@ -380,6 +380,8 @@ def remove_word_menu(screen, clock, my_fonts):
            
         for word, word_rect in clickable_words:
             if word_rect.collidepoint(pygame.mouse.get_pos()):
+                if not notice_clear_all_popup:
+                   pygame.draw.line(screen, (236, 179, 201), (word_rect.left-8, word_rect.centery), (word_rect.right+8, word_rect.centery), 2)
                 if mouseclicked:
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                     remove_word(words_list.index(word))
@@ -387,11 +389,12 @@ def remove_word_menu(screen, clock, my_fonts):
                     if words_list_pages != math.ceil(len(words_list) / 20) and words_list_current_page + 1 == words_list_pages:
                         words_list_current_page -= 1
                 else:
-                    hover = True
+                    if not notice_clear_all_popup:
+                        hover = True
 
         if hover == True:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
-        elif not error_popup_empty or not notice_clear_all_popup:
+        elif not (error_popup_empty or notice_clear_all_popup):
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
         pygame.display.flip()  
