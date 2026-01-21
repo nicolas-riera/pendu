@@ -275,7 +275,7 @@ def remove_word_menu(screen, clock, my_fonts):
                 if (i-words_list_current_page * 20) < 10:
                     word_rect = render_adaptive_text(
                         screen=screen,
-                        text=words_list[i],
+                        text=words_list[i].capitalize(),
                         x=130,
                         y=100 + 50 * (i-words_list_current_page * 20),
                         max_width=250,
@@ -289,7 +289,7 @@ def remove_word_menu(screen, clock, my_fonts):
                 elif (i-words_list_current_page * 20) < 20:
                     word_rect = render_adaptive_text(
                         screen=screen,
-                        text=words_list[i],
+                        text=words_list[i].capitalize(),
                         x=450,
                         y=100 + 50 * ((i-words_list_current_page * 20)-10),
                         max_width=250,
