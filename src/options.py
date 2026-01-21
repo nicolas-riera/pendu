@@ -3,9 +3,9 @@
 import os
 import pygame
 
-from src.lib.words_mgt import *
-from src.lib.pygame_events import *
-from src.lib.keyboard_input import *
+from src.words_mgt import *
+from src.pygame_events import *
+from src.keyboard_input import *
 
 # Variables
 

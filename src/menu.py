@@ -3,8 +3,8 @@
 import os
 import pygame
 
-from src.lib.pygame_events import *
-from src.lib.options import *
+from src.pygame_events import *
+from src.options import *
 
 # Variables
 
@@ -12,7 +12,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Assets loading
 
-logo_title = pygame.image.load(os.path.join(BASE_DIR, "../" , "../", "assets", "img", "logo_title.png"))
+logo_title = pygame.image.load(os.path.join(BASE_DIR, "../", "assets", "img", "logo_title.png"))
 
 # Functions
 

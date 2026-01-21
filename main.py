@@ -3,8 +3,8 @@
 import pygame
 import os
 
-from src.lib.menu import *
-from src.lib.words_mgt import *
+from src.menu import *
+from src.words_mgt import *
 
 # Variables
 
