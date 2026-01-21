@@ -2,17 +2,17 @@
 montagne
 horloge
 parapluie
-etoile
+étoile
 labyrinthe
 chocolat
-ocean
+océan
 dragon
-telephone
+téléphone
 jardin
-mystere
+mystère
 satellite
 boussole
-tempete
+tempête
 papillon
 
---user
+--user--
