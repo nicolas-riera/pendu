@@ -246,6 +246,8 @@ def remove_word_menu(screen, clock, my_fonts):
         
     while True:
 
+        clickable_words = []
+
         # pygame events
 
         events, mouseclicked, escpressed = pygame_events()
@@ -256,46 +258,74 @@ def remove_word_menu(screen, clock, my_fonts):
 
         for i in range(words_list_current_page * 20, len(words_list)):
             if (i-words_list_current_page * 20) < 10:
-                render_adaptive_text(
-            screen=screen,
-            text=words_list[i],
-            x=130,
-            y=100 + 50 * (i-words_list_current_page * 20),
-            max_width=250,
-            font_path=FONT_PATH
-            )
+                word_rect = render_adaptive_text(
+                    screen=screen,
+                    text=words_list[i],
+                    x=130,
+                    y=100 + 50 * (i-words_list_current_page * 20),
+                    max_width=250,
+                    font_path=FONT_PATH,
+                    clickable=True
+                )
+
+                clickable_words.append((words_list[i], word_rect))
+
             
             elif (i-words_list_current_page * 20) < 20:
-                render_adaptive_text(
-            screen=screen,
-            text=words_list[i],
-            x=450,
-            y=100 + 50 * ((i-words_list_current_page * 20)-10),
-            max_width=250,
-            font_path=FONT_PATH
-            )
+                word_rect = render_adaptive_text(
+                    screen=screen,
+                    text=words_list[i],
+                    x=450,
+                    y=100 + 50 * ((i-words_list_current_page * 20)-10),
+                    max_width=250,
+                    font_path=FONT_PATH,
+                    clickable=True
+                )
+
+                clickable_words.append((words_list[i], word_rect))
                 
         if words_list_pages > 1:
             if words_list_current_page != 0:
                 previous_page_arrow = my_fonts[0].render("<", True, (0, 0, 0))
-                screen.blit(previous_page_arrow, (70, 610))
+                screen.blit(previous_page_arrow, (70, 660))
             if words_list_current_page != words_list_pages-1:
                 next_page_arrow = my_fonts[1].render(">", True, (0, 0, 0))
-                screen.blit(next_page_arrow, (700, 610))
+                screen.blit(next_page_arrow, (700, 660))
 
-        pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
-        return_button = pygame.Rect((295, 600, 203, 80))
+        pygame.draw.rect(screen, (168, 168, 168), (295, 650, 203, 80))
+        return_button = pygame.Rect((295, 650, 203, 80))
         return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
-        screen.blit(return_button_text, (356, 620))
+        screen.blit(return_button_text, (356, 670))
 
         pygame.display.flip()  
         clock.tick(60) 
 
         # Logic
 
+        hover = False
+
         if escpressed:
             break
+        elif return_button.collidepoint(pygame.mouse.get_pos()):
+            if mouseclicked:
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                break
+            else:
+                hover = True          
+           
+        for word, word_rect in clickable_words:
+            if word_rect.collidepoint(pygame.mouse.get_pos()):
+                if mouseclicked:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                    remove_word(words_list.index(word))
+                    words_list = read_words()
+                else:
+                    hover = True
 
+        if hover == True:
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+        else:
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
 def popup(screen, clock, my_fonts, mouseclicked, text, text_pos):
 

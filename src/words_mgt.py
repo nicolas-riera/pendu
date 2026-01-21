@@ -22,6 +22,8 @@ def add_word(word:str):
 
     file_list.append(word)
 
+    print(file_list)
+
     text_list=""
     for e in file_list:
         text_list += e +"\n"
@@ -31,7 +33,9 @@ def add_word(word:str):
 
 def remove_word(index):
 
-    file_list = read_words_file().pop(18-index)
+    file_list = read_words_file()
+    
+    file_list.pop(18+index)
 
     text_list=""
     for e in file_list:
