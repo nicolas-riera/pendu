@@ -127,21 +127,26 @@ def username_input_popup(screen, my_fonts, mouseclicked, usr_word):
     usr_word_display = my_fonts[0].render(usr_word, True, (0, 0, 0))
     screen.blit(usr_word_display, (75, 350))
 
-    pygame.draw.rect(screen, (168, 168, 168), (295, 500, 203, 80))
+    if usr_word == "":  
+        ok_button_color = (168, 168, 168)
+    else:
+        ok_button_color = (236, 179, 101)
+
+    pygame.draw.rect(screen, ok_button_color, (295, 500, 203, 80))
     ok_button = pygame.Rect((295, 500, 203, 80))
     ok_button_text = my_fonts[0].render("OK", True, (0, 0, 0))
     screen.blit(ok_button_text, (370, 520))
 
     # Logic
 
-    if ok_button.collidepoint(pygame.mouse.get_pos()):
+    if ok_button.collidepoint(pygame.mouse.get_pos()) and usr_word != "":
         if mouseclicked:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
             return False
         else:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
 
-    else:
+    elif usr_word != "":
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) 
 
     return True
