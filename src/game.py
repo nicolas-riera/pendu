@@ -175,7 +175,7 @@ def game(screen, clock, my_fonts):
         letters_tried_text = my_fonts[0].render(str_already_tried_letters(letters_tried.upper()), True, (0, 0, 0))
         screen.blit(letters_tried_text, (60, 370))
 
-        hangman_title_rect = HANGMAN_IMG[6-life].get_rect(center=(650, 500))
+        hangman_title_rect = HANGMAN_IMG[6-life].get_rect(center=(630, 500))
         hangman_title_scaled = pygame.transform.scale(HANGMAN_IMG[6-life], (HANGMAN_IMG[6-life].get_size()[0]*1, HANGMAN_IMG[6-life].get_size()[1]*1))
         screen.blit(hangman_title_scaled, hangman_title_rect)
 
