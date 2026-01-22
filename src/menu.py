@@ -92,7 +92,7 @@ def menu(screen, clock, my_fonts):
             notice_username_input_popup = username_input_popup(screen, my_fonts, mouseclicked, usr_word)
 
             if notice_username_input_empty_popup:
-                notice_username_input_empty_popup = ok_popup(screen, my_fonts, mouseclicked, "Le nom ne peut pas être vide.", (170, 315))
+                notice_username_input_empty_popup = ok_popup(screen, my_fonts, mouseclicked, "Nom vide.", (287, 315))
 
             if not notice_username_input_popup:
                 if usr_word != "":
