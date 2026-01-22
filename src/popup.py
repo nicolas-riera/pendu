@@ -125,6 +125,10 @@ def username_input_popup(screen, clock, my_fonts, mouseclicked, usr_word):
         
     pygame.draw.rect(screen, (255, 255, 255), (50, 150, 700, 450))
 
+    pygame.draw.rect(screen, (255, 255, 255), (100, 250, 600, 300))
+    text_display = my_fonts[1].render("Entrez votre nom :", True, (0, 0, 0))
+    screen.blit(text_display, (192, 210))
+
     pygame.draw.rect(screen, (240, 240, 240), (70, 340, 660, 60))
     usr_word_display = my_fonts[0].render(usr_word, True, (0, 0, 0))
     screen.blit(usr_word_display, (75, 350))
