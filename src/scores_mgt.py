@@ -1,6 +1,7 @@
 # Libraries
 
 import os
+import ast
 
 # Variables
 
@@ -11,7 +12,7 @@ FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../", "ass
 def read_scores():
     lines = read_scores_file()
 
-    return lines[4:]
+    return [ast.literal_eval(line) for line in lines[4:] if line.strip()]
 
 def read_scores_file():
     with open(FILE_PATH, "r", encoding="utf-8") as f:

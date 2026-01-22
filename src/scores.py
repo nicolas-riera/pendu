@@ -21,7 +21,7 @@ def scores(screen, clock, my_fonts):
     
     while True:
         
-        # read_scores() -> [(username, score, errors)]
+        # read_scores() -> [(username, word_to_guess, errors)]
         scores_list = read_scores()
         scores_list_current_page = 0
         scores_list_pages = math.ceil(len(scores_list) / 30)
@@ -40,7 +40,7 @@ def scores(screen, clock, my_fonts):
         for i in range (scores_list_current_page*20, len(scores_list)):
             render_adaptive_text(
                         screen=screen,
-                        text=scores_list[i][0].capitalize(),
+                        text=str(scores_list[i][0].capitalize()),
                         x=50,
                         y=100 + 50 * (i-scores_list_current_page * 20),
                         max_width=200,
@@ -48,7 +48,7 @@ def scores(screen, clock, my_fonts):
                     )
             render_adaptive_text(
                         screen=screen,
-                        text=scores_list[i][1],
+                        text=str(scores_list[i][1].capitalize()),
                         x=250,
                         y=100 + 50 * (i-scores_list_current_page * 20),
                         max_width=200,
@@ -56,7 +56,7 @@ def scores(screen, clock, my_fonts):
                     )
             render_adaptive_text(
                         screen=screen,
-                        text=scores_list[i][2],
+                        text=str(scores_list[i][2]),
                         x=500,
                         y=100 + 50 * (i-scores_list_current_page * 20),
                         max_width=200,
