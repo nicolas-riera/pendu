@@ -1,6 +1,13 @@
 # Libraries
 
 import pygame
+import os
+
+from src.render_adaptive_text import *
+
+# Variables
+
+FONT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../", "assets", "font", "LiberationSans-Regular.ttf")
 
 # Functions
 
@@ -40,7 +47,7 @@ def ok_popup(screen, clock, my_fonts, mouseclicked, text, text_pos):
 
     return True
 
-def replay_menu_popup(screen, clock, my_fonts, mouseclicked, text, text_pos):
+def replay_menu_popup(screen, clock, my_fonts, mouseclicked, text, text_pos, subtitle=False):
 
     usr_choice = 0
     loop_locker = True
@@ -53,8 +60,20 @@ def replay_menu_popup(screen, clock, my_fonts, mouseclicked, text, text_pos):
     screen.blit(screen_fade, (0, 0))
         
     pygame.draw.rect(screen, (255, 255, 255), (100, 250, 600, 300))
+
     text_display = my_fonts[1].render(text, True, (0, 0, 0))
     screen.blit(text_display, text_pos)
+
+    if subtitle:
+        render_adaptive_text(
+            screen,
+            subtitle,
+            400,
+            400,
+            500,
+            FONT_PATH,
+            centered=True
+            )
 
     pygame.draw.rect(screen, (236, 179, 101), (160, 450, 203, 80))
     replay_button = pygame.Rect((160, 450, 203, 80))
