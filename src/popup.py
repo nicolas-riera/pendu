@@ -12,7 +12,7 @@ FONT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../", "ass
 
 # Functions
 
-def ok_popup(screen, clock, my_fonts, mouseclicked, text, text_pos):
+def ok_popup(screen, my_fonts, mouseclicked, text, text_pos):
 
     # Rendering 
         
@@ -30,9 +30,6 @@ def ok_popup(screen, clock, my_fonts, mouseclicked, text, text_pos):
     ok_button_text = my_fonts[0].render("OK", True, (0, 0, 0))
     screen.blit(ok_button_text, (370, 470))
 
-    pygame.display.flip()  
-    clock.tick(60)
-
     # Logic
 
     if ok_button.collidepoint(pygame.mouse.get_pos()):
@@ -48,7 +45,7 @@ def ok_popup(screen, clock, my_fonts, mouseclicked, text, text_pos):
 
     return True
 
-def replay_menu_popup(screen, clock, my_fonts, mouseclicked, text, text_pos, subtitle=False):
+def replay_menu_popup(screen, my_fonts, mouseclicked, text, text_pos, subtitle=False):
 
     usr_choice = 0
     loop_locker = True
@@ -86,9 +83,6 @@ def replay_menu_popup(screen, clock, my_fonts, mouseclicked, text, text_pos, sub
     gotomenu_button_text = my_fonts[0].render("Menu", True, (0, 0, 0))
     screen.blit(gotomenu_button_text, (495, 470))
 
-    pygame.display.flip()  
-    clock.tick(60)
-
     # Logic
 
     if replay_button.collidepoint(pygame.mouse.get_pos()):
@@ -114,7 +108,7 @@ def replay_menu_popup(screen, clock, my_fonts, mouseclicked, text, text_pos, sub
 
     return loop_locker, usr_choice
 
-def username_input_popup(screen, clock, my_fonts, mouseclicked, usr_word):
+def username_input_popup(screen, my_fonts, mouseclicked, usr_word):
 
     # Rendering 
         
@@ -137,9 +131,6 @@ def username_input_popup(screen, clock, my_fonts, mouseclicked, usr_word):
     ok_button = pygame.Rect((295, 500, 203, 80))
     ok_button_text = my_fonts[0].render("OK", True, (0, 0, 0))
     screen.blit(ok_button_text, (370, 520))
-
-    pygame.display.flip()  
-    clock.tick(60)
 
     # Logic
 

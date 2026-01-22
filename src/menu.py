@@ -24,6 +24,7 @@ def menu(screen, clock, my_fonts):
 
     error_popup_empty = False
     notice_username_input_popup = False
+    notice_username_input_empty_popup = False
 
     usr_word = ""
 
@@ -65,7 +66,7 @@ def menu(screen, clock, my_fonts):
             raise SystemExit
         
         elif error_popup_empty:
-            error_popup_empty = ok_popup(screen, clock, my_fonts, mouseclicked, "La liste est vide.", (213, 315))
+            error_popup_empty = ok_popup(screen, my_fonts, mouseclicked, "La liste est vide.", (213, 315))
             if not error_popup_empty:
                 continue
 
@@ -76,18 +77,33 @@ def menu(screen, clock, my_fonts):
             if usr_input == "backspace":
                 usr_word = usr_word[:-1]
             elif usr_input == "enter":
-                notice_username_input_popup = False
-                change_username(usr_word)
-                game(screen, clock, my_fonts)
-                continue
+                if usr_word != "":
+                    notice_username_input_popup = False
+                    change_username(usr_word)
+                    game(screen, clock, my_fonts)
+
+                    usr_word = ""
+                    continue
+                else:
+                    notice_username_input_empty_popup = True
             elif len(usr_word) < 26:
                 usr_word += usr_input
             
-            notice_username_input_popup = username_input_popup(screen, clock, my_fonts, mouseclicked, usr_word)
+            notice_username_input_popup = username_input_popup(screen, my_fonts, mouseclicked, usr_word)
+
+            if notice_username_input_empty_popup:
+                notice_username_input_empty_popup = ok_popup(screen, my_fonts, mouseclicked, "Le nom ne peut pas être vide.", (170, 315))
 
             if not notice_username_input_popup:
-                change_username(usr_word)
-                game(screen, clock, my_fonts)
+                if usr_word != "":
+                    change_username(usr_word)
+                    game(screen, clock, my_fonts)
+
+                    usr_word = ""
+                    continue
+                else:
+                    notice_username_input_popup = True
+                    notice_username_input_empty_popup = True
 
         elif play_button.collidepoint(pygame.mouse.get_pos()) or scores_button.collidepoint(pygame.mouse.get_pos()) or option_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:

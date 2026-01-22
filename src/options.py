@@ -55,7 +55,7 @@ def options(screen, clock, my_fonts):
             if mouseclicked:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 if words_button.collidepoint(pygame.mouse.get_pos()):
-                    words_menu(screen,clock,my_fonts)
+                    words_menu(screen, clock, my_fonts)
                 elif return_button.collidepoint(pygame.mouse.get_pos()):
                     break
             else:
@@ -108,7 +108,7 @@ def words_menu(screen, clock, my_fonts):
             break
 
         elif reset_popup:
-            reset_popup = ok_popup(screen, clock, my_fonts, mouseclicked, "La liste a été restaurée.", (150, 315))
+            reset_popup = ok_popup(screen, my_fonts, mouseclicked, "La liste a été restaurée.", (150, 315))
 
         else:
             if add_word_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()) or add_word_button.collidepoint(pygame.mouse.get_pos()) or remove_word_button.collidepoint(pygame.mouse.get_pos()) or reset_word_button.collidepoint(pygame.mouse.get_pos()):
@@ -197,9 +197,9 @@ def add_word_menu(screen, clock, my_fonts):
             break
 
         elif error_found_popup:
-            error_found_popup = ok_popup(screen, clock, my_fonts, mouseclicked, "Le mot existe déjà.", (193, 315))
+            error_found_popup = ok_popup(screen, my_fonts, mouseclicked, "Le mot existe déjà.", (193, 315))
         elif error_too_short_popup:
-            error_too_short_popup= ok_popup(screen, clock, my_fonts, mouseclicked, "Le mot est trop court.", (168, 315))
+            error_too_short_popup= ok_popup(screen, my_fonts, mouseclicked, "Le mot est trop court.", (168, 315))
 
         elif add_word_button.collidepoint(pygame.mouse.get_pos()) and not(return_button.collidepoint(pygame.mouse.get_pos())):
             if usr_word != "":
@@ -352,12 +352,12 @@ def remove_word_menu(screen, clock, my_fonts):
             break
 
         elif error_popup_empty:
-            error_popup_empty = ok_popup(screen, clock, my_fonts, mouseclicked, "La liste est vide.", (213, 315))
+            error_popup_empty = ok_popup(screen, my_fonts, mouseclicked, "La liste est vide.", (213, 315))
             if not error_popup_empty:
                 break
         
         elif notice_clear_all_popup:
-            notice_clear_all_popup = ok_popup(screen, clock, my_fonts, mouseclicked, "Liste vidée.", (270, 315))
+            notice_clear_all_popup = ok_popup(screen, my_fonts, mouseclicked, "Liste vidée.", (270, 315))
             if not notice_clear_all_popup:
                 clear_words()
                 break
