@@ -18,13 +18,13 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 def scores(screen, clock, my_fonts):
 
     check_empty_last_line_scores()
-    
+    scores_list_current_page = 0
+
     while True:
         
-        # read_scores() -> [(username, word_to_guess, errors)]
         scores_list = read_scores()
-        scores_list_current_page = 0
-        scores_list_pages = math.ceil(len(scores_list) / 30)
+        scores_list.sort(key=lambda x: x[2])
+        scores_list_pages = math.ceil(len(scores_list) / 10)
 
         previous_page_rect = None
         next_page_rect = None
@@ -36,33 +36,42 @@ def scores(screen, clock, my_fonts):
         # Rendering  
 
         screen.fill("white") 
-        
-        for i in range (scores_list_current_page*20, len(scores_list)):
-            render_adaptive_text(
-                        screen=screen,
-                        text=str(scores_list[i][0].capitalize()),
-                        x=50,
-                        y=100 + 50 * (i-scores_list_current_page * 20),
-                        max_width=200,
-                        font_path=FONT_PATH
-                    )
-            render_adaptive_text(
-                        screen=screen,
-                        text=str(scores_list[i][1].capitalize()),
-                        x=250,
-                        y=100 + 50 * (i-scores_list_current_page * 20),
-                        max_width=200,
-                        font_path=FONT_PATH
-                    )
-            render_adaptive_text(
-                        screen=screen,
-                        text=str(scores_list[i][2]),
-                        x=500,
-                        y=100 + 50 * (i-scores_list_current_page * 20),
-                        max_width=200,
-                        font_path=FONT_PATH
-                    )
-            
+        name_section_text = my_fonts[0].render("JOUEUR", True, (0, 0, 0))
+        screen.blit(name_section_text, (60, 50))
+        word_section_text = my_fonts[0].render("MOT", True, (0, 0, 0))
+        screen.blit(word_section_text, (300, 50))
+        error_section_text = my_fonts[0].render("ERREURS", True, (0, 0, 0))
+        screen.blit(error_section_text, (600, 50))
+        pygame.draw.line(screen, (0, 0, 0), (50, 90), (750, 90), 2)
+        for i in range (scores_list_current_page*10, len(scores_list)):
+            if (i-scores_list_current_page * 10) < 10:
+                y_offset = 50*(i-scores_list_current_page*10)
+                pygame.draw.line(screen, (0, 0, 0), (50, 92 + y_offset), (750, 92 + y_offset), 2)
+                render_adaptive_text(
+                            screen=screen,
+                            text=str(scores_list[i][0].capitalize()),
+                            x=60,
+                            y=100 + y_offset,
+                            max_width=200,
+                            font_path=FONT_PATH
+                        )
+                render_adaptive_text(
+                            screen=screen,
+                            text=str(scores_list[i][1].capitalize()),
+                            x=300,
+                            y=100 + y_offset,
+                            max_width=200,
+                            font_path=FONT_PATH
+                        )
+                render_adaptive_text(
+                            screen=screen,
+                            text=str(scores_list[i][2]),
+                            x=600,
+                            y=100 + y_offset,
+                            max_width=200,
+                            font_path=FONT_PATH
+                        )
+
         if scores_list_pages > 1:
 
             if scores_list_current_page != 0:
@@ -98,7 +107,7 @@ def scores(screen, clock, my_fonts):
             if next_page_rect.collidepoint(pygame.mouse.get_pos()):
                 if mouseclicked:
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_WAITARROW) 
-                    words_list_current_page += 1
+                    scores_list_current_page += 1
                 else:
                     hover = True   
         
@@ -106,7 +115,7 @@ def scores(screen, clock, my_fonts):
             if previous_page_rect.collidepoint(pygame.mouse.get_pos()):
                 if mouseclicked:
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_WAITARROW) 
-                    words_list_current_page -= 1
+                    scores_list_current_page -= 1
                 else:
                     hover = True
 
