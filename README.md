@@ -1,6 +1,6 @@
 # Pendu — Python / pygame
 
-Un simple Pendu développé en Python et utilise pygame pour l'interface graphique.
+Un simple Pendu développé en Python et utilisant pygame pour l'interface graphique.
 
 ## Présentation
 
