@@ -14,7 +14,8 @@ def render_adaptive_text(
     max_size=30,
     min_size=12,
     color=(0, 0, 0),
-    clickable=False
+    clickable=False,
+    centered=False
 ):
     size = max_size
     font = pygame.font.Font(font_path, size)
@@ -25,7 +26,10 @@ def render_adaptive_text(
         font = pygame.font.Font(font_path, size)
         text_surface = font.render(text, True, color)
 
-    rect = text_surface.get_rect(topleft=(x, y))
+    if centered:
+        rect = text_surface.get_rect(center=(x, y))
+    else:
+        rect = text_surface.get_rect(topleft=(x, y))
     screen.blit(text_surface, rect)
 
     if clickable:
