@@ -73,13 +73,11 @@ def menu(screen, clock, my_fonts):
 
             usr_input = keyboard_input(events)
 
-            print(usr_word)
-
             if usr_input == "backspace":
                 usr_word = usr_word[:-1]
             elif usr_input == "enter":
                 notice_username_input_popup = False
-                change_username(usr_input)
+                change_username(usr_word)
                 game(screen, clock, my_fonts)
                 continue
             elif len(usr_word) < 26:
@@ -88,7 +86,7 @@ def menu(screen, clock, my_fonts):
             notice_username_input_popup = username_input_popup(screen, clock, my_fonts, mouseclicked, usr_word)
 
             if not notice_username_input_popup:
-                change_username(usr_input)
+                change_username(usr_word)
                 game(screen, clock, my_fonts)
 
         elif play_button.collidepoint(pygame.mouse.get_pos()) or scores_button.collidepoint(pygame.mouse.get_pos()) or option_button.collidepoint(pygame.mouse.get_pos()):
