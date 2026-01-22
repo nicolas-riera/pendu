@@ -16,6 +16,12 @@ from src.popup import *
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regular.ttf")
 
+# Assets loading
+
+HANGMAN_IMG = tuple(
+    pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "img", "hangman", f"{i}.png"))
+    for i in range(7))
+
 # Functions
 
 def make_clue(word_to_guess, letters_found="", letters_tried=""):
@@ -126,7 +132,7 @@ def game_won_check(clue, word_to_guess):
     
 def reset_values():
 
-    life = 7
+    life = 6
     word_to_guess = random.choice(read_words())
     word_to_guess_normalized = normalizing_str(word_to_guess)
     clue, letters_found, letters_tried = make_clue(word_to_guess)
@@ -169,11 +175,15 @@ def game(screen, clock, my_fonts):
         letters_tried_text = my_fonts[0].render(str_already_tried_letters(letters_tried.upper()), True, (0, 0, 0))
         screen.blit(letters_tried_text, (60, 370))
 
+        hangman_title_rect = HANGMAN_IMG[6-life].get_rect(center=(650, 500))
+        hangman_title_scaled = pygame.transform.scale(HANGMAN_IMG[6-life], (HANGMAN_IMG[6-life].get_size()[0]*1, HANGMAN_IMG[6-life].get_size()[1]*1))
+        screen.blit(hangman_title_scaled, hangman_title_rect)
+
         # Display text rendering
 
         display_text_y = 770
 
-        if display_text_good_choice:
+        if display_text_good_choice and not(notice_win_popup or notice_lose_popup):
             render_adaptive_text(
             screen,
             "Bonne pioche !",
@@ -187,7 +197,7 @@ def game(screen, clock, my_fonts):
             if time.monotonic() - display_text_timestamp >= 1.0:
                 display_text_good_choice = False
 
-        elif display_text_wrong_choice:
+        elif display_text_wrong_choice and not(notice_win_popup or notice_lose_popup):
             render_adaptive_text(
             screen,
             "Mauvaise pioche !",
@@ -201,7 +211,7 @@ def game(screen, clock, my_fonts):
             if time.monotonic() - display_text_timestamp >= 1.0:
                 display_text_wrong_choice = False
                 
-        elif display_text_tried_letter:
+        elif display_text_tried_letter and not(notice_win_popup or notice_lose_popup):
             render_adaptive_text(
             screen,
             "Lettre déjà essayée...",
@@ -216,7 +226,7 @@ def game(screen, clock, my_fonts):
                 display_text_tried_letter = False
 
 
-        else:
+        elif not(notice_win_popup or notice_lose_popup):
             render_adaptive_text(
             screen,
             "Entrez une lettre.",
@@ -233,19 +243,21 @@ def game(screen, clock, my_fonts):
             break
 
         elif notice_win_popup:
-            notice_win_popup, usr_choice = replay_menu_popup(screen, clock, my_fonts, mouseclicked, "Vous avez gagné !", (195, 315))
-            if usr_choice == 1:
-                life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
-            elif usr_choice == 2:
-                gaming = False
+            if time.monotonic() - popup_delay >= 0.7:
+                notice_win_popup, usr_choice = replay_menu_popup(screen, clock, my_fonts, mouseclicked, "Vous avez gagné !", (195, 315))
+                if usr_choice == 1:
+                    life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
+                elif usr_choice == 2:
+                    gaming = False
 
 
         elif notice_lose_popup:
-            notice_lose_popup, usr_choice = replay_menu_popup(screen, clock, my_fonts, mouseclicked, "Vous avez perdu...", (195, 315))
-            if usr_choice == 1:
-                life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
-            elif usr_choice == 2:
-                gaming = False
+            if time.monotonic() - popup_delay >= 0.7:
+                notice_lose_popup, usr_choice = replay_menu_popup(screen, clock, my_fonts, mouseclicked, "Vous avez perdu...", (195, 315))
+                if usr_choice == 1:
+                    life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
+                elif usr_choice == 2:
+                    gaming = False
 
         else:
 
@@ -285,9 +297,11 @@ def game(screen, clock, my_fonts):
 
         if game_won_check(clue, word_to_guess) and not (notice_win_popup or notice_lose_popup):
             notice_win_popup = True
+            popup_delay = time.monotonic()
         
-        if life == 0:
+        if life == 0 and not (notice_win_popup or notice_lose_popup):
             notice_lose_popup = True
+            popup_delay = time.monotonic()
 
         pygame.display.flip()  
         clock.tick(60)   
