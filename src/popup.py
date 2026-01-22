@@ -114,7 +114,7 @@ def replay_menu_popup(screen, clock, my_fonts, mouseclicked, text, text_pos, sub
 
     return loop_locker, usr_choice
 
-def username_input_popup(screen, clock, my_fonts, mouseclicked):
+def username_input_popup(screen, clock, my_fonts, mouseclicked, usr_word):
 
     # Rendering 
         
