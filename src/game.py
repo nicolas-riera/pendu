@@ -3,6 +3,7 @@
 import random
 import pygame
 import unicodedata
+import time
 
 from src.words_mgt import *
 from src.pygame_events import *
@@ -17,10 +18,11 @@ FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regu
 
 # Functions
 
-def make_clue(word_to_guess):
+def make_clue(word_to_guess, letters_found="", letters_tried=""):
+
     '''
     Take word_to_guess
-    and return a string of the lengh of word_to_guess but filled with "_"
+    and return a string of the lengh of word_to_guess but filled with "_" and its associated values
     '''
     
     clue = ""
@@ -28,12 +30,16 @@ def make_clue(word_to_guess):
     for i in range(len(word_to_guess)):
         if i == 0 and len(word_to_guess) > 4:
             clue += word_to_guess[0]
+            add_to_letters_tried = check_letter(word_to_guess, word_to_guess[0], letters_found, letters_tried)
+            letters_found, letters_tried = add_to_letters_tried[1], add_to_letters_tried[2]
+        elif word_to_guess[i] == word_to_guess[0]:
+            clue += word_to_guess[i]
         elif word_to_guess[i] == "-":
             clue += "-"
         else:
             clue += "_"
 
-    return clue
+    return clue, letters_found, letters_tried
 
 def is_in_letters_tried(letter, letters_tried, letters_found):
 
@@ -86,6 +92,17 @@ def check_letter(word_to_guess, letter, letters_found, letters_tried):
 
     return False, letters_found, letters_tried
 
+def str_already_tried_letters(letters_tried):
+
+    '''
+    return stringified letters_tried 
+    '''
+
+    str_letters_tried = ""
+    for letter in letters_tried:
+        str_letters_tried += f" {letter}"
+    return str_letters_tried
+
 def normalizing_str(string):
 
     '''
@@ -110,21 +127,22 @@ def game_won_check(clue, word_to_guess):
 def reset_values():
 
     life = 7
-    letters_found = ""
-    letters_tried = ""
     word_to_guess = random.choice(read_words())
     word_to_guess_normalized = normalizing_str(word_to_guess)
-    clue = make_clue(word_to_guess)
+    clue, letters_found, letters_tried = make_clue(word_to_guess)
     letter_checked = True
     notice_win_popup = False
     notice_lose_popup = False
+    display_text_good_choice = False
+    display_text_wrong_choice = False 
+    display_text_tried_letter = False   
     
-    return life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup
+    return life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter
 
-def game(screen,clock,my_fonts):
+def game(screen, clock, my_fonts):
 
     gaming = True
-    life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup = reset_values() 
+    life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
 
     while gaming:
             
@@ -138,13 +156,76 @@ def game(screen,clock,my_fonts):
 
         render_adaptive_text(
             screen,
-            return_clue_string(clue),
+            return_clue_string(clue.capitalize()),
             400,
-            220,
+            180,
             600,
             FONT_PATH,
             centered=True
         )
+
+        letters_tried_title_text = my_fonts[0].render("Lettres déjà essayées :", True, (0, 0, 0))
+        screen.blit(letters_tried_title_text, (60, 270))
+        letters_tried_text = my_fonts[0].render(str_already_tried_letters(letters_tried.upper()), True, (0, 0, 0))
+        screen.blit(letters_tried_text, (60, 370))
+
+        # Display text rendering
+
+        display_text_y = 770
+
+        if display_text_good_choice:
+            render_adaptive_text(
+            screen,
+            "Bonne pioche !",
+            400,
+            display_text_y,
+            700,
+            FONT_PATH,
+            centered=True
+            )
+            
+            if time.monotonic() - display_text_timestamp >= 1.0:
+                display_text_good_choice = False
+
+        elif display_text_wrong_choice:
+            render_adaptive_text(
+            screen,
+            "Mauvaise pioche !",
+            400,
+            display_text_y,
+            700,
+            FONT_PATH,
+            centered=True
+            )
+
+            if time.monotonic() - display_text_timestamp >= 1.0:
+                display_text_wrong_choice = False
+                
+        elif display_text_tried_letter:
+            render_adaptive_text(
+            screen,
+            "Lettre déjà essayée...",
+            400,
+            display_text_y,
+            700,
+            FONT_PATH,
+            centered=True
+            )
+
+            if time.monotonic() - display_text_timestamp >= 1.0:
+                display_text_tried_letter = False
+
+
+        else:
+            render_adaptive_text(
+            screen,
+            "Entrez une lettre.",
+            400,
+            display_text_y,
+            700,
+            FONT_PATH,
+            centered=True
+            )
         
         # Logic
 
@@ -154,7 +235,7 @@ def game(screen,clock,my_fonts):
         elif notice_win_popup:
             notice_win_popup, usr_choice = replay_menu_popup(screen, clock, my_fonts, mouseclicked, "Vous avez gagné !", (195, 315))
             if usr_choice == 1:
-                life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup = reset_values() 
+                life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
             elif usr_choice == 2:
                 gaming = False
 
@@ -162,7 +243,7 @@ def game(screen,clock,my_fonts):
         elif notice_lose_popup:
             notice_lose_popup, usr_choice = replay_menu_popup(screen, clock, my_fonts, mouseclicked, "Vous avez perdu...", (195, 315))
             if usr_choice == 1:
-                life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup = reset_values() 
+                life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
             elif usr_choice == 2:
                 gaming = False
 
@@ -174,9 +255,11 @@ def game(screen,clock,my_fonts):
 
             usr_input_normalized = normalizing_str(usr_input)
 
-            if is_in_letters_tried(usr_input_normalized, letters_tried, letters_found):
-                # tbd : display text that the letter has already been tried
-                pass
+            if is_in_letters_tried(usr_input_normalized, letters_tried, letters_found) and usr_input != "":
+                display_text_good_choice = False
+                display_text_wrong_choice = False
+                display_text_tried_letter = True
+                display_text_timestamp = time.monotonic()
 
             elif usr_input != "backspace" and usr_input != "enter" and usr_input != "-" and usr_input != "":
                 letter_checked = False
@@ -187,9 +270,15 @@ def game(screen,clock,my_fonts):
                 
                 if is_good_choice:
                     clue = update_clue(clue, usr_input_normalized, word_to_guess, word_to_guess_normalized)
-                    # tbd : display that it is a good choice
+                    display_text_good_choice = True
+                    display_text_wrong_choice = False
+                    display_text_tried_letter = False
+                    display_text_timestamp = time.monotonic()
                 else:
-                    # tbd : display that it isn't a good choice
+                    display_text_good_choice = False
+                    display_text_wrong_choice = True
+                    display_text_tried_letter = False
+                    display_text_timestamp = time.monotonic()
                     life -= 1
 
                 letter_checked = True
