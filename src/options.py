@@ -15,9 +15,6 @@ from src.popup import *
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regular.ttf")
 
-# Assets loading
-
-
 # Functions
 
 def options(screen, clock, my_fonts):
