@@ -48,7 +48,7 @@ def is_in_letters_tried(letter, letters_tried, letters_found):
     else:
         return False
 
-def update_clue(clue, letter, word_to_guess):
+def update_clue(clue, letter, word_to_guess, word_to_guess_normalized):
 
     '''
     Update clue if letter is found in word_to_guess
@@ -57,8 +57,8 @@ def update_clue(clue, letter, word_to_guess):
     clue_list = list(clue)
 
     for i in range(len(word_to_guess)):
-        if letter == word_to_guess[i]:
-            clue_list[i] = letter
+        if letter == word_to_guess_normalized[i]:
+            clue_list[i] = word_to_guess[i]
     
     return ''.join(clue_list)
 
@@ -86,14 +86,14 @@ def check_letter(word_to_guess, letter, letters_found, letters_tried):
 
     return False, letters_found, letters_tried
 
-def normalizing_letter(usr_input):
+def normalizing_str(string):
 
     '''
-    Converts letters with accents to their corresponding non-accent letter
+    Create a version of string without accents
     '''
 
-    normalized = unicodedata.normalize('NFD', usr_input)
-    return ''.join(c for c in normalized if not unicodedata.combining(c))
+    normalized = unicodedata.normalize('NFD', string)
+    return "".join(c for c in normalized if unicodedata.category(c) != 'Mn')
 
 def game_won_check(clue, word_to_guess):
 
@@ -106,20 +106,25 @@ def game_won_check(clue, word_to_guess):
         return True
     else:
         return False
+    
+def reset_values():
 
-def game(screen,clock,my_fonts):
-
-    gaming = True
-
-    word_list = read_words()
-    life = 10
+    life = 7
     letters_found = ""
     letters_tried = ""
-    word_to_guess = random.choice(word_list)
+    word_to_guess = random.choice(read_words())
+    word_to_guess_normalized = normalizing_str(word_to_guess)
     clue = make_clue(word_to_guess)
     letter_checked = True
     notice_win_popup = False
     notice_lose_popup = False
+    
+    return life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup
+
+def game(screen,clock,my_fonts):
+
+    gaming = True
+    life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup = reset_values() 
 
     while gaming:
             
@@ -131,9 +136,16 @@ def game(screen,clock,my_fonts):
 
         screen.fill("white") 
 
-        clue_text = my_fonts[0].render(return_clue_string(clue), True, (0, 0, 0))
-        screen.blit(clue_text, (300, 220))   
-
+        render_adaptive_text(
+            screen,
+            return_clue_string(clue),
+            400,
+            220,
+            600,
+            FONT_PATH,
+            centered=True
+        )
+        
         # Logic
 
         if escpressed:
@@ -142,13 +154,7 @@ def game(screen,clock,my_fonts):
         elif notice_win_popup:
             notice_win_popup, usr_choice = replay_menu_popup(screen, clock, my_fonts, mouseclicked, "Vous avez gagné !", (195, 315))
             if usr_choice == 1:
-                life = 10
-                letters_found = ""
-                letters_tried = ""
-                word_to_guess = random.choice(word_list)
-                clue = make_clue(word_to_guess)
-                letter_checked = True
-                notice_win_popup = False
+                life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup = reset_values() 
             elif usr_choice == 2:
                 gaming = False
 
@@ -156,13 +162,7 @@ def game(screen,clock,my_fonts):
         elif notice_lose_popup:
             notice_lose_popup, usr_choice = replay_menu_popup(screen, clock, my_fonts, mouseclicked, "Vous avez perdu...", (195, 315))
             if usr_choice == 1:
-                life = 10
-                letters_found = ""
-                letters_tried = ""
-                word_to_guess = random.choice(word_list)
-                clue = make_clue(word_to_guess)
-                letter_checked = True
-                notice_lose_popup = False
+                life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup = reset_values() 
             elif usr_choice == 2:
                 gaming = False
 
@@ -171,8 +171,8 @@ def game(screen,clock,my_fonts):
             # Keyboard input logic
 
             usr_input = keyboard_input(events).lower()
- 
-            usr_input_normalized = normalizing_letter(usr_input)
+
+            usr_input_normalized = normalizing_str(usr_input)
 
             if is_in_letters_tried(usr_input_normalized, letters_tried, letters_found):
                 # tbd : display text that the letter has already been tried
@@ -183,10 +183,10 @@ def game(screen,clock,my_fonts):
 
             if not letter_checked:
 
-                is_good_choice, letters_found, letters_tried = check_letter(word_to_guess, usr_input_normalized, letters_found, letters_tried)
+                is_good_choice, letters_found, letters_tried = check_letter(word_to_guess_normalized, usr_input_normalized, letters_found, letters_tried)
                 
                 if is_good_choice:
-                    clue = update_clue(clue, usr_input, word_to_guess)
+                    clue = update_clue(clue, usr_input_normalized, word_to_guess, word_to_guess_normalized)
                     # tbd : display that it is a good choice
                 else:
                     # tbd : display that it isn't a good choice
