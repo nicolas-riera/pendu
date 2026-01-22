@@ -7,6 +7,8 @@ from src.pygame_events import *
 from src.options import *
 from src.game import *
 from src.popup import *
+from src.scores_mgt import *
+from src.scores import *
 
 # Variables
 
@@ -21,6 +23,7 @@ logo_title = pygame.image.load(os.path.join(BASE_DIR, "../", "assets", "img", "l
 def menu(screen, clock, my_fonts):
 
     error_popup_empty = False
+    notice_username_input_popup = False
 
     while True:
         
@@ -57,13 +60,19 @@ def menu(screen, clock, my_fonts):
             error_popup_empty = ok_popup(screen, clock, my_fonts, mouseclicked, "La liste est vide.", (213, 315))
             if not error_popup_empty:
                 continue
+
+        elif notice_username_input_popup:
+            notice_username_input_popup = username_input_popup(screen, clock, my_fonts, mouseclicked, events)
         
         elif play_button.collidepoint(pygame.mouse.get_pos()) or option_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 if play_button.collidepoint(pygame.mouse.get_pos()):
                     if read_words() != []:
-                        game(screen, clock, my_fonts)
+                        if read_username() != "anonyme":
+                            game(screen, clock, my_fonts)
+                        else:
+                            notice_username_input_popup = True
                     else:
                         error_popup_empty = True
                 else:

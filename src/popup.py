@@ -4,6 +4,7 @@ import pygame
 import os
 
 from src.render_adaptive_text import *
+from src.keyboard_input import *
 
 # Variables
 
@@ -112,3 +113,36 @@ def replay_menu_popup(screen, clock, my_fonts, mouseclicked, text, text_pos, sub
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) 
 
     return loop_locker, usr_choice
+
+def username_input_popup(screen, clock, my_fonts, mouseclicked):
+
+    # Rendering 
+        
+    screen_fade = pygame.Surface((800, 800))
+    screen_fade.fill((0, 0, 0))
+    screen_fade.set_alpha(160)
+    screen.blit(screen_fade, (0, 0))
+        
+    pygame.draw.rect(screen, (255, 255, 255), (100, 250, 600, 300))
+
+    pygame.draw.rect(screen, (168, 168, 168), (295, 450, 203, 80))
+    ok_button = pygame.Rect((295, 450, 203, 80))
+    ok_button_text = my_fonts[0].render("OK", True, (0, 0, 0))
+    screen.blit(ok_button_text, (370, 470))
+
+    pygame.display.flip()  
+    clock.tick(60)
+
+    # Logic
+
+    if ok_button.collidepoint(pygame.mouse.get_pos()):
+        if mouseclicked:
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+            return False
+        else:
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+
+    else:
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) 
+
+    return True
