@@ -4,7 +4,7 @@ import os
 
 # Variables
 
-FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../", "assets" , "words.txt")
+FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../", "assets" , "gamedata" ,"words.txt")
 
 # Functions
 
