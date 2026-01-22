@@ -40,15 +40,21 @@ def menu(screen, clock, my_fonts):
         screen.blit(logo_title_scaled, logo_title_rect)
 
         # Draw.rect(surface, color, (x position, y position, x width, y width))
-        pygame.draw.rect(screen, (236, 179, 101), (295, 450, 203, 80))
-        play_button = pygame.Rect((295, 450, 203, 80))
+        pygame.draw.rect(screen, (236, 179, 101), (295, 400, 203, 80))
+        play_button = pygame.Rect((295, 400, 203, 80))
         play_button_text = my_fonts[0].render("Jouer", True, (0, 0, 0))
-        screen.blit(play_button_text, (360, 470))
+        screen.blit(play_button_text, (360, 420))
 
-        pygame.draw.rect(screen, (168, 168, 168), (295, 560, 203, 80))
-        option_button = pygame.Rect((295, 560, 203, 80))
+        # Draw.rect(surface, color, (x position, y position, x width, y width))
+        pygame.draw.rect(screen, (236, 179, 50), (295, 500, 203, 80))
+        scores_button = pygame.Rect((295, 500, 203, 80))
+        scores_button_text = my_fonts[0].render("Scores", True, (0, 0, 0))
+        screen.blit(scores_button_text, (355, 520))
+
+        pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
+        option_button = pygame.Rect((295, 600, 203, 80))
         option_button_text = my_fonts[0].render("Options", True, (0, 0, 0))
-        screen.blit(option_button_text, (350, 580))  
+        screen.blit(option_button_text, (350, 620))  
 
         # Logic
 
@@ -64,7 +70,7 @@ def menu(screen, clock, my_fonts):
         elif notice_username_input_popup:
             notice_username_input_popup = username_input_popup(screen, clock, my_fonts, mouseclicked, events)
         
-        elif play_button.collidepoint(pygame.mouse.get_pos()) or option_button.collidepoint(pygame.mouse.get_pos()):
+        elif play_button.collidepoint(pygame.mouse.get_pos()) or scores_button.collidepoint(pygame.mouse.get_pos()) or option_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 if play_button.collidepoint(pygame.mouse.get_pos()):
@@ -75,6 +81,8 @@ def menu(screen, clock, my_fonts):
                             notice_username_input_popup = True
                     else:
                         error_popup_empty = True
+                elif scores_button.collidepoint(pygame.mouse.get_pos()):
+                    scores(screen, clock, my_fonts)
                 else:
                     options(screen, clock, my_fonts)
             else:
