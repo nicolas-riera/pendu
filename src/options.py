@@ -194,6 +194,9 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
                 for i in range(len(usr_word)):
                     if usr_word[0] != usr_word[i]:
                         error_only_one_letter_popup = False
+                if not error_only_one_letter_popup:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                    break
         else:
             if len(usr_word) < 26:
                 usr_word += usr_input
