@@ -52,12 +52,12 @@ def menu(screen, clock, my_fonts):
         pygame.draw.rect(screen, (236, 179, 50), (295, 500, 203, 80))
         scores_button = pygame.Rect((295, 500, 203, 80))
         scores_button_text = my_fonts[0].render("Scores", True, (0, 0, 0))
-        screen.blit(scores_button_text, (355, 520))
+        screen.blit(scores_button_text, (351, 520))
 
         pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
         option_button = pygame.Rect((295, 600, 203, 80))
         option_button_text = my_fonts[0].render("Options", True, (0, 0, 0))
-        screen.blit(option_button_text, (350, 620))  
+        screen.blit(option_button_text, (346, 620))  
 
         # Logic
 
