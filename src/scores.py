@@ -13,6 +13,7 @@ from src.dark_mode import *
 # Variables
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regular.ttf")
 
 # Functions
 
