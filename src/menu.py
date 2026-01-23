@@ -17,7 +17,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Assets loading
 
-logo_title = pygame.image.load(os.path.join(BASE_DIR, "../", "assets", "img", "logo_title.png"))
+LOGO_TITLE = pygame.image.load(os.path.join(BASE_DIR, "../", "assets", "img", "logo_title.png"))
+LOGO_TITLE_INVERTED = invert_surface(LOGO_TITLE)
 
 # Functions
 
@@ -42,9 +43,14 @@ def menu(screen, clock, my_fonts):
 
         screen.fill(screen_fill_color)
         
-        logo_title_rect = logo_title.get_rect(center=(650, 500))
-        logo_title_scaled = pygame.transform.scale(logo_title, (logo_title.get_size()[0]*0.5, logo_title.get_size()[1]*0.5))
-        screen.blit(logo_title_scaled, logo_title_rect)
+        if is_dark_mode:
+            logo_title_inverted_rect = LOGO_TITLE_INVERTED.get_rect(center=(650, 500))
+            logo_title_inverted_scaled = pygame.transform.scale(LOGO_TITLE_INVERTED, (LOGO_TITLE_INVERTED.get_size()[0]*0.5, LOGO_TITLE_INVERTED.get_size()[1]*0.5))
+            screen.blit(logo_title_inverted_scaled, logo_title_inverted_rect)
+        else:
+            logo_title_rect = LOGO_TITLE.get_rect(center=(650, 500))
+            logo_title_scaled = pygame.transform.scale(LOGO_TITLE, (LOGO_TITLE.get_size()[0]*0.5, LOGO_TITLE.get_size()[1]*0.5))
+            screen.blit(logo_title_scaled, logo_title_rect)
 
         # Draw.rect(surface, color, (x position, y position, x width, y width))
         pygame.draw.rect(screen, (236, 179, 101), (295, 400, 203, 80))

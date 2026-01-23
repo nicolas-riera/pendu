@@ -24,6 +24,10 @@ HANGMAN_IMG = tuple(
     pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "img", "hangman", f"{i}.png"))
     for i in range(7))
 
+HANGMAN_IMG_INVERTED = tuple(
+    invert_surface(pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "img", "hangman", f"{i}.png")))
+    for i in range(7))
+
 # Functions
 
 def make_clue(word_to_guess, letters_found="", letters_tried=""):
@@ -180,9 +184,14 @@ def game(screen, clock, my_fonts, is_dark_mode):
         letters_tried_text = my_fonts[0].render(str_already_tried_letters(letters_tried.upper()), True, text_color)
         screen.blit(letters_tried_text, (60, 370))
 
-        hangman_title_rect = HANGMAN_IMG[6-life].get_rect(center=(630, 500))
-        hangman_title_scaled = pygame.transform.scale(HANGMAN_IMG[6-life], (HANGMAN_IMG[6-life].get_size()[0]*1, HANGMAN_IMG[6-life].get_size()[1]*1))
-        screen.blit(hangman_title_scaled, hangman_title_rect)
+        if is_dark_mode:
+            hangman_title_rect = HANGMAN_IMG_INVERTED[6-life].get_rect(center=(630, 500))
+            hangman_title_scaled = pygame.transform.scale(HANGMAN_IMG_INVERTED[6-life], (HANGMAN_IMG_INVERTED[6-life].get_size()[0]*1, HANGMAN_IMG_INVERTED[6-life].get_size()[1]*1))
+            screen.blit(hangman_title_scaled, hangman_title_rect)
+        else:
+            hangman_title_rect = HANGMAN_IMG[6-life].get_rect(center=(630, 500))
+            hangman_title_scaled = pygame.transform.scale(HANGMAN_IMG[6-life], (HANGMAN_IMG[6-life].get_size()[0]*1, HANGMAN_IMG[6-life].get_size()[1]*1))
+            screen.blit(hangman_title_scaled, hangman_title_rect)
 
         # Display text rendering
 
