@@ -28,7 +28,7 @@ Le but est de trouver le mot secret avant de faire trop d’erreurs. Chaque lett
 
 6. Le joueur gagne s’il trouve toutes les lettres avant que le pendu ne soit complet.
 
-7. Le joueur perd si le dessin du pendu est terminé avant que le mot soit trouvé   
+7. Le joueur perd si le dessin du pendu est terminé avant que le mot soit trouvé.   
 
 ## Installation (Windows uniquement)
 
