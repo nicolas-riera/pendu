@@ -10,7 +10,7 @@ from src.dark_mode import *
 # Variables
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FONT_PATH = os.path.join(BASE_DIR, "assets", "font", "LiberationSans-Regular.ttf")
+FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regular.ttf")
 
 # Assets loading
 
@@ -18,6 +18,7 @@ FONT_PATH = os.path.join(BASE_DIR, "assets", "font", "LiberationSans-Regular.ttf
 pygame.mixer.init()
 
 MENU_BUTTON_CLICK_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_click_sfx.wav"))
+MENU_BUTTON_START_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_start_sfx.mp3"))
 
 # Functions
 
@@ -52,6 +53,7 @@ def ok_popup(screen, my_fonts, mouseclicked, text, text_pos, is_dark_mode):
     if ok_button.collidepoint(pygame.mouse.get_pos()):
         if mouseclicked:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+            pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
             return False
 
         else:
@@ -113,6 +115,7 @@ def replay_menu_popup(screen, my_fonts, mouseclicked, text, text_pos, is_dark_mo
     if replay_button.collidepoint(pygame.mouse.get_pos()):
         if mouseclicked:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+            pygame.mixer.Sound.play(MENU_BUTTON_START_SFX)
             usr_choice = 1
             loop_locker = False
 
@@ -122,6 +125,7 @@ def replay_menu_popup(screen, my_fonts, mouseclicked, text, text_pos, is_dark_mo
     elif gotomenu_button.collidepoint(pygame.mouse.get_pos()):
         if mouseclicked:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+            pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
             usr_choice = 2
             loop_locker = False
 
@@ -173,6 +177,7 @@ def username_input_popup(screen, my_fonts, mouseclicked, usr_word, is_dark_mode)
     if ok_button.collidepoint(pygame.mouse.get_pos()) and usr_word != "":
         if mouseclicked:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+            pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
             return False
         else:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)

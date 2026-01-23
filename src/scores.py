@@ -129,10 +129,12 @@ def scores(screen, clock, my_fonts, is_dark_mode):
                     hover = True
 
         if escpressed:
+            pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
             break
         
         elif return_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
+                pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                 break
             else:
                 hover = True

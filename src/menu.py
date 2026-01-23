@@ -24,6 +24,7 @@ INPUT_POPUP_OPEN_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets"
 INPUT_POPUP_CLOSE_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "input_popup_close_sfx.mp3"))
 MENU_BUTTON_CLICK_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_click_sfx.wav"))
 MENU_BUTTON_START_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_start_sfx.mp3"))
+NOTICE_POPUP_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "notice_popup_sfx.mp3"))
 
 # Functions
 
@@ -93,12 +94,16 @@ def menu(screen, clock, my_fonts):
             elif usr_input == "enter":
                 if usr_word != "":
                     notice_username_input_popup = False
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+                    pygame.mixer.Sound.play(INPUT_POPUP_CLOSE_SFX)
                     change_username(usr_word)
                     game(screen, clock, my_fonts, is_dark_mode)
 
                     usr_word = ""
                     continue
                 else:
+                    if notice_username_input_empty_popup == False:
+                        pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
                     notice_username_input_empty_popup = True
             elif len(usr_word) < 26:
                 usr_word += usr_input
@@ -106,10 +111,12 @@ def menu(screen, clock, my_fonts):
             notice_username_input_popup = username_input_popup(screen, my_fonts, mouseclicked, usr_word, is_dark_mode)
 
             if notice_username_input_empty_popup:
-                notice_username_input_empty_popup = ok_popup(screen, my_fonts, mouseclicked, "Nom vide.", (287, 315))
+                notice_username_input_empty_popup = ok_popup(screen, my_fonts, mouseclicked, "Nom vide.", (287, 315), is_dark_mode)
 
             if not notice_username_input_popup:
                 if usr_word != "":
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+                    pygame.mixer.Sound.play(INPUT_POPUP_CLOSE_SFX)
                     change_username(usr_word)
                     game(screen, clock, my_fonts, is_dark_mode)
 
@@ -118,21 +125,29 @@ def menu(screen, clock, my_fonts):
                 else:
                     notice_username_input_popup = True
                     notice_username_input_empty_popup = True
+                    pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
 
         elif play_button.collidepoint(pygame.mouse.get_pos()) or scores_button.collidepoint(pygame.mouse.get_pos()) or option_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 if play_button.collidepoint(pygame.mouse.get_pos()):
                     if read_words() != []:
+                        pygame.mixer.Sound.play(MENU_BUTTON_START_SFX)
                         if read_username() != "anonyme":
                             game(screen, clock, my_fonts, is_dark_mode)
                         else:
                             notice_username_input_popup = True
+                            pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+                            pygame.mixer.Sound.play(INPUT_POPUP_OPEN_SFX)
                     else:
                         error_popup_empty = True
+                        pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
+
                 elif scores_button.collidepoint(pygame.mouse.get_pos()):
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                     scores(screen, clock, my_fonts, is_dark_mode)
                 else:
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                     is_dark_mode = options(screen, clock, my_fonts, is_dark_mode)
             else:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)

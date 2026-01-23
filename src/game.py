@@ -230,9 +230,10 @@ def reset_values():
     notice_lose_popup = False
     display_text_good_choice = False
     display_text_wrong_choice = False 
-    display_text_tried_letter = False   
+    display_text_tried_letter = False 
+    input_sfx_switch = False  
     
-    return life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter
+    return life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter, input_sfx_switch
 
 def game(screen, clock, my_fonts, is_dark_mode):
 
@@ -245,7 +246,7 @@ def game(screen, clock, my_fonts, is_dark_mode):
     '''
 
     gaming = True
-    life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
+    life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter, input_sfx_switch = reset_values() 
 
     while gaming:
             
@@ -356,19 +357,23 @@ def game(screen, clock, my_fonts, is_dark_mode):
                 notice_win_popup, usr_choice = replay_menu_popup(screen, my_fonts, mouseclicked, "Vous avez gagné !", (195, 315), is_dark_mode)
                 if usr_choice == 1:
                     add_scores(read_username(), word_to_guess, 6-life)
-                    life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
+                    life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter, input_sfx_switch = reset_values() 
+                    continue
                 elif usr_choice == 2:
                     add_scores(read_username(), word_to_guess, 6-life)
                     gaming = False
+                    continue
 
 
         elif notice_lose_popup:
             if time.monotonic() - popup_delay >= 0.7:
                 notice_lose_popup, usr_choice = replay_menu_popup(screen, my_fonts, mouseclicked, "Vous avez perdu...", (195, 315), is_dark_mode, subtitle=f"Le mot était {word_to_guess}.")
                 if usr_choice == 1:
-                    life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
+                    life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter, input_sfx_switch = reset_values() 
+                    continue
                 elif usr_choice == 2:
                     gaming = False
+                    continue
 
         else:
 
@@ -408,10 +413,12 @@ def game(screen, clock, my_fonts, is_dark_mode):
 
         if game_won_check(clue, word_to_guess) and not (notice_win_popup or notice_lose_popup):
             notice_win_popup = True
+            pygame.mixer.Sound.play(WIN_SFX)
             popup_delay = time.monotonic()
         
         if life == 0 and not (notice_win_popup or notice_lose_popup):
             notice_lose_popup = True
+            pygame.mixer.Sound.play(LOST_SFX)
             popup_delay = time.monotonic()
 
         pygame.display.flip()  
