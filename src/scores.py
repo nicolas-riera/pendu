@@ -99,10 +99,10 @@ def scores(screen, clock, my_fonts, is_dark_mode):
 
 
         # Draw.rect(surface, color, (x position, y position, x width, y width))
-        pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
-        return_button = pygame.Rect((295, 600, 203, 80))
+        pygame.draw.rect(screen, (168, 168, 168), (295, 650, 203, 80))
+        return_button = pygame.Rect((295, 650, 203, 80))
         return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
-        screen.blit(return_button_text, (356, 620)) 
+        screen.blit(return_button_text, (356, 670)) 
 
         page_indicator_text = my_fonts[0].render(f"Page {scores_list_current_page + 1}", True, text_color)
         screen.blit(page_indicator_text, (352, 743))
@@ -134,10 +134,10 @@ def scores(screen, clock, my_fonts, is_dark_mode):
             if mouseclicked:
                 break
             else:
-                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+                hover = True
 
         else:
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) 
+            hover = False
 
         if hover == True:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)

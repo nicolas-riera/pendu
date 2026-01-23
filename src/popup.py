@@ -69,7 +69,7 @@ def replay_menu_popup(screen, my_fonts, mouseclicked, text, text_pos, is_dark_mo
     screen.blit(screen_fade, (0, 0))
 
     if is_dark_mode:
-        background_popup_color = (188, 188, 188)
+        background_popup_color = (20, 20, 20)
     else:
         background_popup_color = (255, 255, 255)
         
@@ -137,13 +137,12 @@ def username_input_popup(screen, my_fonts, mouseclicked, usr_word, is_dark_mode)
     screen.blit(screen_fade, (0, 0))
 
     if is_dark_mode:
-        background_popup_color = (188, 188, 188)
+        background_popup_color = (20, 20, 20)
     else:
         background_popup_color = (255, 255, 255)
         
     pygame.draw.rect(screen, background_popup_color, (50, 150, 700, 450))
 
-    pygame.draw.rect(screen, (255, 255, 255), (100, 250, 600, 300))
     text_display = my_fonts[1].render("Entrez votre nom :", True, text_color)
     screen.blit(text_display, (194, 210))
 

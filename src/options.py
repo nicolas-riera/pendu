@@ -47,10 +47,17 @@ def options(screen, clock, my_fonts, is_dark_mode):
         scores_button_text = my_fonts[0].render("Scores", True, (0, 0, 0))
         screen.blit(scores_button_text, (352, 420))
 
-        # pygame.draw.rect(screen, (236, 179, 101), (295, 450, 203, 80))
-        # dark_mode_button = pygame.Rect((295, 450, 203, 80))
-        # dark_mode_button_text = my_fonts[0].render("Dark mode", True, text_color)
-        # screen.blit(dark_mode_button_text, (322, 470))
+        if is_dark_mode:
+            dark_mode_button_background_color = (255, 255, 255)
+            dark_mode_button_text_color = (0, 0, 0)
+        else:
+            dark_mode_button_background_color = (0, 0, 0)
+            dark_mode_button_text_color = (255, 255, 255)
+
+        pygame.draw.rect(screen, dark_mode_button_background_color, (295, 500, 203, 80))
+        dark_mode_button = pygame.Rect((295, 500, 203, 80))
+        dark_mode_button_text = my_fonts[0].render("Clair/Sombre", True, dark_mode_button_text_color)
+        screen.blit(dark_mode_button_text, (308, 520))
 
         pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
         return_button = pygame.Rect((295, 600, 203, 80))
@@ -65,13 +72,15 @@ def options(screen, clock, my_fonts, is_dark_mode):
         if escpressed:
             break
         
-        elif words_button.collidepoint(pygame.mouse.get_pos()) or scores_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()):
+        elif words_button.collidepoint(pygame.mouse.get_pos()) or scores_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()) or dark_mode_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 if words_button.collidepoint(pygame.mouse.get_pos()):
                     words_menu(screen, clock, my_fonts, is_dark_mode)
                 elif scores_button.collidepoint(pygame.mouse.get_pos()):
                     scores_menu_options(screen, clock, my_fonts, is_dark_mode)
+                elif dark_mode_button.collidepoint(pygame.mouse.get_pos()):
+                    is_dark_mode = not is_dark_mode
                 elif return_button.collidepoint(pygame.mouse.get_pos()):
                     break
             else:
@@ -79,6 +88,8 @@ def options(screen, clock, my_fonts, is_dark_mode):
 
         else:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
+    return is_dark_mode
 
 def words_menu(screen, clock, my_fonts, is_dark_mode):
 
