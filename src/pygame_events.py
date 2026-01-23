@@ -6,6 +6,15 @@ import pygame
 
 def pygame_events():
 
+    '''
+    Pygame events gate to avoid calling events
+    multiple time during pygame loops.
+    ### RETURNS
+            events: pygame.Event
+            mouseclicked: bool
+            escpressed: bool
+    '''
+    
     mouseclicked = False
     escpressed = False
 
