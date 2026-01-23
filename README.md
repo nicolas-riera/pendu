@@ -1,5 +1,7 @@
 # Pendu — Python / pygame
 
+![pythonversion](https://img.shields.io/badge/python-3.x-blue)
+
 Un simple Pendu développé en Python et utilisant pygame pour l'interface graphique.
 
 ## Présentation
