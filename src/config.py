@@ -18,3 +18,7 @@ def write_lines(lines):
 
 def default_config():
     write_lines(["is_dark_mode = False"])
+
+def check_empty_last_line_config():
+    lines = read_config_file()
+    write_lines(lines)

@@ -21,10 +21,6 @@ def dark_mode_setting(mode, is_dark_mode):
             
         write_lines(lines)
 
-def check_empty_last_line_config():
-    lines = read_config_file()
-    write_lines(lines)
-
 def light_dark_mode(screen, is_dark_mode):
     
     if is_dark_mode:
