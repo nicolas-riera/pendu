@@ -29,7 +29,7 @@ def add_scores(username, score, errors):
 
     write_lines(lines)
 
-def clear_cores():
+def clear_scores():
     lines = read_scores_file()
 
     write_lines(lines[:4])

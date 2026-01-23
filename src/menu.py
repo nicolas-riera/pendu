@@ -48,7 +48,6 @@ def menu(screen, clock, my_fonts):
         play_button_text = my_fonts[0].render("Jouer", True, (0, 0, 0))
         screen.blit(play_button_text, (360, 420))
 
-        # Draw.rect(surface, color, (x position, y position, x width, y width))
         pygame.draw.rect(screen, (236, 179, 50), (295, 500, 203, 80))
         scores_button = pygame.Rect((295, 500, 203, 80))
         scores_button_text = my_fonts[0].render("Scores", True, (0, 0, 0))
