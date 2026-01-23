@@ -19,6 +19,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regular.ttf")
 
 DRAWING_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "drawing_sfx.mp3"))
+ESC_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "esc_sfx.mp3"))
 INPUT_POPUP_OPEN_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "input_popup_open_sfx.mp3"))
 INPUT_POPUP_CLOSE_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "input_popup_close_sfx.mp3"))
 MENU_BUTTON_CLICK_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_click_sfx.wav"))
@@ -77,7 +78,7 @@ def options(screen, clock, my_fonts, is_dark_mode):
         # Logic
 
         if escpressed:
-            pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+            pygame.mixer.Sound.play(ESC_SFX)
             break
         
         elif words_button.collidepoint(pygame.mouse.get_pos()) or scores_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()) or dark_mode_button.collidepoint(pygame.mouse.get_pos()):
@@ -147,7 +148,7 @@ def words_menu(screen, clock, my_fonts, is_dark_mode):
         # Logic
 
         if escpressed:
-            pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+            pygame.mixer.Sound.play(ESC_SFX)
             break
 
         elif reset_popup:
@@ -256,7 +257,7 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
         # Logic
 
         if escpressed:
-            pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+            pygame.mixer.Sound.play(ESC_SFX)
             usr_word = ""
             break
 
@@ -423,7 +424,7 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
                     hover = True
 
         if escpressed:
-            pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+            pygame.mixer.Sound.play(ESC_SFX)
             break
 
         elif error_popup_empty:
@@ -523,7 +524,7 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
         # Logic
 
         if escpressed:
-            pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+            pygame.mixer.Sound.play(ESC_SFX)
             break
 
         elif reset_popup:

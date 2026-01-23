@@ -28,6 +28,7 @@ HANGMAN_IMG_INVERTED = tuple(
     invert_surface(pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "img", "hangman", f"{i}.png")))
     for i in range(7))
 
+ESC_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "esc_sfx.mp3"))
 LETTER_WRITE_SFX_1 = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "letter_write_sfx_1.mp3"))
 LETTER_WRITE_SFX_2 = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "letter_write_sfx_2.mp3"))
 WIN_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "win_sfx.wav"))
@@ -350,6 +351,7 @@ def game(screen, clock, my_fonts, is_dark_mode):
         # Logic
 
         if escpressed:
+            pygame.mixer.Sound.play(ESC_SFX)
             break
 
         elif notice_win_popup:
