@@ -13,7 +13,7 @@ def read_config_file():
     '''
     Read the config file from the file path FILE_PATH found in /src/config.py file.
     For now only contains dark mode state
-    ### RETURNS
+    ### RETURN
             [str]
     '''
 
@@ -24,7 +24,7 @@ def write_lines(lines):
 
     '''
     Write lines in the config file from the file path FILE_PATH found in /src/config.py file.
-    ### PARAMETERS
+    ### PARAMETER
             lines: str  
     '''
 

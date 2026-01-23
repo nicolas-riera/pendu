@@ -37,7 +37,7 @@ def ok_popup(screen, my_fonts, mouseclicked, text, text_pos, is_dark_mode):
             text: str
             text_pos: tuple(int,int,int)
             is_dark_mode: bool
-    ### RETURNS
+    ### RETURN
             bool
     '''
 
@@ -189,7 +189,7 @@ def username_input_popup(screen, my_fonts, mouseclicked, usr_word, is_dark_mode)
             mouseclicked: bool
             usr_word: str
             is_dark_mode: bool
-    ### RETURNS
+    ### RETURN
             bool
     '''
 

@@ -14,9 +14,9 @@ def get_gamedata_path(filename):
     
     '''
     Get the path of the game data file in parameter.      
-    ### PARAMETERS
+    ### PARAMETER
             filename: str
-    ### RETURNS
+    ### RETURN
             target_file: str
     '''
 

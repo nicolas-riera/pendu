@@ -13,9 +13,9 @@ def keyboard_input(events):
     #### For example: 
             1. pygame.K_BACKSPACE turns into "backspace".
             2. pygame.K_RETURN turns into "enter"       
-    ### PARAMETERS
+    ### PARAMETER
             events: pygame.Events
-    ### RETURNS
+    ### RETURN
             str
     '''
 

@@ -30,8 +30,8 @@ def render_adaptive_text(
             color: tuple(int, int, int)
             clickable: bool
             centered: bool
-    ### RETURNS
-            bool
+    ### RETURN
+            rect: python.Rect
     '''
 
     size = max_size

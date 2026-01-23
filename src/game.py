@@ -81,7 +81,7 @@ def is_in_letters_tried(letter, letters_tried, letters_found):
             letter: str - letter provided by the user.
             letters_tried: str - letters already tried by the user.
             letters_found: str - letters already found by the user.
-    ### RETURNS
+    ### RETURN
             bool
     '''
 
@@ -107,7 +107,7 @@ def update_clue(clue, letter, word_to_guess, word_to_guess_normalized):
             letter: str - the letter found.
             word_to_guess: str - the word to guess.
             word_to_guess_normalized: str - the word to guess without accentuation.
-    ### RETURNS
+    ### RETURN
             clue: str
     '''
 
@@ -156,9 +156,9 @@ def format_str(string_to_format):
     ### For example: 
             string_to_format = "hjdsaq"
             format_clue(string_to_format) -> "h j d s a q"
-    ### PARAMETERS
+    ### PARAMETER
             string_to_format: str
-    ### RETURNS
+    ### RETURN
             formatted_string: str
     '''
 
@@ -174,9 +174,9 @@ def normalizing_str(string_to_normalize):
     ### For example: 
             string_to_normalize = "Aéronautique"
             normalizing_str(string_to_normalize) -> "aeronautique"
-    ### PARAMETERS
+    ### PARAMETER
             string_to_normalize: str
-    ### RETURNS
+    ### RETURN
             str
     '''
 
@@ -194,7 +194,7 @@ def game_won_check(clue, word_to_guess):
     ### PARAMETERS
             clue: str
             word_to_guess: str
-    ### RETURNS
+    ### RETURN
             bool
     '''
 

@@ -13,7 +13,7 @@ def dark_mode_setting(mode, is_dark_mode):
     ### PARAMETERS
             mode: str - read or write
             is_dark_mode: bool
-    ### RETURNS
+    ### RETURN
             bool
     '''
 
@@ -37,9 +37,9 @@ def invert_surface(surface):
 
     '''
     Invert the colors of a pygame Surface, for example an image.
-    ### PARAMETERS
+    ### PARAMETER
             surface: pygame.Surface
-    ### RETURNS
+    ### RETURN
             inverted: pygame.Surface
     '''
 
@@ -64,7 +64,7 @@ def light_dark_mode(is_dark_mode):
     
     '''
     Switch text and screen colors depending on is_dark_mode status.    
-    ### PARAMETERS
+    ### PARAMETER
             is_dark_mode: bool
     ### RETURNS
             screen_fill_color: tuple(int,int,int)

@@ -15,7 +15,7 @@ def read_scores():
     '''
     Read the scores from read_scores_file().
     And parse elements into list of strings tuples
-    ### RETURNS
+    ### RETURN
             [(str,str,str)]
     '''
 
@@ -27,7 +27,7 @@ def read_scores_file():
 
     '''
     Read the scores file from the file path FILE_PATH found in /src/score_mgt.py file.
-    ### RETURNS
+    ### RETURN
             [str]
     '''
 
@@ -38,7 +38,7 @@ def write_lines(lines):
 
     '''
     Write lines in the scores file from the file path FILE_PATH found in /src/score_mgt.py file.
-    ### PARAMETERS
+    ### PARAMETER
             lines: str
     '''
 
@@ -49,7 +49,7 @@ def add_scores(username, score, errors):
 
     '''
     Add score to the scores.txt file.
-    ### PARAMETERS
+    ### PARAMETER
             username: str
             score: str
             errors: int  
@@ -75,7 +75,7 @@ def read_username():
 
     '''
     Read username from scores.txt file
-    ### RETURNS
+    ### RETURN
             str  
     '''
 
@@ -87,7 +87,7 @@ def change_username(username):
 
     '''
     Change username in the scores.txt file.
-    ### PARAMETERS
+    ### PARAMETER
             lines: str  
     '''
 
