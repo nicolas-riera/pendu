@@ -13,6 +13,12 @@ from src.dark_mode import *
 # Variables
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regular.ttf")
+
+# Assets loading
+
+ESC_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "esc_sfx.mp3"))
+MENU_BUTTON_CLICK_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_click_sfx.wav"))
 
 # Functions
 
@@ -128,10 +134,12 @@ def scores(screen, clock, my_fonts, is_dark_mode):
                     hover = True
 
         if escpressed:
+            pygame.mixer.Sound.play(ESC_SFX)
             break
         
         elif return_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
+                pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                 break
             else:
                 hover = True

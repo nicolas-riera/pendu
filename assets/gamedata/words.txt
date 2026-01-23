@@ -89,7 +89,7 @@ confiture
 pain
 beurre
 lait
-œuf
+Oeuf
 salade
 soupe
 riz

@@ -18,6 +18,13 @@ from src.game import *
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regular.ttf")
 
+DRAWING_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "drawing_sfx.mp3"))
+ESC_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "esc_sfx.mp3"))
+INPUT_POPUP_OPEN_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "input_popup_open_sfx.mp3"))
+INPUT_POPUP_CLOSE_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "input_popup_close_sfx.mp3"))
+MENU_BUTTON_CLICK_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_click_sfx.wav"))
+NOTICE_POPUP_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "notice_popup_sfx.mp3"))
+
 # Functions
 
 def options(screen, clock, my_fonts, is_dark_mode):
@@ -71,19 +78,24 @@ def options(screen, clock, my_fonts, is_dark_mode):
         # Logic
 
         if escpressed:
+            pygame.mixer.Sound.play(ESC_SFX)
             break
         
         elif words_button.collidepoint(pygame.mouse.get_pos()) or scores_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()) or dark_mode_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 if words_button.collidepoint(pygame.mouse.get_pos()):
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                     words_menu(screen, clock, my_fonts, is_dark_mode)
                 elif scores_button.collidepoint(pygame.mouse.get_pos()):
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                     scores_menu_options(screen, clock, my_fonts, is_dark_mode)
                 elif dark_mode_button.collidepoint(pygame.mouse.get_pos()):
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                     is_dark_mode = not is_dark_mode
                     dark_mode_setting("write", is_dark_mode)
                 elif return_button.collidepoint(pygame.mouse.get_pos()):
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                     break
             else:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
@@ -136,6 +148,7 @@ def words_menu(screen, clock, my_fonts, is_dark_mode):
         # Logic
 
         if escpressed:
+            pygame.mixer.Sound.play(ESC_SFX)
             break
 
         elif reset_popup:
@@ -146,12 +159,17 @@ def words_menu(screen, clock, my_fonts, is_dark_mode):
                 if mouseclicked:
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                     if add_word_button.collidepoint(pygame.mouse.get_pos()):
+                        pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                         add_word_menu(screen, clock, my_fonts, is_dark_mode)
                     elif return_button.collidepoint(pygame.mouse.get_pos()):
+                        pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                         break
                     elif remove_word_button.collidepoint(pygame.mouse.get_pos()):
+                        pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                         remove_word_menu(screen, clock, my_fonts, is_dark_mode)
                     elif reset_word_button.collidepoint(pygame.mouse.get_pos()):
+                        pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+                        pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
                         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_WAITARROW) 
                         reset_words()
                         reset_popup = True
@@ -187,8 +205,12 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
             usr_word = usr_word[:-1]
         elif usr_input == "enter":
             if usr_word.lower() in read_words():
+                if not error_found_popup:
+                    pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
                 error_found_popup = True
             elif len(usr_word.replace("-", "")) < 3:
+                if not error_too_short_popup:
+                    pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
                 error_too_short_popup = True
             else:
                 error_only_one_letter_popup = True
@@ -197,7 +219,9 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
                         error_only_one_letter_popup = False
                 if not error_only_one_letter_popup:
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                     break
+                pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
         else:
             if len(usr_word) < 26:
                 usr_word += usr_input
@@ -233,6 +257,7 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
         # Logic
 
         if escpressed:
+            pygame.mixer.Sound.play(ESC_SFX)
             usr_word = ""
             break
 
@@ -242,33 +267,36 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
             error_too_short_popup = ok_popup(screen, my_fonts, mouseclicked, "Le mot est trop court.", (168, 315), is_dark_mode)
         elif error_only_one_letter_popup:
             error_only_one_letter_popup = ok_popup(screen,my_fonts, mouseclicked, "C'est un mot d'une lettre.", (130,315), is_dark_mode)
+        
         elif add_word_button.collidepoint(pygame.mouse.get_pos()) and not(return_button.collidepoint(pygame.mouse.get_pos())):
             if usr_word != "":
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
-
                 if mouseclicked:
                     if usr_word in read_words():
                         error_found_popup = True
+                        pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
                     elif len(usr_word.replace("-", "")) < 3:
                         error_too_short_popup = True
+                        pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
                     else:
                         error_only_one_letter_popup = True
                         for i in range(len(usr_word)):
                             if normalizing_str(usr_word[0]) != normalizing_str(usr_word[i]):
                                 error_only_one_letter_popup = False
                         if not error_only_one_letter_popup:
+                            pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                             break
+                        pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
 
             else:  
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
         else:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
-
-
             if return_button.collidepoint(pygame.mouse.get_pos()) and not(add_word_button.collidepoint(pygame.mouse.get_pos())):
                 if mouseclicked:
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                     usr_word = ""
                     break
@@ -314,11 +342,7 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
         words_title_text = my_fonts[1].render("Retirer un mot", True, text_color)
         screen.blit(words_title_text, (233, 22))
 
-        if words_list == []:
-            error_popup_empty = True
-        
-        else:
-
+        if words_list != []:
             for i in range(words_list_current_page * 20, len(words_list)):
                 if (i-words_list_current_page * 20) < 10:
                     word_rect = render_adaptive_text(
@@ -333,7 +357,6 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
                     )
 
                     clickable_words.append((words_list[i], word_rect))
-
                 
                 elif (i-words_list_current_page * 20) < 20:
                     word_rect = render_adaptive_text(
@@ -385,6 +408,7 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
         if next_page_rect is not None:
             if next_page_rect.collidepoint(pygame.mouse.get_pos()):
                 if mouseclicked:
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_WAITARROW) 
                     words_list_current_page += 1
                 else:
@@ -393,12 +417,14 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
         if previous_page_rect is not None:
             if previous_page_rect.collidepoint(pygame.mouse.get_pos()):
                 if mouseclicked:
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_WAITARROW) 
                     words_list_current_page -= 1
                 else:
                     hover = True
 
         if escpressed:
+            pygame.mixer.Sound.play(ESC_SFX)
             break
 
         elif error_popup_empty:
@@ -412,8 +438,14 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
                 clear_words()
                 break
 
+        elif words_list == []:
+            pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
+            error_popup_empty = True
+
+
         elif return_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
+                pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 break
             else:
@@ -421,6 +453,8 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
 
         elif delete_all_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
+                pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+                pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_WAITARROW) 
                 notice_clear_all_popup = True
             else:
@@ -431,6 +465,7 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
                 if not notice_clear_all_popup:
                    pygame.draw.line(screen, (236, 179, 201), (word_rect.left-8, word_rect.centery), (word_rect.right+8, word_rect.centery), 2)
                 if mouseclicked:
+                    pygame.mixer.Sound.play(DRAWING_SFX)
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                     remove_word(words_list.index(word))
                     words_list = read_words()
@@ -453,7 +488,7 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
     reset_popup = False
     notice_username_input_popup = False
     notice_username_input_empty_popup = False
-    usr_word = ""
+    usr_word = read_username()
     
     while True:
         
@@ -489,6 +524,7 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
         # Logic
 
         if escpressed:
+            pygame.mixer.Sound.play(ESC_SFX)
             break
 
         elif reset_popup:
@@ -500,6 +536,8 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
                 usr_word = usr_word[:-1]
             elif usr_input == "enter":
                 if usr_word != "":
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+                    pygame.mixer.Sound.play(INPUT_POPUP_CLOSE_SFX)
                     notice_username_input_popup = False
                     change_username(usr_word)
 
@@ -517,6 +555,8 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
 
             if not notice_username_input_popup:
                 if usr_word != "":
+                    pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+                    pygame.mixer.Sound.play(INPUT_POPUP_CLOSE_SFX)
                     change_username(usr_word)
 
                     usr_word = ""
@@ -530,11 +570,16 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
                 if mouseclicked:
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                     if clear_scores_button.collidepoint(pygame.mouse.get_pos()):
+                        pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+                        pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
                         reset_popup = True
                         clear_scores()
                     elif return_button.collidepoint(pygame.mouse.get_pos()):
+                        pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
                         break
                     elif change_username_button.collidepoint(pygame.mouse.get_pos()):
+                        pygame.mixer.Sound.play(MENU_BUTTON_CLICK_SFX)
+                        pygame.mixer.Sound.play(INPUT_POPUP_OPEN_SFX)
                         notice_username_input_popup = True                
 
                 else:
