@@ -42,9 +42,9 @@ def make_clue(word_to_guess, letters_found="", letters_tried=""):
     for i in range(len(word_to_guess)):
         if i == 0 and len(word_to_guess) > 4:
             clue += word_to_guess[0]
-            add_to_letters_tried = check_letter(word_to_guess, word_to_guess[0], letters_found, letters_tried)
+            add_to_letters_tried = check_letter(word_to_guess, normalizing_str(word_to_guess[0]), letters_found, letters_tried)
             letters_found, letters_tried = add_to_letters_tried[1], add_to_letters_tried[2]
-        elif word_to_guess[i] == word_to_guess[0]:
+        elif normalizing_str(word_to_guess[i]) == normalizing_str(word_to_guess[0]):
             clue += word_to_guess[i]
         elif word_to_guess[i] == "-":
             clue += "-"
