@@ -36,8 +36,22 @@ LETTER_WRITE_SFX_2 = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", 
 def make_clue(word_to_guess, letters_found="", letters_tried=""):
 
     '''
-    Take word_to_guess
-    and return a string of the lengh of word_to_guess but filled with "_" and its associated values
+    Take a word to guess and return the corresponding clue. 
+    Initialize letters_found and letters_tried because the first letter is given.
+    If the first letter is repeated in the word, its also given in the rest of the word.
+    Hyphens is given.
+    #### For example: 
+            1. "Umbrella" will output "U _ _ _ _ _ _ _" clue.
+            2. "Example" will output "E _ _ _ _ _ E" clue.
+            3. "Science-fiction" will output "S _ _ _ _ _ _ - _ _ _ _ _ _ _" clue.        
+    ### PARAMETERS
+            word_to_guess: str - litterally the word to guess.
+            letters_found: str - letters already found by user.
+            letters_tried: str - letters already tried by user.
+    ### RETURNS
+            clue: str - the clue returned.
+            letters_found: str - letters already found by user now containing first letter.
+            letters_tried: str - letters already tried by user now containung first letter.
     '''
     
     clue = ""
@@ -47,7 +61,7 @@ def make_clue(word_to_guess, letters_found="", letters_tried=""):
             clue += word_to_guess[0]
             add_to_letters_tried = check_letter(word_to_guess, normalizing_str(word_to_guess[0]), letters_found, letters_tried)
             letters_found, letters_tried = add_to_letters_tried[1], add_to_letters_tried[2]
-        elif normalizing_str(word_to_guess[i]) == normalizing_str(word_to_guess[0]):
+        elif normalizing_str(word_to_guess[i]) == normalizing_str(word_to_guess[0]) and len(word_to_guess) > 4:
             clue += word_to_guess[i]
         elif word_to_guess[i] == "-":
             clue += "-"
@@ -59,10 +73,14 @@ def make_clue(word_to_guess, letters_found="", letters_tried=""):
 def is_in_letters_tried(letter, letters_tried, letters_found):
 
     '''
-    Take letter and letters_tried as parameter 
-    and return a boolean if the letter is found in letters_tried or not
+    Check if a letter is already found or tried.
+    ### PARAMETERS
+            letter: str - letter provided by the user.
+            letters_tried: str - letters already tried by the user.
+            letters_found: str - letters already found by the user.
+    ### RETURNS
+            bool
     '''
-
 
     if letter in letters_tried or letter in letters_found:
         return True
@@ -72,7 +90,22 @@ def is_in_letters_tried(letter, letters_tried, letters_found):
 def update_clue(clue, letter, word_to_guess, word_to_guess_normalized):
 
     '''
-    Update clue if letter is found in word_to_guess
+    Update clue with found letter. The user only provide unaccentuated letters.
+    The check is made on unaccentuated word to guess version letters.
+    The clue is updated with accentuated word to guess version letters.
+    ### For example: 
+            word_to_guess = "hélicoptère"
+            word_to_guess_normalized = "helicoptere"
+            letter = "e"
+            clue = "h__________"
+            update_clue(clue,letter,word_to_guess,word_to_guess_normalized) -> "hé_____è_e" 
+    ### PARAMETERS
+            clue: str
+            letter: str - the letter found.
+            word_to_guess: str - the word to guess.
+            word_to_guess_normalized: str - the word to guess without accentuation.
+    ### RETURNS
+            clue: str
     '''
 
     clue_list = list(clue)
@@ -83,19 +116,25 @@ def update_clue(clue, letter, word_to_guess, word_to_guess_normalized):
     
     return ''.join(clue_list)
 
-def return_clue_string(clue):
-
-    clue_string = ''
-    for char in clue:
-        clue_string = clue_string + ' ' + char
-
-    return clue_string
-
 def check_letter(word_to_guess, letter, letters_found, letters_tried):
 
     '''
-    Check if letter is present in word_to_guess, 
-    return is_good_choice, letters_tried and a boolean letter_found
+    Check if the letter is present in the word to guess.
+    ### For example: 
+            word_to_guess = "avion"
+            letter = "v"
+            letters_found = "in"
+            letters_tried = "xb"
+            check_letter(word_to_guess, letter, letters_found, letters_tried) -> True,"inv","xb"
+    ### PARAMETERS
+            word_to_guess: str
+            letter: str
+            letters_found: str
+            letters_tried: str
+    ### RETURNS
+            bool - True if letter in word_to_guess
+            letters_tried: str
+            letters_found: str
     '''
 
     if word_to_guess.find(letter) != -1:
@@ -107,31 +146,53 @@ def check_letter(word_to_guess, letter, letters_found, letters_tried):
 
     return False, letters_found, letters_tried
 
-def str_already_tried_letters(letters_tried):
+def format_str(string_to_format):
 
     '''
-    return stringified letters_tried 
+    Add spaces between string_to_format letters.
+    ### For example: 
+            string_to_format = "hjdsaq"
+            format_clue(string_to_format) -> "h j d s a q"
+    ### PARAMETERS
+            string_to_format: str
+    ### RETURNS
+            formatted_string: str
     '''
 
-    str_letters_tried = ""
-    for letter in letters_tried:
-        str_letters_tried += f" {letter}"
-    return str_letters_tried
+    formatted_string = ""
+    for letter in string_to_format:
+        formatted_string += f" {letter}"
+    return formatted_string
 
-def normalizing_str(string):
+def normalizing_str(string_to_normalize):
 
     '''
-    Create a version of string without accents
+    Normalize its parameter.
+    ### For example: 
+            string_to_normalize = "Aéronautique"
+            normalizing_str(string_to_normalize) -> "aeronautique"
+    ### PARAMETERS
+            string_to_normalize: str
+    ### RETURNS
+            str
     '''
 
-    normalized = unicodedata.normalize('NFD', string)
+    normalized = unicodedata.normalize('NFD', string_to_normalize)
     return "".join(c for c in normalized if unicodedata.category(c) != 'Mn')
 
 def game_won_check(clue, word_to_guess):
 
     '''
-    Check if the player has won, 
-    return a boolean corresponding if he won or not
+    Check if player won.
+    ### For example: 
+            clue = "Gateau"
+            word_to_guess = "Gateau"
+            game_won_check(clue, word_to_guess) -> True
+    ### PARAMETERS
+            clue: str
+            word_to_guess: str
+    ### RETURNS
+            bool
     '''
 
     if clue == word_to_guess:
@@ -140,6 +201,23 @@ def game_won_check(clue, word_to_guess):
         return False
     
 def reset_values():
+
+    '''
+    Reset game values.
+    ### RETURNS
+            life: int
+            word_to_guess: str
+            word_to_guess_normalized: str
+            clue: str
+            letters_found: str
+            letters_tried: str
+            letter_checked: bool - game status to know if letter as been checked
+            notice_win_popup: bool - status to know if popup is displayed 
+            notice_lose_popup: bool - status to know if popup is displayed
+            display_text_good_choice: bool - status to know if text is displayed
+            display_text_wrong_choice: bool - status to know if text is displayed
+            display_text_tried_letter: bool  - status to know if text is displayed
+    '''
 
     life = 6
     word_to_guess = random.choice(read_words())
@@ -155,6 +233,14 @@ def reset_values():
     return life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter
 
 def game(screen, clock, my_fonts, is_dark_mode):
+
+    '''
+    Pygame gameplay loop.
+    ### PARAMETERS
+            screen: pygame.Surface
+            clock: pygame.Clock
+            my_fonts: tuple[pygame.Font, pygame.Font]
+    '''
 
     gaming = True
     life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
@@ -173,7 +259,7 @@ def game(screen, clock, my_fonts, is_dark_mode):
 
         render_adaptive_text(
             screen,
-            return_clue_string(clue.capitalize()),
+            format_str(clue.capitalize()),
             400,
             180,
             600,
@@ -184,7 +270,7 @@ def game(screen, clock, my_fonts, is_dark_mode):
 
         letters_tried_title_text = my_fonts[0].render("Lettres déjà essayées :", True, text_color)
         screen.blit(letters_tried_title_text, (60, 270))
-        letters_tried_text = my_fonts[0].render(str_already_tried_letters(letters_tried.upper()), True, text_color)
+        letters_tried_text = my_fonts[0].render(format_str(letters_tried.upper()), True, text_color)
         screen.blit(letters_tried_text, (60, 370))
 
         if is_dark_mode:
