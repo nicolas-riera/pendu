@@ -10,6 +10,7 @@ from src.pygame_events import *
 from src.keyboard_input import *
 from src.render_adaptive_text import *
 from src.popup import *
+from src.dark_mode import *
 
 # Variables
 
@@ -145,10 +146,11 @@ def reset_values():
     
     return life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter
 
-def game(screen, clock, my_fonts):
+def game(screen, clock, my_fonts, is_dark_mode=False):
 
     gaming = True
     life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
+    is_dark_mode = True
 
     while gaming:
             
@@ -158,7 +160,7 @@ def game(screen, clock, my_fonts):
 
         # Rendering  
 
-        screen.fill("white") 
+        is_dark_mode, text_color = is_dark_modes(screen, is_dark_mode)
 
         render_adaptive_text(
             screen,
@@ -167,12 +169,13 @@ def game(screen, clock, my_fonts):
             180,
             600,
             FONT_PATH,
-            centered=True
+            centered=True,
+            color=text_color
         )
 
-        letters_tried_title_text = my_fonts[0].render("Lettres déjà essayées :", True, (0, 0, 0))
+        letters_tried_title_text = my_fonts[0].render("Lettres déjà essayées :", True, text_color)
         screen.blit(letters_tried_title_text, (60, 270))
-        letters_tried_text = my_fonts[0].render(str_already_tried_letters(letters_tried.upper()), True, (0, 0, 0))
+        letters_tried_text = my_fonts[0].render(str_already_tried_letters(letters_tried.upper()), True, text_color)
         screen.blit(letters_tried_text, (60, 370))
 
         hangman_title_rect = HANGMAN_IMG[6-life].get_rect(center=(650, 500))
@@ -191,7 +194,8 @@ def game(screen, clock, my_fonts):
             display_text_y,
             700,
             FONT_PATH,
-            centered=True
+            centered=True,
+            color=text_color
             )
             
             if time.monotonic() - display_text_timestamp >= 1.0:
@@ -205,7 +209,8 @@ def game(screen, clock, my_fonts):
             display_text_y,
             700,
             FONT_PATH,
-            centered=True
+            centered=True,
+            color=text_color
             )
 
             if time.monotonic() - display_text_timestamp >= 1.0:
@@ -219,7 +224,8 @@ def game(screen, clock, my_fonts):
             display_text_y,
             700,
             FONT_PATH,
-            centered=True
+            centered=True,
+            color=text_color
             )
 
             if time.monotonic() - display_text_timestamp >= 1.0:
@@ -234,7 +240,8 @@ def game(screen, clock, my_fonts):
             display_text_y,
             700,
             FONT_PATH,
-            centered=True
+            centered=True,
+            color=text_color
             )
         
         # Logic
