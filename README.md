@@ -32,7 +32,9 @@ Le but est de trouver le mot secret avant de faire trop d’erreurs. Chaque lett
 
 ## Installation (Windows uniquement)
 
-tbd
+Téléchagez la dernière release de l'exécutable ici : https://github.com/nicolas-riera/pendu/releases/latest
+
+Après le téléchargement, exécutez simplement ```Pendu_[version].exe``` pour lancer le jeu.
 
 ## Fonctionnalités
 
@@ -45,6 +47,7 @@ tbd
     - Système de nom du joueur.
     - Système de classement persisté pour sauvegarder les résultats.
     - Historique de parties, permettant de consulter les scores précédents.
+- Thème clair/sombre, avec persistence
 
 ## Contrôles
 
