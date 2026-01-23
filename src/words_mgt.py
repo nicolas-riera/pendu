@@ -12,8 +12,8 @@ def read_words():
 
     '''
     Read the words from read_words_file().
-    And parse words into list of strings
-    ### RETURNS
+    Parse words into list of strings.
+    ### RETURN
             [str]
     '''
 
@@ -25,7 +25,7 @@ def read_words_file():
 
     '''
     Read the words file from the file path FILE_PATH found in /src/words_mgt.py file.
-    ### RETURNS
+    ### RETURN
             [str]
     '''
 
@@ -35,8 +35,8 @@ def read_words_file():
 def write_lines(lines):
 
     '''
-    Write lines in the scoreswords file from the file path FILE_PATH found in /src/words_mgt.py file.
-    ### PARAMETERS
+    Write lines in the words file from the file path FILE_PATH found in /src/words_mgt.py file.
+    ### PARAMETER
             lines: str
     '''
 
@@ -47,7 +47,7 @@ def add_word(word):
 
     '''
     Add word to the words.txt file.
-    ### PARAMETERS
+    ### PARAMETER
             word: str 
     '''
 
@@ -61,7 +61,7 @@ def remove_word(index):
 
     '''
     Remove word from words.txt file using its index.
-    ### PARAMETERS
+    ### PARAMETER
             index: int 
     '''
 
@@ -96,5 +96,11 @@ def clear_words():
     write_lines(lines)
     
 def check_empty_last_line():
+
+    '''
+    Check if words.txt file last line is empty.
+    Create one empty last line if none is found.
+    '''
+
     lines = read_words_file()
     write_lines(lines)
