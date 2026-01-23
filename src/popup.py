@@ -18,9 +18,6 @@ FONT_PATH = os.path.join(BASE_DIR, "assets", "font", "LiberationSans-Regular.ttf
 pygame.mixer.init()
 
 MENU_BUTTON_CLICK_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_click_sfx.wav"))
-WIN_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "win_sfx.wav"))
-LOST_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "lost_sfx.wav"))
-# todo xbox 360
 
 # Functions
 

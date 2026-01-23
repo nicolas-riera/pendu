@@ -30,6 +30,8 @@ HANGMAN_IMG_INVERTED = tuple(
 
 LETTER_WRITE_SFX_1 = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "letter_write_sfx_1.mp3"))
 LETTER_WRITE_SFX_2 = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "letter_write_sfx_2.mp3"))
+WIN_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "win_sfx.wav"))
+LOST_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "lost_sfx.wav"))
 
 # Functions
 
