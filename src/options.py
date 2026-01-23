@@ -29,6 +29,15 @@ NOTICE_POPUP_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "s
 
 def options(screen, clock, my_fonts, is_dark_mode):
 
+    '''
+    Pygame options menu loop.
+    ### PARAMETERS
+            screen: pygame.Surface
+            clock: pygame.Clock
+            my_fonts: tuple[pygame.Font, pygame.Font]
+            is_dark_mode: bool
+    '''
+
     while True:
         
         # pygame events
@@ -107,6 +116,15 @@ def options(screen, clock, my_fonts, is_dark_mode):
 
 def words_menu(screen, clock, my_fonts, is_dark_mode):
 
+    '''
+    Pygame words menu loop.
+    ### PARAMETERS
+            screen: pygame.Surface
+            clock: pygame.Clock
+            my_fonts: tuple[pygame.Font, pygame.Font]
+            is_dark_mode: bool
+    '''
+
     reset_popup = False
     
     while True:
@@ -184,6 +202,15 @@ def words_menu(screen, clock, my_fonts, is_dark_mode):
         clock.tick(60) 
 
 def add_word_menu(screen, clock, my_fonts, is_dark_mode):
+
+    '''
+    Pygame add word menu loop.
+    ### PARAMETERS
+            screen: pygame.Surface
+            clock: pygame.Clock
+            my_fonts: tuple[pygame.Font, pygame.Font]
+            is_dark_mode: bool
+    '''
 
     usr_word = ""
     error_found_popup = False
@@ -312,8 +339,16 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
     if usr_word != "":
         add_word(usr_word.lower())
 
-
 def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
+
+    '''
+    Pygame remove word menu loop.
+    ### PARAMETERS
+            screen: pygame.Surface
+            clock: pygame.Clock
+            my_fonts: tuple[pygame.Font, pygame.Font]
+            is_dark_mode: bool
+    '''
 
     words_list = read_words()
     words_list_current_page = 0
@@ -484,6 +519,15 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
         clock.tick(60) 
 
 def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
+
+    '''
+    Pygame scores menu options loop.
+    ### PARAMETERS
+            screen: pygame.Surface
+            clock: pygame.Clock
+            my_fonts: tuple[pygame.Font, pygame.Font]
+            is_dark_mode: bool
+    '''
 
     reset_popup = False
     notice_username_input_popup = False
