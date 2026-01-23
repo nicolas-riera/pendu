@@ -32,7 +32,9 @@ Le but est de trouver le mot secret avant de faire trop d’erreurs. Chaque lett
 
 ## Installation (Windows uniquement)
 
-tbd
+Téléchagez la dernière release de l'exécutable ici : https://github.com/nicolas-riera/pendu/releases/latest
+
+Après le téléchargement, exécutez simplement ```Pendu_[version].exe``` pour lancer le jeu.
 
 ## Fonctionnalités
 
@@ -45,6 +47,7 @@ tbd
     - Système de nom du joueur.
     - Système de classement persisté pour sauvegarder les résultats.
     - Historique de parties, permettant de consulter les scores précédents.
+- Thème clair/sombre, avec persistence
 
 ## Contrôles
 
@@ -75,12 +78,13 @@ Dans **Options → Mots → Retirer mot** :
     - Cliquer sur un mot pour le supprimer
     - Utiliser les flèches `<` / `>` pour changer de pages (s'il y a plus de 20 mots)
 
-## Exécuter depuis le code source
+## Exécuter et Build depuis le code source
 
 ### Prérequis
 
 - Python 3.x
 - pygame -> ```python -m pip install pygame```
+- pyinstaller -> ```python -m pip install pyinstaller```
 
 ## Exécuter
 
@@ -89,6 +93,16 @@ Dans **Options → Mots → Retirer mot** :
 ```bash
 python main.py
 ```
+
+## Build
+
+Pour build le jeu en .EXE, utilisez pyinstaller
+
+```bash
+pyinstaller main.py --onefile --noconsole --icon=assets/img/logo.ico --hidden-import=pygame --name Pendu --add-data="assets;assets"
+```
+
+Sur ```--add-data```, remplacez ";" avec ":" si vous êtes sur MacOS ou Linux.
 
 ## Auteurs
 

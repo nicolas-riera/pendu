@@ -9,6 +9,7 @@ from src.game import *
 from src.popup import *
 from src.scores_mgt import *
 from src.scores import *
+from src.dark_mode import *
 
 # Variables
 
@@ -16,13 +17,15 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Assets loading
 
-logo_title = pygame.image.load(os.path.join(BASE_DIR, "../", "assets", "img", "logo_title.png"))
+LOGO_TITLE = pygame.image.load(os.path.join(BASE_DIR, "../", "assets", "img", "logo_title.png"))
+LOGO_TITLE_INVERTED = invert_surface(LOGO_TITLE)
 
 # Functions
 
 def menu(screen, clock, my_fonts):
 
     error_popup_empty = False
+    is_dark_mode = dark_mode_setting("read", None)
     notice_username_input_popup = False
     notice_username_input_empty_popup = False
 
@@ -36,11 +39,18 @@ def menu(screen, clock, my_fonts):
 
         # Rendering  
 
-        screen.fill("white") 
+        screen_fill_color, text_color = light_dark_mode(is_dark_mode)
+
+        screen.fill(screen_fill_color)
         
-        logo_title_rect = logo_title.get_rect(center=(650, 500))
-        logo_title_scaled = pygame.transform.scale(logo_title, (logo_title.get_size()[0]*0.5, logo_title.get_size()[1]*0.5))
-        screen.blit(logo_title_scaled, logo_title_rect)
+        if is_dark_mode:
+            logo_title_inverted_rect = LOGO_TITLE_INVERTED.get_rect(center=(650, 500))
+            logo_title_inverted_scaled = pygame.transform.scale(LOGO_TITLE_INVERTED, (LOGO_TITLE_INVERTED.get_size()[0]*0.5, LOGO_TITLE_INVERTED.get_size()[1]*0.5))
+            screen.blit(logo_title_inverted_scaled, logo_title_inverted_rect)
+        else:
+            logo_title_rect = LOGO_TITLE.get_rect(center=(650, 500))
+            logo_title_scaled = pygame.transform.scale(LOGO_TITLE, (LOGO_TITLE.get_size()[0]*0.5, LOGO_TITLE.get_size()[1]*0.5))
+            screen.blit(logo_title_scaled, logo_title_rect)
 
         # Draw.rect(surface, color, (x position, y position, x width, y width))
         pygame.draw.rect(screen, (236, 179, 101), (295, 400, 203, 80))
@@ -65,7 +75,7 @@ def menu(screen, clock, my_fonts):
             raise SystemExit
         
         elif error_popup_empty:
-            error_popup_empty = ok_popup(screen, my_fonts, mouseclicked, "La liste est vide.", (213, 315))
+            error_popup_empty = ok_popup(screen, my_fonts, mouseclicked, "La liste est vide.", (213, 315), is_dark_mode)
             if not error_popup_empty:
                 continue
 
@@ -79,7 +89,7 @@ def menu(screen, clock, my_fonts):
                 if usr_word != "":
                     notice_username_input_popup = False
                     change_username(usr_word)
-                    game(screen, clock, my_fonts)
+                    game(screen, clock, my_fonts, is_dark_mode)
 
                     usr_word = ""
                     continue
@@ -88,7 +98,7 @@ def menu(screen, clock, my_fonts):
             elif len(usr_word) < 26:
                 usr_word += usr_input
             
-            notice_username_input_popup = username_input_popup(screen, my_fonts, mouseclicked, usr_word)
+            notice_username_input_popup = username_input_popup(screen, my_fonts, mouseclicked, usr_word, is_dark_mode)
 
             if notice_username_input_empty_popup:
                 notice_username_input_empty_popup = ok_popup(screen, my_fonts, mouseclicked, "Nom vide.", (287, 315))
@@ -96,7 +106,7 @@ def menu(screen, clock, my_fonts):
             if not notice_username_input_popup:
                 if usr_word != "":
                     change_username(usr_word)
-                    game(screen, clock, my_fonts)
+                    game(screen, clock, my_fonts, is_dark_mode)
 
                     usr_word = ""
                     continue
@@ -110,15 +120,15 @@ def menu(screen, clock, my_fonts):
                 if play_button.collidepoint(pygame.mouse.get_pos()):
                     if read_words() != []:
                         if read_username() != "anonyme":
-                            game(screen, clock, my_fonts)
+                            game(screen, clock, my_fonts, is_dark_mode)
                         else:
                             notice_username_input_popup = True
                     else:
                         error_popup_empty = True
                 elif scores_button.collidepoint(pygame.mouse.get_pos()):
-                    scores(screen, clock, my_fonts)
+                    scores(screen, clock, my_fonts, is_dark_mode)
                 else:
-                    options(screen, clock, my_fonts)
+                    is_dark_mode = options(screen, clock, my_fonts, is_dark_mode)
             else:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
 

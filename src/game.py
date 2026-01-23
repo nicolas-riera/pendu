@@ -10,6 +10,7 @@ from src.pygame_events import *
 from src.keyboard_input import *
 from src.render_adaptive_text import *
 from src.popup import *
+from src.dark_mode import *
 from src.scores_mgt import *
 
 # Variables
@@ -21,6 +22,10 @@ FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regu
 
 HANGMAN_IMG = tuple(
     pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "img", "hangman", f"{i}.png"))
+    for i in range(7))
+
+HANGMAN_IMG_INVERTED = tuple(
+    invert_surface(pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "img", "hangman", f"{i}.png")))
     for i in range(7))
 
 # Functions
@@ -51,9 +56,9 @@ def make_clue(word_to_guess, letters_found="", letters_tried=""):
     for i in range(len(word_to_guess)):
         if i == 0 and len(word_to_guess) > 4:
             clue += word_to_guess[0]
-            add_to_letters_tried = check_letter(word_to_guess, word_to_guess[0], letters_found, letters_tried)
+            add_to_letters_tried = check_letter(word_to_guess, normalizing_str(word_to_guess[0]), letters_found, letters_tried)
             letters_found, letters_tried = add_to_letters_tried[1], add_to_letters_tried[2]
-        elif word_to_guess[i] == word_to_guess[0] and len(word_to_guess) > 4:
+        elif normalizing_str(word_to_guess[i]) == normalizing_str(word_to_guess[0] and len(word_to_guess) > 4):
             clue += word_to_guess[i]
         elif word_to_guess[i] == "-":
             clue += "-"
@@ -224,7 +229,7 @@ def reset_values():
     
     return life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter
 
-def game(screen, clock, my_fonts):
+def game(screen, clock, my_fonts, is_dark_mode):
 
     '''
     Pygame gameplay loop.
@@ -245,7 +250,9 @@ def game(screen, clock, my_fonts):
 
         # Rendering  
 
-        screen.fill("white") 
+        screen_fill_color, text_color = light_dark_mode(is_dark_mode)
+
+        screen.fill(screen_fill_color)
 
         render_adaptive_text(
             screen,
@@ -254,17 +261,23 @@ def game(screen, clock, my_fonts):
             180,
             600,
             FONT_PATH,
-            centered=True
+            centered=True,
+            color=text_color
         )
 
-        letters_tried_title_text = my_fonts[0].render("Lettres déjà essayées :", True, (0, 0, 0))
+        letters_tried_title_text = my_fonts[0].render("Lettres déjà essayées :", True, text_color)
         screen.blit(letters_tried_title_text, (60, 270))
-        letters_tried_text = my_fonts[0].render(format_str(letters_tried.upper()), True, (0, 0, 0))
+        letters_tried_text = my_fonts[0].render(format_str(letters_tried.upper()), True, text_color)
         screen.blit(letters_tried_text, (60, 370))
 
-        hangman_title_rect = HANGMAN_IMG[6-life].get_rect(center=(630, 500))
-        hangman_title_scaled = pygame.transform.scale(HANGMAN_IMG[6-life], (HANGMAN_IMG[6-life].get_size()[0]*1, HANGMAN_IMG[6-life].get_size()[1]*1))
-        screen.blit(hangman_title_scaled, hangman_title_rect)
+        if is_dark_mode:
+            hangman_title_rect = HANGMAN_IMG_INVERTED[6-life].get_rect(center=(630, 500))
+            hangman_title_scaled = pygame.transform.scale(HANGMAN_IMG_INVERTED[6-life], (HANGMAN_IMG_INVERTED[6-life].get_size()[0]*1, HANGMAN_IMG_INVERTED[6-life].get_size()[1]*1))
+            screen.blit(hangman_title_scaled, hangman_title_rect)
+        else:
+            hangman_title_rect = HANGMAN_IMG[6-life].get_rect(center=(630, 500))
+            hangman_title_scaled = pygame.transform.scale(HANGMAN_IMG[6-life], (HANGMAN_IMG[6-life].get_size()[0]*1, HANGMAN_IMG[6-life].get_size()[1]*1))
+            screen.blit(hangman_title_scaled, hangman_title_rect)
 
         # Display text rendering
 
@@ -278,7 +291,8 @@ def game(screen, clock, my_fonts):
             display_text_y,
             700,
             FONT_PATH,
-            centered=True
+            centered=True,
+            color=text_color
             )
             
             if time.monotonic() - display_text_timestamp >= 1.0:
@@ -292,7 +306,8 @@ def game(screen, clock, my_fonts):
             display_text_y,
             700,
             FONT_PATH,
-            centered=True
+            centered=True,
+            color=text_color
             )
 
             if time.monotonic() - display_text_timestamp >= 1.0:
@@ -306,7 +321,8 @@ def game(screen, clock, my_fonts):
             display_text_y,
             700,
             FONT_PATH,
-            centered=True
+            centered=True,
+            color=text_color
             )
 
             if time.monotonic() - display_text_timestamp >= 1.0:
@@ -321,7 +337,8 @@ def game(screen, clock, my_fonts):
             display_text_y,
             700,
             FONT_PATH,
-            centered=True
+            centered=True,
+            color=text_color
             )
         
         # Logic
@@ -331,7 +348,7 @@ def game(screen, clock, my_fonts):
 
         elif notice_win_popup:
             if time.monotonic() - popup_delay >= 0.7:
-                notice_win_popup, usr_choice = replay_menu_popup(screen, my_fonts, mouseclicked, "Vous avez gagné !", (195, 315))
+                notice_win_popup, usr_choice = replay_menu_popup(screen, my_fonts, mouseclicked, "Vous avez gagné !", (195, 315), is_dark_mode)
                 if usr_choice == 1:
                     add_scores(read_username(), word_to_guess, 6-life)
                     life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
@@ -342,8 +359,7 @@ def game(screen, clock, my_fonts):
 
         elif notice_lose_popup:
             if time.monotonic() - popup_delay >= 0.7:
-                notice_lose_popup, usr_choice = replay_menu_popup(screen
-                , my_fonts, mouseclicked, "Vous avez perdu...", (195, 315), subtitle=f"Le mot était {word_to_guess}.")
+                notice_lose_popup, usr_choice = replay_menu_popup(screen, my_fonts, mouseclicked, "Vous avez perdu...", (195, 315), is_dark_mode, subtitle=f"Le mot était {word_to_guess}.")
                 if usr_choice == 1:
                     life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
                 elif usr_choice == 2:
