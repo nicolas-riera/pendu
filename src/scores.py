@@ -38,11 +38,11 @@ def scores(screen, clock, my_fonts, is_dark_mode):
 
         text_color = light_dark_mode(screen, is_dark_mode)
 
-        name_section_text = my_fonts[0].render("JOUEUR", True, (0, 0, 0))
+        name_section_text = my_fonts[0].render("JOUEUR", True, text_color)
         screen.blit(name_section_text, (60, 50))
-        word_section_text = my_fonts[0].render("MOT", True, (0, 0, 0))
+        word_section_text = my_fonts[0].render("MOT", True, text_color)
         screen.blit(word_section_text, (300, 50))
-        error_section_text = my_fonts[0].render("ERREURS", True, (0, 0, 0))
+        error_section_text = my_fonts[0].render("ERREURS", True, text_color)
         screen.blit(error_section_text, (600, 50))
 
         pygame.draw.line(screen, text_color, (50, 90), (750, 90), 2)

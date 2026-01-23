@@ -24,7 +24,7 @@ logo_title = pygame.image.load(os.path.join(BASE_DIR, "../", "assets", "img", "l
 def menu(screen, clock, my_fonts):
 
     error_popup_empty = False
-    is_dark_mode = False
+    is_dark_mode = True
     notice_username_input_popup = False
     notice_username_input_empty_popup = False
 

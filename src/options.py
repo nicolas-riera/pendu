@@ -31,13 +31,13 @@ def options(screen, clock, my_fonts, is_dark_mode):
 
         text_color = light_dark_mode(screen, is_dark_mode)
 
-        settings_title_button_text = my_fonts[1].render("Options", True, (0, 0, 0))
+        settings_title_button_text = my_fonts[1].render("Options", True, text_color)
         screen.blit(settings_title_button_text, (310, 120))
 
         # Draw.rect(surface, color, (x position, y position, x width, y width))
         pygame.draw.rect(screen, (236, 179, 101), (295, 300, 203, 80))
         words_button = pygame.Rect((295, 300, 203, 80))
-        words_button_text = my_fonts[0].render("Mots", True, text_color)
+        words_button_text = my_fonts[0].render("Mots", True, (0, 0, 0))
         screen.blit(words_button_text, (365, 320))
 
         pygame.draw.rect(screen, (236, 179, 50), (295, 400, 203, 80))
@@ -45,14 +45,14 @@ def options(screen, clock, my_fonts, is_dark_mode):
         scores_button_text = my_fonts[0].render("Scores", True, (0, 0, 0))
         screen.blit(scores_button_text, (352, 420))
 
-        pygame.draw.rect(screen, (236, 179, 101), (295, 450, 203, 80))
-        dark_mode_button = pygame.Rect((295, 450, 203, 80))
-        dark_mode_button_text = my_fonts[0].render("Dark mode", True, text_color)
-        screen.blit(dark_mode_button_text, (322, 470))
+        # pygame.draw.rect(screen, (236, 179, 101), (295, 450, 203, 80))
+        # dark_mode_button = pygame.Rect((295, 450, 203, 80))
+        # dark_mode_button_text = my_fonts[0].render("Dark mode", True, text_color)
+        # screen.blit(dark_mode_button_text, (322, 470))
 
         pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
         return_button = pygame.Rect((295, 600, 203, 80))
-        return_button_text = my_fonts[0].render("Retour", True, text_color)
+        return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
         screen.blit(return_button_text, (356, 620))
 
         pygame.display.flip()  
@@ -191,7 +191,7 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
         screen.blit(words_title_text, (230, 120))
 
         pygame.draw.rect(screen, (240, 240, 240), (70, 310, 660, 60))
-        usr_word_display = my_fonts[0].render(usr_word, True, text_color)
+        usr_word_display = my_fonts[0].render(usr_word, True, (0, 0, 0))
         screen.blit(usr_word_display, (75, 320))
 
         if usr_word == "":
@@ -201,12 +201,12 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
 
         pygame.draw.rect(screen, add_word_button_color, (295, 500, 203, 80))
         add_word_button = pygame.Rect((295, 500, 203, 80))
-        add_word_button_text = my_fonts[0].render("Ajouter mot", True, text_color)
+        add_word_button_text = my_fonts[0].render("Ajouter mot", True, (0, 0, 0))
         screen.blit(add_word_button_text, (322, 520))
 
         pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
         return_button = pygame.Rect((295, 600, 203, 80))
-        return_button_text = my_fonts[0].render("Retour", True, text_color)
+        return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
         screen.blit(return_button_text, (356, 620))
         
         # Logic
@@ -305,7 +305,8 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
                         y=100 + 50 * (i-words_list_current_page * 20),
                         max_width=250,
                         font_path=FONT_PATH,
-                        clickable=True
+                        clickable=True,
+                        color=text_color
                     )
 
                     clickable_words.append((words_list[i], word_rect))
@@ -319,7 +320,8 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
                         y=100 + 50 * ((i-words_list_current_page * 20)-10),
                         max_width=250,
                         font_path=FONT_PATH,
-                        clickable=True
+                        clickable=True,
+                        color=text_color
                     )
 
                     clickable_words.append((words_list[i], word_rect))
@@ -342,12 +344,12 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
 
         pygame.draw.rect(screen, (168, 168, 168), (165, 650, 203, 80))
         return_button = pygame.Rect((165, 650, 203, 80))
-        return_button_text = my_fonts[0].render("Retour", True, text_color)
+        return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
         screen.blit(return_button_text, (226, 670))
 
         pygame.draw.rect(screen, (236, 179, 201), (425, 650, 203, 80))
         delete_all_button = pygame.Rect((425, 650, 203, 80))
-        delete_all_button_text = my_fonts[0].render("Tout supprimer", True, text_color)
+        delete_all_button_text = my_fonts[0].render("Tout supprimer", True, (0, 0, 0))
         screen.blit(delete_all_button_text, (427, 670))
 
         page_indicator_text = my_fonts[0].render(f"Page {words_list_current_page + 1}", True, text_color)
@@ -440,7 +442,7 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
 
         text_color = light_dark_mode(screen, is_dark_mode)
 
-        words_title_button_text = my_fonts[1].render("Scores", True, (0, 0, 0))
+        words_title_button_text = my_fonts[1].render("Scores", True, text_color)
         screen.blit(words_title_button_text, (320, 120))
 
         # Draw.rect(surface, color, (x position, y position, x width, y width))
