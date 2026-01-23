@@ -30,6 +30,14 @@ NOTICE_POPUP_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "s
 
 def menu(screen, clock, my_fonts):
 
+    '''
+    Pygame menu loop.
+    ### PARAMETERS
+            screen: pygame.Surface
+            clock: pygame.Clock
+            my_fonts: tuple[pygame.Font, pygame.Font]
+    '''
+
     error_popup_empty = False
     is_dark_mode = dark_mode_setting("read", None)
     notice_username_input_popup = False
