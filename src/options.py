@@ -19,9 +19,7 @@ FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regu
 
 # Functions
 
-def options(screen, clock, my_fonts, is_dark_mode=False):
-
-    is_dark_mode = False
+def options(screen, clock, my_fonts, is_dark_mode):
 
     while True:
         
@@ -31,7 +29,7 @@ def options(screen, clock, my_fonts, is_dark_mode=False):
 
         # Rendering  
 
-        is_dark_mode, text_color = is_dark_modes(screen, is_dark_mode)
+        text_color = light_dark_mode(screen, is_dark_mode)
 
         settings_title_button_text = my_fonts[1].render("Options", True, (0, 0, 0))
         screen.blit(settings_title_button_text, (310, 120))
@@ -69,9 +67,9 @@ def options(screen, clock, my_fonts, is_dark_mode=False):
             if mouseclicked:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 if words_button.collidepoint(pygame.mouse.get_pos()):
-                    words_menu(screen, clock, my_fonts)
+                    words_menu(screen, clock, my_fonts, is_dark_mode)
                 elif scores_button.collidepoint(pygame.mouse.get_pos()):
-                    scores_menu_options(screen, clock, my_fonts)
+                    scores_menu_options(screen, clock, my_fonts, is_dark_mode)
                 elif return_button.collidepoint(pygame.mouse.get_pos()):
                     break
             else:
@@ -80,10 +78,9 @@ def options(screen, clock, my_fonts, is_dark_mode=False):
         else:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
-def words_menu(screen, clock, my_fonts,is_dark_mode):
+def words_menu(screen, clock, my_fonts, is_dark_mode):
 
     reset_popup = False
-
     
     while True:
         
@@ -94,30 +91,30 @@ def words_menu(screen, clock, my_fonts,is_dark_mode):
 
         # Rendering  
 
-        is_dark_mode, text_color = is_dark_modes(screen, is_dark_mode)
+        text_color = light_dark_mode(screen, is_dark_mode)
 
-        words_title_button_text = my_fonts[1].render("Mots", True, text_color)
-        screen.blit(words_title_button_text, (340, 120))
+        words_title_text = my_fonts[1].render("Mots", True, text_color)
+        screen.blit(words_title_text, (340, 120))
 
         # Draw.rect(surface, color, (x position, y position, x width, y width))
         pygame.draw.rect(screen, (236, 179, 101), (295, 300, 203, 80))
         add_word_button = pygame.Rect((295, 300, 203, 80))
-        add_word_button_text = my_fonts[0].render("Ajouter mot", True, text_color)
+        add_word_button_text = my_fonts[0].render("Ajouter mot", True, (0, 0, 0))
         screen.blit(add_word_button_text, (322, 320))
         
         pygame.draw.rect(screen, (236, 179, 151), (295, 400, 203, 80))
         remove_word_button = pygame.Rect((295, 400, 203, 80))
-        remove_word_button_text = my_fonts[0].render("Retirer mot", True, text_color)
+        remove_word_button_text = my_fonts[0].render("Retirer mot", True, (0, 0, 0))
         screen.blit(remove_word_button_text, (322, 420))
 
         pygame.draw.rect(screen, (236, 179, 201), (295, 500, 203, 80))
         reset_word_button = pygame.Rect((295, 500, 203, 80))
-        reset_word_button_text = my_fonts[0].render("Restaurer liste", True, text_color)
+        reset_word_button_text = my_fonts[0].render("Restaurer liste", True, (0, 0, 0))
         screen.blit(reset_word_button_text, (300, 520))
 
         pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
         return_button = pygame.Rect((295, 600, 203, 80))
-        return_button_text = my_fonts[0].render("Retour", True, text_color)
+        return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
         screen.blit(return_button_text, (356, 620))    
 
         # Logic
@@ -133,11 +130,11 @@ def words_menu(screen, clock, my_fonts,is_dark_mode):
                 if mouseclicked:
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                     if add_word_button.collidepoint(pygame.mouse.get_pos()):
-                        add_word_menu(screen, clock, my_fonts)
+                        add_word_menu(screen, clock, my_fonts, is_dark_mode)
                     elif return_button.collidepoint(pygame.mouse.get_pos()):
                         break
                     elif remove_word_button.collidepoint(pygame.mouse.get_pos()):
-                        remove_word_menu(screen, clock, my_fonts)
+                        remove_word_menu(screen, clock, my_fonts, is_dark_mode)
                     elif reset_word_button.collidepoint(pygame.mouse.get_pos()):
                         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_WAITARROW) 
                         reset_words()
@@ -158,6 +155,7 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
     error_found_popup = False
     error_too_short_popup = False
     error_only_one_letter_popup = False
+
     while True:
         
         # pygame events
@@ -187,7 +185,7 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
 
         # Rendering  
 
-        is_dark_mode, text_color = is_dark_modes(screen, is_dark_mode) 
+        text_color = light_dark_mode(screen, is_dark_mode)
 
         words_title_text = my_fonts[1].render("Ajouter un mot", True, text_color)
         screen.blit(words_title_text, (230, 120))
@@ -288,7 +286,7 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
 
         # Rendering  
 
-        is_dark_mode, text_color = is_dark_modes(screen, is_dark_mode)
+        text_color = light_dark_mode(screen, is_dark_mode)
 
         words_title_text = my_fonts[1].render("Retirer un mot", True, text_color)
         screen.blit(words_title_text, (233, 22))
@@ -425,7 +423,7 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
         pygame.display.flip()  
         clock.tick(60) 
 
-def scores_menu_options(screen, clock, my_fonts):
+def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
 
     reset_popup = False
     notice_username_input_popup = False
@@ -440,7 +438,7 @@ def scores_menu_options(screen, clock, my_fonts):
 
         # Rendering  
 
-        screen.fill("white") 
+        text_color = light_dark_mode(screen, is_dark_mode)
 
         words_title_button_text = my_fonts[1].render("Scores", True, (0, 0, 0))
         screen.blit(words_title_button_text, (320, 120))

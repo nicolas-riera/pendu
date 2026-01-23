@@ -1,5 +1,4 @@
-
-def is_dark_modes(screen, is_dark_mode):
+def light_dark_mode(screen, is_dark_mode):
     
     if not is_dark_mode:
         screen.fill("white")
@@ -9,5 +8,5 @@ def is_dark_modes(screen, is_dark_mode):
         screen.fill((0, 0, 0))
         text_color = (255, 255, 255)
 
-    return is_dark_mode, text_color
+    return text_color
 

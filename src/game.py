@@ -160,7 +160,7 @@ def game(screen, clock, my_fonts, is_dark_mode):
 
         # Rendering  
 
-        is_dark_mode, text_color = is_dark_modes(screen, is_dark_mode)
+        text_color = light_dark_mode(screen, is_dark_mode)
 
         render_adaptive_text(
             screen,

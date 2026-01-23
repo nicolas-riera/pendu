@@ -21,7 +21,7 @@ logo_title = pygame.image.load(os.path.join(BASE_DIR, "../", "assets", "img", "l
 
 # Functions
 
-def menu(screen, clock, my_fonts, is_dark_mode):
+def menu(screen, clock, my_fonts):
 
     error_popup_empty = False
     is_dark_mode = False
@@ -38,7 +38,7 @@ def menu(screen, clock, my_fonts, is_dark_mode):
 
         # Rendering  
 
-        is_dark_mode, text_color = is_dark_modes(screen, is_dark_mode)
+        text_color = light_dark_mode(screen, is_dark_mode)
         
         logo_title_rect = logo_title.get_rect(center=(650, 500))
         logo_title_scaled = pygame.transform.scale(logo_title, (logo_title.get_size()[0]*0.5, logo_title.get_size()[1]*0.5))
@@ -47,7 +47,7 @@ def menu(screen, clock, my_fonts, is_dark_mode):
         # Draw.rect(surface, color, (x position, y position, x width, y width))
         pygame.draw.rect(screen, (236, 179, 101), (295, 400, 203, 80))
         play_button = pygame.Rect((295, 400, 203, 80))
-        play_button_text = my_fonts[0].render("Jouer", True, text_color)
+        play_button_text = my_fonts[0].render("Jouer", True, (0, 0, 0))
         screen.blit(play_button_text, (360, 420))
 
         pygame.draw.rect(screen, (236, 179, 50), (295, 500, 203, 80))
@@ -57,7 +57,7 @@ def menu(screen, clock, my_fonts, is_dark_mode):
 
         pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
         option_button = pygame.Rect((295, 600, 203, 80))
-        option_button_text = my_fonts[0].render("Options", True, text_color)
+        option_button_text = my_fonts[0].render("Options", True, (0, 0, 0))
         screen.blit(option_button_text, (346, 620))  
 
         # Logic
@@ -81,7 +81,7 @@ def menu(screen, clock, my_fonts, is_dark_mode):
                 if usr_word != "":
                     notice_username_input_popup = False
                     change_username(usr_word)
-                    game(screen, clock, my_fonts)
+                    game(screen, clock, my_fonts, is_dark_mode)
 
                     usr_word = ""
                     continue
@@ -98,7 +98,7 @@ def menu(screen, clock, my_fonts, is_dark_mode):
             if not notice_username_input_popup:
                 if usr_word != "":
                     change_username(usr_word)
-                    game(screen, clock, my_fonts)
+                    game(screen, clock, my_fonts, is_dark_mode)
 
                     usr_word = ""
                     continue
@@ -118,7 +118,7 @@ def menu(screen, clock, my_fonts, is_dark_mode):
                     else:
                         error_popup_empty = True
                 elif scores_button.collidepoint(pygame.mouse.get_pos()):
-                    scores(screen, clock, my_fonts)
+                    scores(screen, clock, my_fonts, is_dark_mode)
                 else:
                     options(screen, clock, my_fonts, is_dark_mode)
             else:

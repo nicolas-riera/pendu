@@ -24,11 +24,10 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((800,800))
     my_fonts = pygame.font.Font(FONT_PATH, 30), pygame.font.Font(FONT_PATH, 50)
     clock = pygame.time.Clock()
-    is_dark_mode = False
 
     check_empty_last_line()
 
     if read_words() == []:
         reset_words()
 
-    menu(screen, clock, my_fonts, is_dark_mode)
+    menu(screen, clock, my_fonts)
