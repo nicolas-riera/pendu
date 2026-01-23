@@ -22,7 +22,7 @@ def ok_popup(screen, my_fonts, mouseclicked, text, text_pos, is_dark_mode):
     screen_fade.set_alpha(160)
     screen.blit(screen_fade, (0, 0))
 
-    screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+    screen_fill_color, text_color = light_dark_mode(is_dark_mode)
 
     if is_dark_mode:
         background_popup_color = (20, 20, 20)
@@ -61,7 +61,7 @@ def replay_menu_popup(screen, my_fonts, mouseclicked, text, text_pos, is_dark_mo
 
     # Rendering 
 
-    screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+    screen_fill_color, text_color = light_dark_mode(is_dark_mode)
         
     screen_fade = pygame.Surface((800, 800))
     screen_fade.fill((0, 0, 0))
@@ -129,7 +129,7 @@ def username_input_popup(screen, my_fonts, mouseclicked, usr_word, is_dark_mode)
 
     # Rendering 
 
-    screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+    screen_fill_color, text_color = light_dark_mode(is_dark_mode)
         
     screen_fade = pygame.Surface((800, 800))
     screen_fade.fill((0, 0, 0))

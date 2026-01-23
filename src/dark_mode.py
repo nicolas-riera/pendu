@@ -21,7 +21,7 @@ def dark_mode_setting(mode, is_dark_mode):
             
         write_lines(lines)
 
-def light_dark_mode(screen, is_dark_mode):
+def light_dark_mode(is_dark_mode):
     
     if is_dark_mode:
         screen_fill_color = (0, 0, 0) 

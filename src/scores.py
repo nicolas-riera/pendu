@@ -36,7 +36,7 @@ def scores(screen, clock, my_fonts, is_dark_mode):
 
         # Rendering  
 
-        screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+        screen_fill_color, text_color = light_dark_mode(is_dark_mode)
 
         screen.fill(screen_fill_color)
 

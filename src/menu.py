@@ -38,7 +38,7 @@ def menu(screen, clock, my_fonts):
 
         # Rendering  
 
-        screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+        screen_fill_color, text_color = light_dark_mode(is_dark_mode)
 
         screen.fill(screen_fill_color)
         
