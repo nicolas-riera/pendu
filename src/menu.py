@@ -19,10 +19,9 @@ logo_title = pygame.image.load(os.path.join(BASE_DIR, "../", "assets", "img", "l
 
 # Functions
 
-def menu(screen, clock, my_fonts):
+def menu(screen, clock, my_fonts, is_dark_mode):
 
     error_popup_empty = False
-    is_dark_mode = False
 
     while True:
         
@@ -69,7 +68,7 @@ def menu(screen, clock, my_fonts):
                     else:
                         error_popup_empty = True
                 else:
-                    is_dark_mode = options(screen, clock, my_fonts, is_dark_mode)
+                    options(screen, clock, my_fonts, is_dark_mode)
             else:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
 

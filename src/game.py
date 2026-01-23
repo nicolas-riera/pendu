@@ -146,11 +146,10 @@ def reset_values():
     
     return life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter
 
-def game(screen, clock, my_fonts, is_dark_mode=False):
+def game(screen, clock, my_fonts, is_dark_mode):
 
     gaming = True
     life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
-    is_dark_mode = True
 
     while gaming:
             
