@@ -80,7 +80,7 @@ def options(screen, clock, my_fonts, is_dark_mode=False):
         else:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
-def words_menu(screen, clock, my_fonts,is_dark_mode=False):
+def words_menu(screen, clock, my_fonts,is_dark_mode):
 
     reset_popup = False
 
@@ -152,7 +152,7 @@ def words_menu(screen, clock, my_fonts,is_dark_mode=False):
         pygame.display.flip()  
         clock.tick(60) 
 
-def add_word_menu(screen, clock, my_fonts, is_dark_mode=False):
+def add_word_menu(screen, clock, my_fonts, is_dark_mode):
 
     usr_word = ""
     error_found_popup = False
@@ -266,7 +266,7 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode=False):
         add_word(usr_word.lower())
 
 
-def remove_word_menu(screen, clock, my_fonts, is_dark_mode=False):
+def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
 
     words_list = read_words()
     words_list_current_page = 0

@@ -21,14 +21,17 @@ logo_title = pygame.image.load(os.path.join(BASE_DIR, "../", "assets", "img", "l
 
 # Functions
 
-def menu(screen, clock, my_fonts):
+def menu(screen, clock, my_fonts, is_dark_mode):
 
     error_popup_empty = False
+<<<<<<< HEAD
     is_dark_mode = False
     notice_username_input_popup = False
     notice_username_input_empty_popup = False
 
     usr_word = ""
+=======
+>>>>>>> 81ce046512bd064d6e65c38f0adb1a0958178850
 
     while True:
         
@@ -120,7 +123,7 @@ def menu(screen, clock, my_fonts):
                 elif scores_button.collidepoint(pygame.mouse.get_pos()):
                     scores(screen, clock, my_fonts)
                 else:
-                    is_dark_mode = options(screen, clock, my_fonts, is_dark_mode)
+                    options(screen, clock, my_fonts, is_dark_mode)
             else:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
 
