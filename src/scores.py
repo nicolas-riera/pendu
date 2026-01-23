@@ -36,6 +36,7 @@ def scores(screen, clock, my_fonts):
         # Rendering  
 
         screen.fill("white") 
+
         name_section_text = my_fonts[0].render("JOUEUR", True, (0, 0, 0))
         screen.blit(name_section_text, (60, 50))
         word_section_text = my_fonts[0].render("MOT", True, (0, 0, 0))
@@ -43,6 +44,7 @@ def scores(screen, clock, my_fonts):
         error_section_text = my_fonts[0].render("ERREURS", True, (0, 0, 0))
         screen.blit(error_section_text, (600, 50))
         pygame.draw.line(screen, (0, 0, 0), (50, 90), (750, 90), 2)
+
         for i in range (scores_list_current_page*10, len(scores_list)):
             if (i-scores_list_current_page * 10) < 10:
                 y_offset = 50*(i-scores_list_current_page*10)
@@ -90,7 +92,6 @@ def scores(screen, clock, my_fonts):
 
 
         # Draw.rect(surface, color, (x position, y position, x width, y width))
-
         pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
         return_button = pygame.Rect((295, 600, 203, 80))
         return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
