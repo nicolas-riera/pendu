@@ -7,6 +7,16 @@ from src.config import *
 # Functions
 
 def dark_mode_setting(mode, is_dark_mode):
+
+    '''
+    Read/Write dark mode settings in settings file.     
+    ### PARAMETERS
+            mode: str - read or write
+            is_dark_mode: bool
+    ### RETURNS
+            bool
+    '''
+
     lines = read_config_file()
 
     if mode == "read":
@@ -24,6 +34,15 @@ def dark_mode_setting(mode, is_dark_mode):
         write_lines(lines)
 
 def invert_surface(surface):
+
+    '''
+    Invert the colors of a pygame Surface, for example an image.
+    ### PARAMETERS
+            surface: pygame.Surface
+    ### RETURNS
+            inverted: pygame.Surface
+    '''
+
     inverted = surface.copy()
     px = pygame.PixelArray(inverted)
 
@@ -43,6 +62,15 @@ def invert_surface(surface):
 
 def light_dark_mode(is_dark_mode):
     
+    '''
+    Switch text and screen colors depending on is_dark_mode status.    
+    ### PARAMETERS
+            is_dark_mode: bool
+    ### RETURNS
+            screen_fill_color: tuple(int,int,int)
+            text_color: tuple(int,int,int)
+    '''
+
     if is_dark_mode:
         screen_fill_color = (0, 0, 0) 
         text_color = (255, 255, 255)
@@ -52,4 +80,3 @@ def light_dark_mode(is_dark_mode):
         text_color = (0, 0, 0)
 
     return screen_fill_color, text_color
-
