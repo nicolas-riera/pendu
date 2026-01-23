@@ -47,36 +47,36 @@ Après le téléchargement, exécutez simplement ```Pendu_[version].exe``` pour 
     - Système de nom du joueur.
     - Système de classement persisté pour sauvegarder les résultats.
     - Historique de parties, permettant de consulter les scores précédents.
-- Thème clair/sombre, avec persistence
+- Thème clair/sombre, avec persistence.
 
 ## Contrôles
 
-- **Souris** : Cliquer sur les boutons (Menu/Scores/Options/Pop-ups)
-- **Échap** : Revenir en arrière/quitter le jeu (par rapport à l'écran affiché)
+- **Souris** : Cliquer sur les boutons (Menu/Scores/Options/Pop-ups).
+- **Échap** : Revenir en arrière/quitter le jeu (par rapport à l'écran affiché).
 
 Dans **Jouer** :
 - Clavier :
-    - Entrer les lettres avec le clavier
-        - Caractères acceptés : lettres
+    - Entrer les lettres avec le clavier.
+        - Caractères acceptés : lettres.
 
 Dans **Scores** :
 
 - **Souris** :
-    - Utiliser les flèches `<` / `>` pour changer de pages (s'il y a plus de 10 scores)
+    - Utiliser les flèches `<` / `>` pour changer de pages (s'il y a plus de 10 scores).
 
 Dans **Options → Mots → Ajouter mot** et les **Pop-ups** pour entrer **le nom**  :
 
 - **Clavier** :
-    - Taper les lettres avec le clavier
-        - Caractères acceptés : lettres et tiret  
-    - **Retour arrière**: Supprimer le dernier caractère entrée
-    - **Enter**: Valider le mot entrée
+    - Taper les lettres avec le clavier.
+        - Caractères acceptés : lettres et tiret.  
+    - **Retour arrière**: Supprimer le dernier caractère entrée.
+    - **Enter**: Valider le mot entrée.
 
 Dans **Options → Mots → Retirer mot** :
 
 - **Souris** :
-    - Cliquer sur un mot pour le supprimer
-    - Utiliser les flèches `<` / `>` pour changer de pages (s'il y a plus de 20 mots)
+    - Cliquer sur un mot pour le supprimer.
+    - Utiliser les flèches `<` / `>` pour changer de pages (s'il y a plus de 20 mots).
 
 ## Exécuter et Build depuis le code source
 
@@ -96,7 +96,7 @@ python main.py
 
 ## Build
 
-Pour build le jeu en .EXE, utilisez pyinstaller
+Pour build le jeu en .EXE, utilisez pyinstaller :
 
 ```bash
 pyinstaller main.py --onefile --noconsole --icon=assets/img/logo.ico --hidden-import=pygame --name Pendu --add-data="assets;assets"
