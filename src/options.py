@@ -147,7 +147,7 @@ def add_word_menu(screen, clock, my_fonts):
     usr_word = ""
     error_found_popup = False
     error_too_short_popup = False
-
+    error_only_one_letter_popup = False
     while True:
         
         # pygame events
@@ -166,8 +166,11 @@ def add_word_menu(screen, clock, my_fonts):
                 error_found_popup = True
             elif len(usr_word.replace("-", "")) < 3:
                 error_too_short_popup = True
-            elif usr_word != "":
-                break
+            else:
+                error_only_one_letter_popup = True
+                for i in range(len(usr_word)):
+                    if usr_word[0] != usr_word[i]:
+                        error_only_one_letter_popup = False
         else:
             if len(usr_word) < 26:
                 usr_word += usr_input
@@ -207,8 +210,9 @@ def add_word_menu(screen, clock, my_fonts):
         elif error_found_popup:
             error_found_popup = ok_popup(screen, my_fonts, mouseclicked, "Le mot existe déjà.", (193, 315))
         elif error_too_short_popup:
-            error_too_short_popup= ok_popup(screen, my_fonts, mouseclicked, "Le mot est trop court.", (168, 315))
-
+            error_too_short_popup = ok_popup(screen, my_fonts, mouseclicked, "Le mot est trop court.", (168, 315))
+        elif error_only_one_letter_popup:
+            error_only_one_letter_popup = ok_popup(screen,my_fonts, mouseclicked, "C'est un mot d'une lettre.", (130,315))
         elif add_word_button.collidepoint(pygame.mouse.get_pos()) and not(return_button.collidepoint(pygame.mouse.get_pos())):
             if usr_word != "":
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
@@ -219,8 +223,13 @@ def add_word_menu(screen, clock, my_fonts):
                     elif len(usr_word.replace("-", "")) < 3:
                         error_too_short_popup = True
                     else:
-                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
-                        break
+                        error_only_one_letter_popup = True
+                        for i in range(len(usr_word)):
+                            if usr_word[0] != usr_word[i]:
+                                error_only_one_letter_popup = False
+                        if not error_only_one_letter_popup:
+                            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                            break
 
             else:  
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
