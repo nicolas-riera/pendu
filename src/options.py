@@ -18,6 +18,10 @@ from src.game import *
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FONT_PATH = os.path.join(BASE_DIR, "../", "assets", "font", "LiberationSans-Regular.ttf")
 
+DRAWING_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "drawing_sfx.mp3"))
+MENU_BUTTON_CLICK_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_click_sfx.wav"))
+MENU_BUTTON_START_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_start_sfx.mp3"))
+
 # Functions
 
 def options(screen, clock, my_fonts, is_dark_mode):

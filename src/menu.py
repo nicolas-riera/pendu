@@ -20,6 +20,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOGO_TITLE = pygame.image.load(os.path.join(BASE_DIR, "../", "assets", "img", "logo_title.png"))
 LOGO_TITLE_INVERTED = invert_surface(LOGO_TITLE)
 
+MENU_BUTTON_CLICK_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_click_sfx.wav"))
+MENU_BUTTON_START_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_start_sfx.mp3"))
+
 # Functions
 
 def menu(screen, clock, my_fonts):

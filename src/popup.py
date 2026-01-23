@@ -9,7 +9,18 @@ from src.dark_mode import *
 
 # Variables
 
-FONT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../", "assets", "font", "LiberationSans-Regular.ttf")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FONT_PATH = os.path.join(BASE_DIR, "assets", "font", "LiberationSans-Regular.ttf")
+
+# Assets loading
+
+# Python loads this first, so mixer init has to be here
+pygame.mixer.init()
+
+MENU_BUTTON_CLICK_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_click_sfx.wav"))
+WIN_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "win_sfx.wav"))
+LOST_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "lost_sfx.wav"))
+# todo xbox 360
 
 # Functions
 

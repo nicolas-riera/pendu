@@ -9,7 +9,7 @@ from src.words_mgt import *
 # Variables
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FONT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "font", "LiberationSans-Regular.ttf")
+FONT_PATH = os.path.join(BASE_DIR, "assets", "font", "LiberationSans-Regular.ttf")
 
 # Main program
 
