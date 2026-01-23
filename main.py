@@ -8,6 +8,7 @@ from src.words_mgt import *
 
 # Variables
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FONT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "font", "LiberationSans-Regular.ttf")
 
 # Main program
@@ -18,6 +19,7 @@ if __name__ == "__main__":
     pygame.font.init()
 
     pygame.display.set_caption("Pendu")
+    pygame.display.set_icon(pygame.image.load(os.path.join(BASE_DIR, "assets", "img", "logo.png")))
 
     pygame.key.set_repeat(400, 50)
 
