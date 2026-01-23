@@ -24,6 +24,23 @@ MENU_BUTTON_START_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets
 
 def ok_popup(screen, my_fonts, mouseclicked, text, text_pos, is_dark_mode):
 
+    '''
+    Pygame ok popup loop, returns a boolean 
+    to set its state in the loop where it's called.
+    By default it returns True so at the next clock round, 
+    it can be called and displayed again. When clicking ok, it returns False
+    so it's not called again.
+    ### PARAMETERS
+            screen: pygame.Surface
+            my_fonts: tuple[pygame.Font, pygame.Font]
+            mouseclicked: bool
+            text: str
+            text_pos: tuple(int,int,int)
+            is_dark_mode: bool
+    ### RETURNS
+            bool
+    '''
+
     # Rendering 
         
     screen_fade = pygame.Surface((800, 800))
@@ -65,6 +82,27 @@ def ok_popup(screen, my_fonts, mouseclicked, text, text_pos, is_dark_mode):
     return True
 
 def replay_menu_popup(screen, my_fonts, mouseclicked, text, text_pos, is_dark_mode, subtitle=False):
+
+    '''
+    Pygame replay popup menu loop.
+    It returns a loop_locker boolean 
+    to set its state in the loop where it's called.
+    By default it returns True so at the next clock round, 
+    it can be called and displayed again. When a choice is made,
+    loop_locker is set to False so it's not called again.
+    The choice index is returned with loop_locker.
+    ### PARAMETERS
+            screen: pygame.Surface
+            my_fonts: tuple[pygame.Font, pygame.Font]
+            mouseclicked: bool
+            text: str
+            text_pos: tuple(int,int,int)
+            is_dark_mode: bool
+            subtitle: bool
+    ### RETURNS
+            loop_locker: bool
+            usr_choice: int
+    '''
 
     usr_choice = 0
     loop_locker = True
@@ -138,6 +176,22 @@ def replay_menu_popup(screen, my_fonts, mouseclicked, text, text_pos, is_dark_mo
     return loop_locker, usr_choice
 
 def username_input_popup(screen, my_fonts, mouseclicked, usr_word, is_dark_mode):
+
+    '''
+    Pygame username input popup loop, returns a boolean 
+    to set its state in the loop where it's called.
+    By default it returns True so at the next clock round, 
+    it can be called and displayed again. When clicking ok, it returns False
+    so it's not called again. The real input is handled outside of this function.
+    ### PARAMETERS
+            screen: pygame.Surface
+            my_fonts: tuple[pygame.Font, pygame.Font]
+            mouseclicked: bool
+            usr_word: str
+            is_dark_mode: bool
+    ### RETURNS
+            bool
+    '''
 
     # Rendering 
 
