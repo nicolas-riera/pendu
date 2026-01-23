@@ -1,6 +1,8 @@
 # Pendu — Python / pygame
 
-Un simple Pendu développé en Python et utilise pygame pour l'interface graphique.
+![pythonversion](https://img.shields.io/badge/python-3.x-blue)
+
+Un simple Pendu développé en Python et utilisant pygame pour l'interface graphique.
 
 ## Présentation
 
@@ -32,17 +34,21 @@ Le but est de trouver le mot secret avant de faire trop d’erreurs. Chaque lett
 
 tbd
 
-## Fonctionnalités (temporaire)
+## Fonctionnalités
 
-- tbd/game
+- Jeu du pendu classique avec une interface pygame.
 - Gestion complète de la liste des mots :
     - Ajout de mots par l'utilisateur.
     - Suppression par cas ou complète des mots.
     - Réinitialisation des mots à leur état d'origine.
+- Gestion de scores :
+    - Système de nom du joueur.
+    - Système de classement persisté pour sauvegarder les résultats.
+    - Historique de parties, permettant de consulter les scores précédents.
 
 ## Contrôles
 
-- **Souris** : Cliquer sur les boutons (Menu/ Options/Pop-ups)
+- **Souris** : Cliquer sur les boutons (Menu/Scores/Options/Pop-ups)
 - **Échap** : Revenir en arrière/quitter le jeu (par rapport à l'écran affiché)
 
 Dans **Jouer** :
@@ -50,7 +56,12 @@ Dans **Jouer** :
     - Entrer les lettres avec le clavier
         - Caractères acceptés : lettres
 
-Dans **Options → Mots → Ajouter mot** :
+Dans **Scores** :
+
+- **Souris** :
+    - Utiliser les flèches `<` / `>` pour changer de pages (s'il y a plus de 10 scores)
+
+Dans **Options → Mots → Ajouter mot** et les **Pop-ups** pour entrer **le nom**  :
 
 - **Clavier** :
     - Taper les lettres avec le clavier
@@ -60,8 +71,9 @@ Dans **Options → Mots → Ajouter mot** :
 
 Dans **Options → Mots → Retirer mot** :
 
-- Cliquer sur un mot pour le supprimer
-- Utiliser les flèches `<` / `>` pour changer de pages (s'il y a plus de 20 mots)
+- **Souris** :
+    - Cliquer sur un mot pour le supprimer
+    - Utiliser les flèches `<` / `>` pour changer de pages (s'il y a plus de 20 mots)
 
 ## Exécuter depuis le code source
 

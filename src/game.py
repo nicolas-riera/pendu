@@ -11,6 +11,7 @@ from src.keyboard_input import *
 from src.render_adaptive_text import *
 from src.popup import *
 from src.dark_mode import *
+from src.scores_mgt import *
 
 # Variables
 
@@ -178,7 +179,7 @@ def game(screen, clock, my_fonts, is_dark_mode=False):
         letters_tried_text = my_fonts[0].render(str_already_tried_letters(letters_tried.upper()), True, text_color)
         screen.blit(letters_tried_text, (60, 370))
 
-        hangman_title_rect = HANGMAN_IMG[6-life].get_rect(center=(650, 500))
+        hangman_title_rect = HANGMAN_IMG[6-life].get_rect(center=(630, 500))
         hangman_title_scaled = pygame.transform.scale(HANGMAN_IMG[6-life], (HANGMAN_IMG[6-life].get_size()[0]*1, HANGMAN_IMG[6-life].get_size()[1]*1))
         screen.blit(hangman_title_scaled, hangman_title_rect)
 
@@ -251,16 +252,19 @@ def game(screen, clock, my_fonts, is_dark_mode=False):
 
         elif notice_win_popup:
             if time.monotonic() - popup_delay >= 0.7:
-                notice_win_popup, usr_choice = replay_menu_popup(screen, clock, my_fonts, mouseclicked, "Vous avez gagné !", (195, 315))
+                notice_win_popup, usr_choice = replay_menu_popup(screen, my_fonts, mouseclicked, "Vous avez gagné !", (195, 315))
                 if usr_choice == 1:
+                    add_scores(read_username(), word_to_guess, 6-life)
                     life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
                 elif usr_choice == 2:
+                    add_scores(read_username(), word_to_guess, 6-life)
                     gaming = False
 
 
         elif notice_lose_popup:
             if time.monotonic() - popup_delay >= 0.7:
-                notice_lose_popup, usr_choice = replay_menu_popup(screen, clock, my_fonts, mouseclicked, "Vous avez perdu...", (195, 315))
+                notice_lose_popup, usr_choice = replay_menu_popup(screen
+                , my_fonts, mouseclicked, "Vous avez perdu...", (195, 315), subtitle=f"Le mot était {word_to_guess}.")
                 if usr_choice == 1:
                     life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
                 elif usr_choice == 2:
