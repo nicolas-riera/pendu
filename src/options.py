@@ -9,6 +9,7 @@ from src.pygame_events import *
 from src.keyboard_input import *
 from src.render_adaptive_text import *
 from src.popup import *
+from src.scores_mgt import *
 
 # Variables
 
@@ -38,6 +39,11 @@ def options(screen, clock, my_fonts):
         words_button_text = my_fonts[0].render("Mots", True, (0, 0, 0))
         screen.blit(words_button_text, (365, 320))
 
+        pygame.draw.rect(screen, (236, 179, 50), (295, 400, 203, 80))
+        scores_button = pygame.Rect((295, 400, 203, 80))
+        scores_button_text = my_fonts[0].render("Scores", True, (0, 0, 0))
+        screen.blit(scores_button_text, (352, 420))
+
         pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
         return_button = pygame.Rect((295, 600, 203, 80))
         return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
@@ -51,11 +57,13 @@ def options(screen, clock, my_fonts):
         if escpressed:
             break
         
-        elif words_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()):
+        elif words_button.collidepoint(pygame.mouse.get_pos()) or scores_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()):
             if mouseclicked:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                 if words_button.collidepoint(pygame.mouse.get_pos()):
                     words_menu(screen, clock, my_fonts)
+                elif scores_button.collidepoint(pygame.mouse.get_pos()):
+                    scores_menu_options(screen, clock, my_fonts)
                 elif return_button.collidepoint(pygame.mouse.get_pos()):
                     break
             else:
@@ -394,6 +402,102 @@ def remove_word_menu(screen, clock, my_fonts):
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
         elif not (error_popup_empty or notice_clear_all_popup):
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
+        pygame.display.flip()  
+        clock.tick(60) 
+
+def scores_menu_options(screen, clock, my_fonts):
+
+    reset_popup = False
+    notice_username_input_popup = False
+    notice_username_input_empty_popup = False
+    usr_word = ""
+    
+    while True:
+        
+        # pygame events
+
+        events, mouseclicked, escpressed = pygame_events()
+
+        # Rendering  
+
+        screen.fill("white") 
+
+        words_title_button_text = my_fonts[1].render("Scores", True, (0, 0, 0))
+        screen.blit(words_title_button_text, (320, 120))
+
+        # Draw.rect(surface, color, (x position, y position, x width, y width))
+        pygame.draw.rect(screen, (236, 179, 101), (295, 300, 203, 80))
+        clear_scores_button = pygame.Rect((295, 300, 203, 80))
+        clear_scores_button_text = my_fonts[0].render("Vider scores", True, (0, 0, 0))
+        screen.blit(clear_scores_button_text, (312, 320))
+        
+        pygame.draw.rect(screen, (236, 179, 151), (295, 400, 203, 80))
+        change_username_button = pygame.Rect((295, 400, 203, 80))
+        change_username_button_text = my_fonts[0].render("Changer nom", True, (0, 0, 0))
+        screen.blit(change_username_button_text, (305, 420))
+
+        pygame.draw.rect(screen, (168, 168, 168), (295, 600, 203, 80))
+        return_button = pygame.Rect((295, 600, 203, 80))
+        return_button_text = my_fonts[0].render("Retour", True, (0, 0, 0))
+        screen.blit(return_button_text, (356, 620))    
+
+        # Logic
+
+        if escpressed:
+            break
+
+        elif reset_popup:
+            reset_popup = ok_popup(screen, my_fonts, mouseclicked, "Scores effacés", (230, 315))
+        elif notice_username_input_popup:
+            usr_input = keyboard_input(events)
+
+            if usr_input == "backspace":
+                usr_word = usr_word[:-1]
+            elif usr_input == "enter":
+                if usr_word != "":
+                    notice_username_input_popup = False
+                    change_username(usr_word)
+
+                    usr_word = ""
+                    continue
+                else:
+                    notice_username_input_empty_popup = True
+            elif len(usr_word) < 26:
+                usr_word += usr_input
+            
+            notice_username_input_popup = username_input_popup(screen, my_fonts, mouseclicked, usr_word)
+
+            if notice_username_input_empty_popup:
+                notice_username_input_empty_popup = ok_popup(screen, my_fonts, mouseclicked, "Nom vide.", (287, 315))
+
+            if not notice_username_input_popup:
+                if usr_word != "":
+                    change_username(usr_word)
+
+                    usr_word = ""
+                    continue
+                else:
+                    notice_username_input_popup = True
+                    notice_username_input_empty_popup = True
+
+        else:
+            if clear_scores_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()) or change_username_button.collidepoint(pygame.mouse.get_pos()):
+                if mouseclicked:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                    if clear_scores_button.collidepoint(pygame.mouse.get_pos()):
+                        reset_popup = True
+                        clear_scores()
+                    elif return_button.collidepoint(pygame.mouse.get_pos()):
+                        break
+                    elif change_username_button.collidepoint(pygame.mouse.get_pos()):
+                        notice_username_input_popup = True                
+
+                else:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+
+            else:
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)       
 
         pygame.display.flip()  
         clock.tick(60) 
