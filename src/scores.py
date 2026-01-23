@@ -24,6 +24,15 @@ MENU_BUTTON_CLICK_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets
 
 def scores(screen, clock, my_fonts, is_dark_mode):
 
+    '''
+    Pygame scores menu loop.
+    ### PARAMETERS
+            screen: pygame.Surface
+            clock: pygame.Clock
+            my_fonts: tuple[pygame.Font, pygame.Font]
+            is_dark_mode: bool
+    '''
+
     check_empty_last_line_scores()
     scores_list_current_page = 0
 
