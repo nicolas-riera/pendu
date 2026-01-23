@@ -11,6 +11,7 @@ from src.render_adaptive_text import *
 from src.popup import *
 from src.dark_mode import *
 from src.scores_mgt import *
+from src.game import *
 
 # Variables
 
@@ -192,7 +193,7 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
             else:
                 error_only_one_letter_popup = True
                 for i in range(len(usr_word)):
-                    if usr_word[0] != usr_word[i]:
+                    if normalizing_str(usr_word[0]) != normalizing_str(usr_word[i]):
                         error_only_one_letter_popup = False
                 if not error_only_one_letter_popup:
                     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
@@ -253,7 +254,7 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
                     else:
                         error_only_one_letter_popup = True
                         for i in range(len(usr_word)):
-                            if usr_word[0] != usr_word[i]:
+                            if normalizing_str(usr_word[0]) != normalizing_str(usr_word[i]):
                                 error_only_one_letter_popup = False
                         if not error_only_one_letter_popup:
                             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
