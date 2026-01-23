@@ -38,7 +38,9 @@ def menu(screen, clock, my_fonts):
 
         # Rendering  
 
-        text_color = light_dark_mode(screen, is_dark_mode)
+        screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+
+        screen.fill(screen_fill_color)
         
         logo_title_rect = logo_title.get_rect(center=(650, 500))
         logo_title_scaled = pygame.transform.scale(logo_title, (logo_title.get_size()[0]*0.5, logo_title.get_size()[1]*0.5))
@@ -67,7 +69,7 @@ def menu(screen, clock, my_fonts):
             raise SystemExit
         
         elif error_popup_empty:
-            error_popup_empty = ok_popup(screen, my_fonts, mouseclicked, "La liste est vide.", (213, 315))
+            error_popup_empty = ok_popup(screen, my_fonts, mouseclicked, "La liste est vide.", (213, 315), is_dark_mode)
             if not error_popup_empty:
                 continue
 
@@ -90,7 +92,7 @@ def menu(screen, clock, my_fonts):
             elif len(usr_word) < 26:
                 usr_word += usr_input
             
-            notice_username_input_popup = username_input_popup(screen, my_fonts, mouseclicked, usr_word)
+            notice_username_input_popup = username_input_popup(screen, my_fonts, mouseclicked, usr_word, is_dark_mode)
 
             if notice_username_input_empty_popup:
                 notice_username_input_empty_popup = ok_popup(screen, my_fonts, mouseclicked, "Nom vide.", (287, 315))

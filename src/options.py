@@ -29,7 +29,9 @@ def options(screen, clock, my_fonts, is_dark_mode):
 
         # Rendering  
 
-        text_color = light_dark_mode(screen, is_dark_mode)
+        screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+
+        screen.fill(screen_fill_color)
 
         settings_title_button_text = my_fonts[1].render("Options", True, text_color)
         screen.blit(settings_title_button_text, (310, 120))
@@ -88,10 +90,11 @@ def words_menu(screen, clock, my_fonts, is_dark_mode):
 
         events, mouseclicked, escpressed = pygame_events()
         
-
         # Rendering  
 
-        text_color = light_dark_mode(screen, is_dark_mode)
+        screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+
+        screen.fill(screen_fill_color)
 
         words_title_text = my_fonts[1].render("Mots", True, text_color)
         screen.blit(words_title_text, (340, 120))
@@ -123,7 +126,7 @@ def words_menu(screen, clock, my_fonts, is_dark_mode):
             break
 
         elif reset_popup:
-            reset_popup = ok_popup(screen, my_fonts, mouseclicked, "La liste a été restaurée.", (150, 315))
+            reset_popup = ok_popup(screen, my_fonts, mouseclicked, "La liste a été restaurée.", (150, 315), is_dark_mode)
 
         else:
             if add_word_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()) or add_word_button.collidepoint(pygame.mouse.get_pos()) or remove_word_button.collidepoint(pygame.mouse.get_pos()) or reset_word_button.collidepoint(pygame.mouse.get_pos()):
@@ -185,7 +188,9 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
 
         # Rendering  
 
-        text_color = light_dark_mode(screen, is_dark_mode)
+        screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+
+        screen.fill(screen_fill_color)
 
         words_title_text = my_fonts[1].render("Ajouter un mot", True, text_color)
         screen.blit(words_title_text, (230, 120))
@@ -216,11 +221,11 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
             break
 
         elif error_found_popup:
-            error_found_popup = ok_popup(screen, my_fonts, mouseclicked, "Le mot existe déjà.", (193, 315))
+            error_found_popup = ok_popup(screen, my_fonts, mouseclicked, "Le mot existe déjà.", (193, 315), is_dark_mode)
         elif error_too_short_popup:
-            error_too_short_popup = ok_popup(screen, my_fonts, mouseclicked, "Le mot est trop court.", (168, 315))
+            error_too_short_popup = ok_popup(screen, my_fonts, mouseclicked, "Le mot est trop court.", (168, 315), is_dark_mode)
         elif error_only_one_letter_popup:
-            error_only_one_letter_popup = ok_popup(screen,my_fonts, mouseclicked, "C'est un mot d'une lettre.", (130,315))
+            error_only_one_letter_popup = ok_popup(screen,my_fonts, mouseclicked, "C'est un mot d'une lettre.", (130,315), is_dark_mode)
         elif add_word_button.collidepoint(pygame.mouse.get_pos()) and not(return_button.collidepoint(pygame.mouse.get_pos())):
             if usr_word != "":
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
@@ -286,7 +291,9 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
 
         # Rendering  
 
-        text_color = light_dark_mode(screen, is_dark_mode)
+        screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+
+        screen.fill(screen_fill_color)
 
         words_title_text = my_fonts[1].render("Retirer un mot", True, text_color)
         screen.blit(words_title_text, (233, 22))
@@ -379,12 +386,12 @@ def remove_word_menu(screen, clock, my_fonts, is_dark_mode):
             break
 
         elif error_popup_empty:
-            error_popup_empty = ok_popup(screen, my_fonts, mouseclicked, "La liste est vide.", (213, 315))
+            error_popup_empty = ok_popup(screen, my_fonts, mouseclicked, "La liste est vide.", (213, 315), is_dark_mode)
             if not error_popup_empty:
                 break
         
         elif notice_clear_all_popup:
-            notice_clear_all_popup = ok_popup(screen, my_fonts, mouseclicked, "Liste vidée.", (270, 315))
+            notice_clear_all_popup = ok_popup(screen, my_fonts, mouseclicked, "Liste vidée.", (270, 315), is_dark_mode)
             if not notice_clear_all_popup:
                 clear_words()
                 break
@@ -440,7 +447,9 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
 
         # Rendering  
 
-        text_color = light_dark_mode(screen, is_dark_mode)
+        screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+
+        screen.fill(screen_fill_color)
 
         words_title_button_text = my_fonts[1].render("Scores", True, text_color)
         screen.blit(words_title_button_text, (320, 120))
@@ -467,7 +476,7 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
             break
 
         elif reset_popup:
-            reset_popup = ok_popup(screen, my_fonts, mouseclicked, "Scores effacés", (230, 315))
+            reset_popup = ok_popup(screen, my_fonts, mouseclicked, "Scores effacés", (230, 315), is_dark_mode)
         elif notice_username_input_popup:
             usr_input = keyboard_input(events)
 
@@ -485,10 +494,10 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
             elif len(usr_word) < 26:
                 usr_word += usr_input
             
-            notice_username_input_popup = username_input_popup(screen, my_fonts, mouseclicked, usr_word)
+            notice_username_input_popup = username_input_popup(screen, my_fonts, mouseclicked, usr_word, is_dark_mode)
 
             if notice_username_input_empty_popup:
-                notice_username_input_empty_popup = ok_popup(screen, my_fonts, mouseclicked, "Nom vide.", (287, 315))
+                notice_username_input_empty_popup = ok_popup(screen, my_fonts, mouseclicked, "Nom vide.", (287, 315), is_dark_mode)
 
             if not notice_username_input_popup:
                 if usr_word != "":

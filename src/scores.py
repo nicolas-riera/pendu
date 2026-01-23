@@ -36,7 +36,9 @@ def scores(screen, clock, my_fonts, is_dark_mode):
 
         # Rendering  
 
-        text_color = light_dark_mode(screen, is_dark_mode)
+        screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+
+        screen.fill(screen_fill_color)
 
         name_section_text = my_fonts[0].render("JOUEUR", True, text_color)
         screen.blit(name_section_text, (60, 50))

@@ -1,12 +1,12 @@
 def light_dark_mode(screen, is_dark_mode):
     
     if is_dark_mode:
-        screen.fill((0, 0, 0))
+        screen_fill_color = (0, 0, 0) 
         text_color = (255, 255, 255)
 
     else:
-        screen.fill((255, 255, 255))
+        screen_fill_color = (0, 0, 0) 
         text_color = (0, 0, 0)
 
-    return text_color
+    return screen_fill_color, text_color
 

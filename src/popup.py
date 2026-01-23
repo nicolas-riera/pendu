@@ -5,6 +5,7 @@ import os
 
 from src.render_adaptive_text import *
 from src.keyboard_input import *
+from src.dark_mode import *
 
 # Variables
 
@@ -12,7 +13,7 @@ FONT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../", "ass
 
 # Functions
 
-def ok_popup(screen, my_fonts, mouseclicked, text, text_pos):
+def ok_popup(screen, my_fonts, mouseclicked, text, text_pos, is_dark_mode):
 
     # Rendering 
         
@@ -20,9 +21,17 @@ def ok_popup(screen, my_fonts, mouseclicked, text, text_pos):
     screen_fade.fill((0, 0, 0))
     screen_fade.set_alpha(160)
     screen.blit(screen_fade, (0, 0))
+
+    screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+
+    if is_dark_mode:
+        background_popup_color = (20, 20, 20)
+    else:
+        background_popup_color = (255, 255, 255)
         
-    pygame.draw.rect(screen, (255, 255, 255), (100, 250, 600, 300))
-    text_display = my_fonts[1].render(text, True, (0, 0, 0))
+    pygame.draw.rect(screen, background_popup_color, (100, 250, 600, 300))
+
+    text_display = my_fonts[1].render(text, True, text_color)
     screen.blit(text_display, text_pos)
 
     pygame.draw.rect(screen, (168, 168, 168), (295, 450, 203, 80))
@@ -45,21 +54,28 @@ def ok_popup(screen, my_fonts, mouseclicked, text, text_pos):
 
     return True
 
-def replay_menu_popup(screen, my_fonts, mouseclicked, text, text_pos, subtitle=False):
+def replay_menu_popup(screen, my_fonts, mouseclicked, text, text_pos, is_dark_mode, subtitle=False):
 
     usr_choice = 0
     loop_locker = True
 
     # Rendering 
+
+    screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
         
     screen_fade = pygame.Surface((800, 800))
     screen_fade.fill((0, 0, 0))
     screen_fade.set_alpha(160)
     screen.blit(screen_fade, (0, 0))
-        
-    pygame.draw.rect(screen, (255, 255, 255), (100, 250, 600, 300))
 
-    text_display = my_fonts[1].render(text, True, (0, 0, 0))
+    if is_dark_mode:
+        background_popup_color = (188, 188, 188)
+    else:
+        background_popup_color = (255, 255, 255)
+        
+    pygame.draw.rect(screen, background_popup_color, (100, 250, 600, 300))
+
+    text_display = my_fonts[1].render(text, True, text_color)
     screen.blit(text_display, text_pos)
 
     if subtitle:
@@ -70,7 +86,8 @@ def replay_menu_popup(screen, my_fonts, mouseclicked, text, text_pos, subtitle=F
             400,
             500,
             FONT_PATH,
-            centered=True
+            centered=True,
+            color=text_color
             )
 
     pygame.draw.rect(screen, (236, 179, 101), (160, 450, 203, 80))
@@ -108,19 +125,26 @@ def replay_menu_popup(screen, my_fonts, mouseclicked, text, text_pos, subtitle=F
 
     return loop_locker, usr_choice
 
-def username_input_popup(screen, my_fonts, mouseclicked, usr_word):
+def username_input_popup(screen, my_fonts, mouseclicked, usr_word, is_dark_mode):
 
     # Rendering 
+
+    screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
         
     screen_fade = pygame.Surface((800, 800))
     screen_fade.fill((0, 0, 0))
     screen_fade.set_alpha(160)
     screen.blit(screen_fade, (0, 0))
+
+    if is_dark_mode:
+        background_popup_color = (188, 188, 188)
+    else:
+        background_popup_color = (255, 255, 255)
         
-    pygame.draw.rect(screen, (255, 255, 255), (50, 150, 700, 450))
+    pygame.draw.rect(screen, background_popup_color, (50, 150, 700, 450))
 
     pygame.draw.rect(screen, (255, 255, 255), (100, 250, 600, 300))
-    text_display = my_fonts[1].render("Entrez votre nom :", True, (0, 0, 0))
+    text_display = my_fonts[1].render("Entrez votre nom :", True, text_color)
     screen.blit(text_display, (194, 210))
 
     pygame.draw.rect(screen, (240, 240, 240), (70, 340, 660, 60))

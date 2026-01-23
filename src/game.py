@@ -160,7 +160,9 @@ def game(screen, clock, my_fonts, is_dark_mode):
 
         # Rendering  
 
-        text_color = light_dark_mode(screen, is_dark_mode)
+        screen_fill_color, text_color = light_dark_mode(screen, is_dark_mode)
+
+        screen.fill(screen_fill_color)
 
         render_adaptive_text(
             screen,
@@ -251,7 +253,7 @@ def game(screen, clock, my_fonts, is_dark_mode):
 
         elif notice_win_popup:
             if time.monotonic() - popup_delay >= 0.7:
-                notice_win_popup, usr_choice = replay_menu_popup(screen, my_fonts, mouseclicked, "Vous avez gagné !", (195, 315))
+                notice_win_popup, usr_choice = replay_menu_popup(screen, my_fonts, mouseclicked, "Vous avez gagné !", (195, 315), is_dark_mode)
                 if usr_choice == 1:
                     add_scores(read_username(), word_to_guess, 6-life)
                     life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
@@ -262,8 +264,7 @@ def game(screen, clock, my_fonts, is_dark_mode):
 
         elif notice_lose_popup:
             if time.monotonic() - popup_delay >= 0.7:
-                notice_lose_popup, usr_choice = replay_menu_popup(screen
-                , my_fonts, mouseclicked, "Vous avez perdu...", (195, 315), subtitle=f"Le mot était {word_to_guess}.")
+                notice_lose_popup, usr_choice = replay_menu_popup(screen, my_fonts, mouseclicked, "Vous avez perdu...", (195, 315), is_dark_mode, subtitle=f"Le mot était {word_to_guess}.")
                 if usr_choice == 1:
                     life, letters_found, letters_tried, word_to_guess, word_to_guess_normalized, clue, letter_checked, notice_win_popup, notice_lose_popup, display_text_good_choice, display_text_wrong_choice, display_text_tried_letter = reset_values() 
                 elif usr_choice == 2:
