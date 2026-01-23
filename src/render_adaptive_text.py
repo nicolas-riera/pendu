@@ -17,6 +17,23 @@ def render_adaptive_text(
     clickable=False,
     centered=False
 ):
+    
+    '''
+    Render adaptative text depending on the max width provided.
+    ### PARAMETERS
+            screen: pygame.Surface
+            text: str
+            x: int - x position in pixel from top left
+            y: int - y position in pixel from top left
+            max_size: int
+            max_width: int
+            color: tuple(int, int, int)
+            clickable: bool
+            centered: bool
+    ### RETURNS
+            bool
+    '''
+
     size = max_size
     font = pygame.font.Font(font_path, size)
     text_surface = font.render(text, True, color)
