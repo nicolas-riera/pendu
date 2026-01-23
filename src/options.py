@@ -81,6 +81,7 @@ def options(screen, clock, my_fonts, is_dark_mode):
                     scores_menu_options(screen, clock, my_fonts, is_dark_mode)
                 elif dark_mode_button.collidepoint(pygame.mouse.get_pos()):
                     is_dark_mode = not is_dark_mode
+                    dark_mode_setting("write", is_dark_mode)
                 elif return_button.collidepoint(pygame.mouse.get_pos()):
                     break
             else:

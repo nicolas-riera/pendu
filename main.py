@@ -26,8 +26,12 @@ if __name__ == "__main__":
     clock = pygame.time.Clock()
 
     check_empty_last_line()
+    check_empty_last_line_config()
 
     if read_words() == []:
         reset_words()
+
+    if read_config_file() == []:
+        default_config()
 
     menu(screen, clock, my_fonts)
