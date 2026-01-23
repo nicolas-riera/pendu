@@ -12,6 +12,14 @@ APP_NAME = "Pendu-NAA"
 
 def get_gamedata_path(filename):
     
+    '''
+    Get the path of the game data file in parameter.      
+    ### PARAMETERS
+            filename: str
+    ### RETURNS
+            target_file: str
+    '''
+
     # PyInstaller
     if getattr(sys, 'frozen', False):
         base = os.getenv("APPDATA")
