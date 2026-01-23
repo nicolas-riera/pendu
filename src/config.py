@@ -1,10 +1,10 @@
 # Libraries
 
-import os
+from src.gamedata_path import *
 
 # Variables
 
-FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../", "assets" , "gamedata" ,"config.txt")
+FILE_PATH = get_gamedata_path("config.txt")
 
 # Functions
 

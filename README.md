@@ -75,12 +75,13 @@ Dans **Options → Mots → Retirer mot** :
     - Cliquer sur un mot pour le supprimer
     - Utiliser les flèches `<` / `>` pour changer de pages (s'il y a plus de 20 mots)
 
-## Exécuter depuis le code source
+## Exécuter et Build depuis le code source
 
 ### Prérequis
 
 - Python 3.x
 - pygame -> ```python -m pip install pygame```
+- pyinstaller -> ```python -m pip install pyinstaller```
 
 ## Exécuter
 
@@ -89,6 +90,16 @@ Dans **Options → Mots → Retirer mot** :
 ```bash
 python main.py
 ```
+
+## Build
+
+Pour build le jeu en .EXE, utilisez pyinstaller
+
+```bash
+pyinstaller main.py --onefile --noconsole --icon=assets/img/logo.ico --hidden-import=pygame --name Pendu --add-data="assets;assets"
+```
+
+Sur ```--add-data```, remplacez ";" avec ":" si vous êtes sur MacOS ou Linux.
 
 ## Auteurs
 

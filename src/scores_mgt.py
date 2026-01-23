@@ -1,11 +1,12 @@
 # Libraries
 
-import os
 import ast
+
+from src.gamedata_path import *
 
 # Variables
 
-FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../", "assets" , "gamedata" ,"scores.txt")
+FILE_PATH = get_gamedata_path("scores.txt")
 
 # Functions
 
