@@ -28,6 +28,7 @@ HANGMAN_IMG_INVERTED = tuple(
     invert_surface(pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "img", "hangman", f"{i}.png")))
     for i in range(7))
 
+DRAWING_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "drawing_sfx.mp3"))
 ESC_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "esc_sfx.mp3"))
 LETTER_WRITE_SFX_1 = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "letter_write_sfx_1.mp3"))
 LETTER_WRITE_SFX_2 = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "letter_write_sfx_2.mp3"))
@@ -398,13 +399,20 @@ def game(screen, clock, my_fonts, is_dark_mode):
 
                 is_good_choice, letters_found, letters_tried = check_letter(word_to_guess_normalized, usr_input_normalized, letters_found, letters_tried)
                 
+                if not input_sfx_switch:
+                    pygame.mixer.Sound.play(LETTER_WRITE_SFX_1)
+                else:
+                    pygame.mixer.Sound.play(LETTER_WRITE_SFX_2)
+
                 if is_good_choice:
                     clue = update_clue(clue, usr_input_normalized, word_to_guess, word_to_guess_normalized)
+                    input_sfx_switch = not input_sfx_switch
                     display_text_good_choice = True
                     display_text_wrong_choice = False
                     display_text_tried_letter = False
                     display_text_timestamp = time.monotonic()
                 else:
+                    pygame.mixer.Sound.play(DRAWING_SFX)
                     display_text_good_choice = False
                     display_text_wrong_choice = True
                     display_text_tried_letter = False
