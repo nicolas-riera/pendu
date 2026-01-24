@@ -20,6 +20,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOGO_TITLE = pygame.image.load(os.path.join(BASE_DIR, "../", "assets", "img", "logo_title.png"))
 LOGO_TITLE_INVERTED = invert_surface(LOGO_TITLE)
 
+ESC_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "esc_sfx.mp3"))
 INPUT_POPUP_OPEN_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "input_popup_open_sfx.mp3"))
 INPUT_POPUP_CLOSE_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "input_popup_close_sfx.mp3"))
 MENU_BUTTON_CLICK_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "menu_button_click_sfx.wav"))
@@ -84,16 +85,25 @@ def menu(screen, clock, my_fonts):
 
         # Logic
 
-        if escpressed:
+        if escpressed and not (error_popup_empty or notice_username_input_popup or notice_username_input_empty_popup):
             pygame.quit()
             raise SystemExit
         
         elif error_popup_empty:
             error_popup_empty = ok_popup(screen, my_fonts, mouseclicked, "La liste est vide.", (213, 315), is_dark_mode)
+            if escpressed:
+                pygame.mixer.Sound.play(ESC_SFX)
+                error_popup_empty = False
             if not error_popup_empty:
                 continue
 
         elif notice_username_input_popup:
+
+            if escpressed and not notice_username_input_empty_popup:
+                pygame.mixer.Sound.play(ESC_SFX)
+                notice_username_input_popup = False
+                usr_word = ""
+                continue
 
             usr_input = keyboard_input(events)
 
@@ -120,6 +130,10 @@ def menu(screen, clock, my_fonts):
 
             if notice_username_input_empty_popup:
                 notice_username_input_empty_popup = ok_popup(screen, my_fonts, mouseclicked, "Nom vide.", (287, 315), is_dark_mode)
+                if escpressed:
+                    pygame.mixer.Sound.play(ESC_SFX)
+                    notice_username_input_empty_popup = False
+                    continue
 
             if not notice_username_input_popup:
                 if usr_word != "":

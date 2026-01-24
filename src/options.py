@@ -165,12 +165,16 @@ def words_menu(screen, clock, my_fonts, is_dark_mode):
 
         # Logic
 
-        if escpressed:
+        if escpressed and not reset_popup:
             pygame.mixer.Sound.play(ESC_SFX)
             break
 
         elif reset_popup:
             reset_popup = ok_popup(screen, my_fonts, mouseclicked, "La liste a été restaurée.", (150, 315), is_dark_mode)
+            if escpressed:
+                pygame.mixer.Sound.play(ESC_SFX)
+                reset_popup = False
+                continue
 
         else:
             if add_word_button.collidepoint(pygame.mouse.get_pos()) or return_button.collidepoint(pygame.mouse.get_pos()) or add_word_button.collidepoint(pygame.mouse.get_pos()) or remove_word_button.collidepoint(pygame.mouse.get_pos()) or reset_word_button.collidepoint(pygame.mouse.get_pos()):
@@ -283,17 +287,26 @@ def add_word_menu(screen, clock, my_fonts, is_dark_mode):
         
         # Logic
 
-        if escpressed:
+        if escpressed and not (error_found_popup or error_too_short_popup or error_only_one_letter_popup):
             pygame.mixer.Sound.play(ESC_SFX)
             usr_word = ""
             break
 
         elif error_found_popup:
             error_found_popup = ok_popup(screen, my_fonts, mouseclicked, "Le mot existe déjà.", (193, 315), is_dark_mode)
+            if escpressed:
+                pygame.mixer.Sound.play(ESC_SFX)
+                error_found_popup = False
         elif error_too_short_popup:
             error_too_short_popup = ok_popup(screen, my_fonts, mouseclicked, "Le mot est trop court.", (168, 315), is_dark_mode)
+            if escpressed:
+                pygame.mixer.Sound.play(ESC_SFX)
+                error_too_short_popup = False
         elif error_only_one_letter_popup:
             error_only_one_letter_popup = ok_popup(screen,my_fonts, mouseclicked, "C'est un mot d'une lettre.", (130,315), is_dark_mode)
+            if escpressed:
+                pygame.mixer.Sound.play(ESC_SFX)
+                error_only_one_letter_popup = False
         
         elif add_word_button.collidepoint(pygame.mouse.get_pos()) and not(return_button.collidepoint(pygame.mouse.get_pos())):
             if usr_word != "":
@@ -567,13 +580,24 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
 
         # Logic
 
-        if escpressed:
+        if escpressed and not (reset_popup or notice_username_input_popup or notice_username_input_empty_popup):
             pygame.mixer.Sound.play(ESC_SFX)
             break
 
         elif reset_popup:
             reset_popup = ok_popup(screen, my_fonts, mouseclicked, "Scores effacés", (230, 315), is_dark_mode)
+            if escpressed:
+                pygame.mixer.Sound.play(ESC_SFX)
+                reset_popup = False
+
         elif notice_username_input_popup:
+
+            if escpressed and not notice_username_input_empty_popup:
+                usr_word = read_username()
+                pygame.mixer.Sound.play(ESC_SFX)
+                notice_username_input_popup = False
+                continue
+
             usr_input = keyboard_input(events)
 
             if usr_input == "backspace":
@@ -585,9 +609,10 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
                     notice_username_input_popup = False
                     change_username(usr_word)
 
-                    usr_word = ""
                     continue
                 else:
+                    if not notice_username_input_empty_popup:
+                        pygame.mixer.Sound.play(NOTICE_POPUP_SFX)
                     notice_username_input_empty_popup = True
             elif len(usr_word) < 26:
                 usr_word += usr_input
@@ -596,6 +621,10 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
 
             if notice_username_input_empty_popup:
                 notice_username_input_empty_popup = ok_popup(screen, my_fonts, mouseclicked, "Nom vide.", (287, 315), is_dark_mode)
+                if escpressed:
+                    pygame.mixer.Sound.play(ESC_SFX)
+                    notice_username_input_empty_popup = False
+                    continue
 
             if not notice_username_input_popup:
                 if usr_word != "":
@@ -603,7 +632,6 @@ def scores_menu_options(screen, clock, my_fonts, is_dark_mode):
                     pygame.mixer.Sound.play(INPUT_POPUP_CLOSE_SFX)
                     change_username(usr_word)
 
-                    usr_word = ""
                     continue
                 else:
                     notice_username_input_popup = True
