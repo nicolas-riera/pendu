@@ -3,6 +3,9 @@
 import pygame
 import os
 
+# Python will load sound, so we have to put the mixer init here
+pygame.mixer.init()
+
 from src.menu import *
 from src.words_mgt import *
 
