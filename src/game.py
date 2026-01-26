@@ -30,6 +30,7 @@ HANGMAN_IMG_INVERTED = tuple(
 
 DRAWING_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "drawing_sfx.mp3"))
 ESC_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "esc_sfx.mp3"))
+ERROR_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "error.mp3"))
 LETTER_WRITE_SFX_1 = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "letter_write_sfx_1.mp3"))
 LETTER_WRITE_SFX_2 = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "letter_write_sfx_2.mp3"))
 WIN_SFX = pygame.mixer.Sound(os.path.join(BASE_DIR, "../", "assets", "sfx", "win_sfx.wav"))
@@ -391,6 +392,8 @@ def game(screen, clock, my_fonts, is_dark_mode):
                 display_text_wrong_choice = False
                 display_text_tried_letter = True
                 display_text_timestamp = time.monotonic()
+                pygame.mixer.Sound.play(ERROR_SFX)
+
 
             elif usr_input != "backspace" and usr_input != "enter" and usr_input != "-" and usr_input != "":
                 letter_checked = False
