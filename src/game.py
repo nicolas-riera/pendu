@@ -157,7 +157,7 @@ def format_str(string_to_format):
     Add spaces between string_to_format letters.
     ### For example: 
             string_to_format = "hjdsaq"
-            format_clue(string_to_format) -> "h j d s a q"
+            format_str(string_to_format) -> "h j d s a q"
     ### PARAMETER
             string_to_format: str
     ### RETURN
